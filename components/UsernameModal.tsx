@@ -4,9 +4,10 @@ import { X, User, Sparkles } from 'lucide-react';
 interface UsernameModalProps {
   isOpen: boolean;
   onSubmit: (username: string) => Promise<void>;
+  isDemoMode?: boolean;
 }
 
-export const UsernameModal: React.FC<UsernameModalProps> = ({ isOpen, onSubmit }) => {
+export const UsernameModal: React.FC<UsernameModalProps> = ({ isOpen, onSubmit, isDemoMode = false }) => {
   const [username, setUsername] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -55,6 +56,15 @@ export const UsernameModal: React.FC<UsernameModalProps> = ({ isOpen, onSubmit }
               <Sparkles className="w-8 h-8 text-white" />
             </div>
           </div>
+
+          {/* Demo mode banner */}
+          {isDemoMode && (
+            <div className="mb-4 p-3 bg-amber-500/10 border border-amber-500/30 rounded-xl">
+              <p className="text-amber-400 text-sm text-center">
+                Mode démo - Le serveur backend n'est pas disponible. Vous pouvez explorer l'interface mais certaines fonctionnalités seront limitées.
+              </p>
+            </div>
+          )}
 
           {/* Title */}
           <h2 className="text-2xl font-bold text-center text-white mb-2">

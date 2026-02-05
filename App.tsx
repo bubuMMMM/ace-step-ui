@@ -26,7 +26,7 @@ export default function App() {
   const { isMobile, isDesktop } = useResponsive();
 
   // Auth
-  const { user, token, isAuthenticated, isLoading: authLoading, setupUser, logout } = useAuth();
+  const { user, token, isAuthenticated, isLoading: authLoading, setupUser, logout, isDemoMode } = useAuth();
   const [showUsernameModal, setShowUsernameModal] = useState(false);
   // Track multiple concurrent generation jobs
   const activeJobsRef = useRef<Map<string, { tempId: string; pollInterval: ReturnType<typeof setInterval> }>>(new Map());
@@ -1059,6 +1059,7 @@ export default function App() {
       <UsernameModal
         isOpen={showUsernameModal}
         onSubmit={handleUsernameSubmit}
+        isDemoMode={isDemoMode}
       />
       <SettingsModal
         isOpen={showSettingsModal}
