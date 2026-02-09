@@ -1,6 +1,31 @@
 // Use relative URLs so Vite proxy handles them (enables LAN access)
 const API_BASE = '';
 
+// Track backend availability
+let _backendAvailable = false;
+let _backendChecked = false;
+
+export function isBackendAvailable(): boolean {
+  return _backendAvailable;
+}
+
+export async function checkBackendAvailability(): Promise<boolean> {
+  if (_backendChecked) return _backendAvailable;
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 3000);
+    const response = await fetch(`${API_BASE}/health`, {
+      signal: controller.signal,
+    });
+    clearTimeout(timeout);
+    _backendAvailable = response.ok;
+  } catch {
+    _backendAvailable = false;
+  }
+  _backendChecked = true;
+  return _backendAvailable;
+}
+
 // Resolve audio URL based on storage type
 export function getAudioUrl(audioUrl: string | undefined | null, songId?: string): string | undefined {
   if (!audioUrl) return undefined;
@@ -123,21 +148,25 @@ function transformSongs(songs: Song[]): Song[] {
 
 export const songsApi = {
   getMySongs: async (token: string): Promise<{ songs: Song[] }> => {
+    if (!_backendAvailable) return { songs: [] };
     const result = await api('/api/songs', { token }) as { songs: Song[] };
     return { songs: transformSongs(result.songs) };
   },
 
   getPublicSongs: async (limit = 20, offset = 0): Promise<{ songs: Song[] }> => {
+    if (!_backendAvailable) return { songs: [] };
     const result = await api(`/api/songs/public?limit=${limit}&offset=${offset}`) as { songs: Song[] };
     return { songs: transformSongs(result.songs) };
   },
 
   getFeaturedSongs: async (): Promise<{ songs: Song[] }> => {
+    if (!_backendAvailable) return { songs: [] };
     const result = await api('/api/songs/public/featured') as { songs: Song[] };
     return { songs: transformSongs(result.songs) };
   },
 
   getSong: async (id: string, token?: string | null): Promise<{ song: Song }> => {
+    if (!_backendAvailable) return Promise.reject(new Error('Backend not available'));
     const result = await api(`/api/songs/${id}`, { token: token || undefined }) as { song: Song };
     const rawUrl = result.song.audio_url || result.song.audioUrl;
     const resolvedUrl = getAudioUrl(rawUrl, result.song.id);
@@ -145,43 +174,63 @@ export const songsApi = {
   },
 
   getFullSong: async (id: string, token?: string | null): Promise<{ song: Song, comments: any[] }> => {
+    if (!_backendAvailable) return Promise.reject(new Error('Backend not available'));
     const result = await api(`/api/songs/${id}/full`, { token: token || undefined }) as { song: Song, comments: any[] };
     const rawUrl = result.song.audio_url || result.song.audioUrl;
     const resolvedUrl = getAudioUrl(rawUrl, result.song.id);
     return { ...result, song: { ...result.song, audio_url: resolvedUrl, audioUrl: resolvedUrl } };
   },
 
-  createSong: (song: Partial<Song>, token: string): Promise<{ song: Song }> =>
-    api('/api/songs', { method: 'POST', body: song, token }),
+  createSong: (song: Partial<Song>, token: string): Promise<{ song: Song }> => {
+    if (!_backendAvailable) return Promise.reject(new Error('Backend not available'));
+    return api('/api/songs', { method: 'POST', body: song, token });
+  },
 
-  updateSong: (id: string, updates: Partial<Song>, token: string): Promise<{ song: Song }> =>
-    api(`/api/songs/${id}`, { method: 'PATCH', body: updates, token }),
+  updateSong: (id: string, updates: Partial<Song>, token: string): Promise<{ song: Song }> => {
+    if (!_backendAvailable) return Promise.reject(new Error('Backend not available'));
+    return api(`/api/songs/${id}`, { method: 'PATCH', body: updates, token });
+  },
 
-  deleteSong: (id: string, token: string): Promise<{ success: boolean }> =>
-    api(`/api/songs/${id}`, { method: 'DELETE', token }),
+  deleteSong: (id: string, token: string): Promise<{ success: boolean }> => {
+    if (!_backendAvailable) return Promise.reject(new Error('Backend not available'));
+    return api(`/api/songs/${id}`, { method: 'DELETE', token });
+  },
 
-  toggleLike: (id: string, token: string): Promise<{ liked: boolean }> =>
-    api(`/api/songs/${id}/like`, { method: 'POST', token }),
+  toggleLike: (id: string, token: string): Promise<{ liked: boolean }> => {
+    if (!_backendAvailable) return Promise.resolve({ liked: true });
+    return api(`/api/songs/${id}/like`, { method: 'POST', token });
+  },
 
   getLikedSongs: async (token: string): Promise<{ songs: Song[] }> => {
+    if (!_backendAvailable) return { songs: [] };
     const result = await api('/api/songs/liked/list', { token }) as { songs: Song[] };
     return { songs: transformSongs(result.songs) };
   },
 
-  togglePrivacy: (id: string, token: string): Promise<{ isPublic: boolean }> =>
-    api(`/api/songs/${id}/privacy`, { method: 'PATCH', token }),
+  togglePrivacy: (id: string, token: string): Promise<{ isPublic: boolean }> => {
+    if (!_backendAvailable) return Promise.resolve({ isPublic: true });
+    return api(`/api/songs/${id}/privacy`, { method: 'PATCH', token });
+  },
 
-  trackPlay: (id: string, token?: string | null): Promise<{ viewCount: number }> =>
-    api(`/api/songs/${id}/play`, { method: 'POST', token: token || undefined }),
+  trackPlay: (id: string, token?: string | null): Promise<{ viewCount: number }> => {
+    if (!_backendAvailable) return Promise.resolve({ viewCount: 0 });
+    return api(`/api/songs/${id}/play`, { method: 'POST', token: token || undefined });
+  },
 
-  getComments: (id: string, token?: string | null): Promise<{ comments: Comment[] }> =>
-    api(`/api/songs/${id}/comments`, { token: token || undefined }),
+  getComments: async (id: string, token?: string | null): Promise<{ comments: Comment[] }> => {
+    if (!_backendAvailable) return { comments: [] };
+    return api(`/api/songs/${id}/comments`, { token: token || undefined });
+  },
 
-  addComment: (id: string, content: string, token: string): Promise<{ comment: Comment }> =>
-    api(`/api/songs/${id}/comments`, { method: 'POST', body: { content }, token }),
+  addComment: (id: string, content: string, token: string): Promise<{ comment: Comment }> => {
+    if (!_backendAvailable) return Promise.reject(new Error('Backend not available'));
+    return api(`/api/songs/${id}/comments`, { method: 'POST', body: { content }, token });
+  },
 
-  deleteComment: (commentId: string, token: string): Promise<{ success: boolean }> =>
-    api(`/api/songs/comments/${commentId}`, { method: 'DELETE', token }),
+  deleteComment: (commentId: string, token: string): Promise<{ success: boolean }> => {
+    if (!_backendAvailable) return Promise.reject(new Error('Backend not available'));
+    return api(`/api/songs/comments/${commentId}`, { method: 'DELETE', token });
+  },
 };
 
 interface Comment {
@@ -277,16 +326,23 @@ export interface GenerationJob {
 }
 
 export const generateApi = {
-  startGeneration: (params: GenerationParams, token: string): Promise<GenerationJob> =>
-    api('/api/generate', { method: 'POST', body: params, token }),
+  startGeneration: (params: GenerationParams, token: string): Promise<GenerationJob> => {
+    if (!_backendAvailable) return Promise.reject(new Error('Backend server not available. Music generation requires a running ACE-Step server.'));
+    return api('/api/generate', { method: 'POST', body: params, token });
+  },
 
-  getStatus: (jobId: string, token: string): Promise<GenerationJob> =>
-    api(`/api/generate/status/${jobId}`, { token }),
+  getStatus: (jobId: string, token: string): Promise<GenerationJob> => {
+    if (!_backendAvailable) return Promise.reject(new Error('Backend not available'));
+    return api(`/api/generate/status/${jobId}`, { token });
+  },
 
-  getHistory: (token: string): Promise<{ jobs: GenerationJob[] }> =>
-    api('/api/generate/history', { token }),
+  getHistory: async (token: string): Promise<{ jobs: GenerationJob[] }> => {
+    if (!_backendAvailable) return { jobs: [] };
+    return api('/api/generate/history', { token });
+  },
 
   uploadAudio: async (file: File, token: string): Promise<{ url: string; key: string }> => {
+    if (!_backendAvailable) throw new Error('Backend server not available. Audio upload requires a running server.');
     const formData = new FormData();
     formData.append('audio', file);
     const response = await fetch(`${API_BASE}/api/generate/upload-audio`, {
@@ -322,7 +378,10 @@ export const generateApi = {
     time_signature?: string;
     status_message?: string;
     error?: string;
-  }> => api('/api/generate/format', { method: 'POST', body: params, token }),
+  }> => {
+    if (!_backendAvailable) return Promise.reject(new Error('Backend not available'));
+    return api('/api/generate/format', { method: 'POST', body: params, token });
+  },
 };
 
 // Users API
@@ -334,22 +393,33 @@ export interface UserProfile extends User {
 }
 
 export const usersApi = {
-  getProfile: (username: string, token?: string | null): Promise<{ user: UserProfile }> =>
-    api(`/api/users/${username}`, { token: token || undefined }),
+  getProfile: (username: string, token?: string | null): Promise<{ user: UserProfile }> => {
+    if (!_backendAvailable) return Promise.reject(new Error('Backend not available'));
+    return api(`/api/users/${username}`, { token: token || undefined });
+  },
 
-  getPublicSongs: (username: string): Promise<{ songs: Song[] }> =>
-    api(`/api/users/${username}/songs`),
+  getPublicSongs: async (username: string): Promise<{ songs: Song[] }> => {
+    if (!_backendAvailable) return { songs: [] };
+    return api(`/api/users/${username}/songs`);
+  },
 
-  getPublicPlaylists: (username: string): Promise<{ playlists: any[] }> =>
-    api(`/api/users/${username}/playlists`),
+  getPublicPlaylists: async (username: string): Promise<{ playlists: any[] }> => {
+    if (!_backendAvailable) return { playlists: [] };
+    return api(`/api/users/${username}/playlists`);
+  },
 
-  getFeaturedCreators: (): Promise<{ creators: Array<UserProfile & { follower_count?: number }> }> =>
-    api('/api/users/public/featured'),
+  getFeaturedCreators: async (): Promise<{ creators: Array<UserProfile & { follower_count?: number }> }> => {
+    if (!_backendAvailable) return { creators: [] };
+    return api('/api/users/public/featured');
+  },
 
-  updateProfile: (updates: Partial<User>, token: string): Promise<{ user: User }> =>
-    api('/api/users/me', { method: 'PATCH', body: updates, token }),
+  updateProfile: (updates: Partial<User>, token: string): Promise<{ user: User }> => {
+    if (!_backendAvailable) return Promise.reject(new Error('Backend not available'));
+    return api('/api/users/me', { method: 'PATCH', body: updates, token });
+  },
 
   uploadAvatar: async (file: File, token: string): Promise<{ user: UserProfile; url: string }> => {
+    if (!_backendAvailable) throw new Error('Backend server not available.');
     const formData = new FormData();
     formData.append('avatar', file);
     const response = await fetch(`${API_BASE}/api/users/me/avatar`, {
@@ -365,6 +435,7 @@ export const usersApi = {
   },
 
   uploadBanner: async (file: File, token: string): Promise<{ user: UserProfile; url: string }> => {
+    if (!_backendAvailable) throw new Error('Backend server not available.');
     const formData = new FormData();
     formData.append('banner', file);
     const response = await fetch(`${API_BASE}/api/users/me/banner`, {
@@ -379,17 +450,25 @@ export const usersApi = {
     return response.json();
   },
 
-  toggleFollow: (username: string, token: string): Promise<{ following: boolean, followerCount: number }> =>
-    api(`/api/users/${username}/follow`, { method: 'POST', token }),
+  toggleFollow: (username: string, token: string): Promise<{ following: boolean, followerCount: number }> => {
+    if (!_backendAvailable) return Promise.resolve({ following: false, followerCount: 0 });
+    return api(`/api/users/${username}/follow`, { method: 'POST', token });
+  },
 
-  getFollowers: (username: string): Promise<{ followers: User[] }> =>
-    api(`/api/users/${username}/followers`),
+  getFollowers: async (username: string): Promise<{ followers: User[] }> => {
+    if (!_backendAvailable) return { followers: [] };
+    return api(`/api/users/${username}/followers`);
+  },
 
-  getFollowing: (username: string): Promise<{ following: User[] }> =>
-    api(`/api/users/${username}/following`),
+  getFollowing: async (username: string): Promise<{ following: User[] }> => {
+    if (!_backendAvailable) return { following: [] };
+    return api(`/api/users/${username}/following`);
+  },
 
-  getStats: (username: string, token?: string | null): Promise<{ followerCount: number, followingCount: number, isFollowing: boolean }> =>
-    api(`/api/users/${username}/stats`, { token: token || undefined }),
+  getStats: async (username: string, token?: string | null): Promise<{ followerCount: number, followingCount: number, isFollowing: boolean }> => {
+    if (!_backendAvailable) return { followerCount: 0, followingCount: 0, isFollowing: false };
+    return api(`/api/users/${username}/stats`, { token: token || undefined });
+  },
 };
 
 // Playlists API
@@ -405,29 +484,45 @@ export interface Playlist {
 }
 
 export const playlistsApi = {
-  create: (name: string, description: string, isPublic: boolean, token: string): Promise<{ playlist: Playlist }> =>
-    api('/api/playlists', { method: 'POST', body: { name, description, isPublic }, token }),
+  create: (name: string, description: string, isPublic: boolean, token: string): Promise<{ playlist: Playlist }> => {
+    if (!_backendAvailable) return Promise.reject(new Error('Backend not available'));
+    return api('/api/playlists', { method: 'POST', body: { name, description, isPublic }, token });
+  },
 
-  getMyPlaylists: (token: string): Promise<{ playlists: Playlist[] }> =>
-    api('/api/playlists', { token }),
+  getMyPlaylists: async (token: string): Promise<{ playlists: Playlist[] }> => {
+    if (!_backendAvailable) return { playlists: [] };
+    return api('/api/playlists', { token });
+  },
 
-  getPlaylist: (id: string, token?: string | null): Promise<{ playlist: Playlist, songs: any[] }> =>
-    api(`/api/playlists/${id}`, { token: token || undefined }),
+  getPlaylist: (id: string, token?: string | null): Promise<{ playlist: Playlist, songs: any[] }> => {
+    if (!_backendAvailable) return Promise.reject(new Error('Backend not available'));
+    return api(`/api/playlists/${id}`, { token: token || undefined });
+  },
 
-  getFeaturedPlaylists: (): Promise<{ playlists: Array<Playlist & { creator?: string; creator_avatar?: string }> }> =>
-    api('/api/playlists/public/featured'),
+  getFeaturedPlaylists: async (): Promise<{ playlists: Array<Playlist & { creator?: string; creator_avatar?: string }> }> => {
+    if (!_backendAvailable) return { playlists: [] };
+    return api('/api/playlists/public/featured');
+  },
 
-  addSong: (playlistId: string, songId: string, token: string): Promise<{ success: boolean }> =>
-    api(`/api/playlists/${playlistId}/songs`, { method: 'POST', body: { songId }, token }),
+  addSong: (playlistId: string, songId: string, token: string): Promise<{ success: boolean }> => {
+    if (!_backendAvailable) return Promise.reject(new Error('Backend not available'));
+    return api(`/api/playlists/${playlistId}/songs`, { method: 'POST', body: { songId }, token });
+  },
 
-  removeSong: (playlistId: string, songId: string, token: string): Promise<{ success: boolean }> =>
-    api(`/api/playlists/${playlistId}/songs/${songId}`, { method: 'DELETE', token }),
+  removeSong: (playlistId: string, songId: string, token: string): Promise<{ success: boolean }> => {
+    if (!_backendAvailable) return Promise.reject(new Error('Backend not available'));
+    return api(`/api/playlists/${playlistId}/songs/${songId}`, { method: 'DELETE', token });
+  },
 
-  update: (id: string, updates: Partial<Playlist>, token: string): Promise<{ playlist: Playlist }> =>
-    api(`/api/playlists/${id}`, { method: 'PATCH', body: updates, token }),
+  update: (id: string, updates: Partial<Playlist>, token: string): Promise<{ playlist: Playlist }> => {
+    if (!_backendAvailable) return Promise.reject(new Error('Backend not available'));
+    return api(`/api/playlists/${id}`, { method: 'PATCH', body: updates, token });
+  },
 
-  delete: (id: string, token: string): Promise<{ success: boolean }> =>
-    api(`/api/playlists/${id}`, { method: 'DELETE', token }),
+  delete: (id: string, token: string): Promise<{ success: boolean }> => {
+    if (!_backendAvailable) return Promise.reject(new Error('Backend not available'));
+    return api(`/api/playlists/${id}`, { method: 'DELETE', token });
+  },
 };
 
 // Search API
@@ -439,6 +534,7 @@ export interface SearchResult {
 
 export const searchApi = {
   search: async (query: string, type?: 'songs' | 'creators' | 'playlists' | 'all'): Promise<SearchResult> => {
+    if (!_backendAvailable) return { songs: [], creators: [], playlists: [] };
     const params = new URLSearchParams({ q: query });
     if (type && type !== 'all') params.append('type', type);
     const result = await api(`/api/search?${params}`) as SearchResult;
@@ -459,6 +555,8 @@ export interface ContactFormData {
 }
 
 export const contactApi = {
-  submit: (data: ContactFormData): Promise<{ success: boolean; message: string; id: string }> =>
-    api('/api/contact', { method: 'POST', body: data }),
+  submit: (data: ContactFormData): Promise<{ success: boolean; message: string; id: string }> => {
+    if (!_backendAvailable) return Promise.reject(new Error('Backend not available'));
+    return api('/api/contact', { method: 'POST', body: data });
+  },
 };
