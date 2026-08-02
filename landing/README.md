@@ -7,13 +7,15 @@ ton édition personnelle, imprimée chez toi chaque matin à 07:00.
 
 ```
 landing/
-├── index.html            # la page complète (une seule route)
-├── styles.css            # design system + toutes les sections
-├── script.js             # menu mobile, apparitions, composer, FAQ, inscription
-├── vercel.json           # cleanUrls + en-têtes de cache/sécurité
-└── assets/
-    └── hero-printer.webp # visuel du héros, sert aussi d’image de partage (640×640)
+├── index.html   # la page complète (une seule route)
+├── styles.css   # design system + toutes les sections
+├── script.js    # menu mobile, apparitions, composer, FAQ, inscription
+└── vercel.json  # cleanUrls + en-têtes de sécurité
 ```
+
+Aucune image : le visuel du héros et l’illustration « à la une » sont des SVG
+inline. La page ne charge donc qu’une seule ressource externe, les polices
+Google Fonts.
 
 ## Sections
 
@@ -53,5 +55,9 @@ python3 -m http.server 4173
 
 ## Déploiement
 
-Site statique servi tel quel par Vercel — le dossier `landing/` est la racine du
-projet (`Root Directory` = `landing`, aucun framework, aucune commande de build).
+En production sur Vercel : **https://morning-paper-one.vercel.app**
+(projet `morning-paper`, équipe `bubummmms-projects`).
+
+Site statique servi tel quel — aucun framework, aucune commande de build. Pour
+brancher le déploiement continu sur ce dépôt, importer le projet depuis GitHub
+avec `Root Directory` = `landing`.
