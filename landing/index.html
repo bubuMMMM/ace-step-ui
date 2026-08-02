@@ -13,13 +13,9 @@
 <meta property="og:site_name" content="Morning Paper" />
 <meta property="og:title" content="Morning Paper — Ta journée, imprimée avant ton réveil." />
 <meta property="og:description" content="De 1 à 8 pages personnalisées, imprimées chez toi chaque matin à 07:00. Zéro écran. Zéro distraction. 100% toi." />
-<meta property="og:image" content="/assets/og.jpg" />
-<meta property="og:image:width" content="1200" />
-<meta property="og:image:height" content="630" />
-<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="Morning Paper — Ta journée, imprimée avant ton réveil." />
 <meta name="twitter:description" content="De 1 à 8 pages personnalisées, imprimées chez toi chaque matin à 07:00." />
-<meta name="twitter:image" content="/assets/og.jpg" />
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2316150F'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-size='30' font-weight='700' fill='%23F7F3E9' text-anchor='middle'%3EMP%3C/text%3E%3C/svg%3E" />
 
@@ -116,7 +112,115 @@
 
     <div class="hero-visual reveal" data-delay="2">
       <figure class="photo-frame">
-        <img src="/assets/hero-printer.webp" width="880" height="880" alt="Une imprimante posée sur un bureau en bois clair qui imprime l’édition Morning Paper du jour." fetchpriority="high" />
+        <svg class="hero-art" viewBox="0 0 640 640" role="img" aria-labelledby="heroArtTitle">
+          <title id="heroArtTitle">Une imprimante posée sur un bureau imprime l’édition Morning Paper du jour, à côté d’un café et d’une plante.</title>
+          <defs>
+            <linearGradient id="wall" x1="0" y1="0" x2=".4" y2="1">
+              <stop offset="0%" stop-color="#FDFAF3"/><stop offset="100%" stop-color="#EFE8D8"/>
+            </linearGradient>
+            <linearGradient id="deskG" x1="0" y1="0" x2=".2" y2="1">
+              <stop offset="0%" stop-color="#E9DCC2"/><stop offset="100%" stop-color="#D8C6A3"/>
+            </linearGradient>
+            <linearGradient id="body" x1="0" y1="0" x2=".3" y2="1">
+              <stop offset="0%" stop-color="#FCF9F2"/><stop offset="100%" stop-color="#E6DECD"/>
+            </linearGradient>
+            <linearGradient id="lid" x1="0" y1="0" x2=".2" y2="1">
+              <stop offset="0%" stop-color="#FFFEFA"/><stop offset="100%" stop-color="#F1EADB"/>
+            </linearGradient>
+            <linearGradient id="sheet" x1=".5" y1="0" x2=".5" y2="1">
+              <stop offset="0%" stop-color="#F6F1E4"/><stop offset="22%" stop-color="#FDFBF5"/><stop offset="100%" stop-color="#FBF7EC"/>
+            </linearGradient>
+          </defs>
+
+          <!-- mur + lumière de fenêtre -->
+          <rect width="640" height="436" fill="url(#wall)"/>
+          <g fill="#FFFFFF" opacity=".55">
+            <path d="M46 0h72L44 436H-30z"/>
+            <path d="M150 0h34l-66 436H84z"/>
+          </g>
+
+          <!-- bureau -->
+          <rect y="436" width="640" height="204" fill="url(#deskG)"/>
+          <rect y="436" width="640" height="3" fill="#F3E4C8" opacity=".8"/>
+          <g stroke="#B99C6F" stroke-width="1" opacity=".3">
+            <path d="M0 512h640M0 586h640"/>
+          </g>
+
+          <!-- plante -->
+          <g transform="translate(-32 0)">
+            <g fill="#7E8F6B">
+              <path d="M556 330c-16-4-28-18-27-33 15-3 30 7 34 22z"/>
+              <path d="M562 336c14-9 19-27 12-40-14 6-22 22-19 37z"/>
+              <path d="M552 341c-18 3-35-6-41-21 16-8 35-2 44 13z"/>
+            </g>
+            <path d="M540 344h34l-5 44h-24z" fill="#EDE3D0"/>
+            <path d="M536 340h42v10h-42z" fill="#E2D6BE"/>
+          </g>
+
+          <!-- mug -->
+          <g transform="translate(-28 0)">
+            <path d="M588 392h44v28a14 14 0 0 1-14 14h-16a14 14 0 0 1-14-14z" fill="#F5F0E4"/>
+            <path d="M632 398h8a10 10 0 0 1 0 20h-8z" fill="none" stroke="#E0D6C1" stroke-width="5"/>
+            <ellipse cx="610" cy="392" rx="22" ry="6" fill="#E8DFCB"/>
+            <ellipse cx="610" cy="392" rx="15" ry="4" fill="#6B563C"/>
+          </g>
+
+          <!-- carnet -->
+          <g transform="rotate(-7 66 508)">
+            <rect x="18" y="484" width="96" height="52" rx="4" fill="#F2EADA"/>
+            <rect x="18" y="484" width="10" height="52" rx="4" fill="#E3D8C2"/>
+          </g>
+
+          <!-- ombre de l'imprimante -->
+          <ellipse cx="312" cy="448" rx="196" ry="20" fill="#8C7550" opacity=".28"/>
+
+          <!-- imprimante -->
+          <g>
+            <path d="M214 206h196l16 34H198z" fill="#EDE5D5" stroke="#D9CFB9" stroke-width="1.5"/>
+            <rect x="146" y="236" width="332" height="52" rx="14" fill="url(#lid)" stroke="#DED4BF" stroke-width="1.5"/>
+            <rect x="140" y="272" width="344" height="176" rx="18" fill="url(#body)" stroke="#DED4BF" stroke-width="1.5"/>
+            <path d="M140 356h344v74a18 18 0 0 1-18 18H158a18 18 0 0 1-18-18z" fill="#F2EBDB"/>
+            <path d="M141 356h342" stroke="#E2D8C3" stroke-width="1.5"/>
+            <rect x="300" y="300" width="62" height="38" rx="7" fill="#2B2A24"/>
+            <rect x="310" y="312" width="34" height="4" rx="2" fill="#D8DE4D"/>
+            <rect x="310" y="322" width="22" height="3" rx="1.5" fill="#87856F"/>
+            <circle cx="212" cy="318" r="11" fill="#EFE7D6"/><circle cx="212" cy="318" r="4" fill="#B6AC94"/>
+            <circle cx="252" cy="318" r="9" fill="#EFE7D6"/><circle cx="252" cy="318" r="3" fill="#B6AC94"/>
+            <circle cx="176" cy="318" r="5" fill="#C3C93C"/>
+            <text x="404" y="326" font-family="Inter, Helvetica, Arial, sans-serif" font-size="15" letter-spacing="1.2" fill="#A79C84">XP-6100</text>
+            <rect x="168" y="366" width="288" height="12" rx="6" fill="#1C1B15" opacity=".75"/>
+            <rect x="176" y="448" width="40" height="12" rx="4" fill="#DCD2BE"/>
+            <rect x="408" y="448" width="40" height="12" rx="4" fill="#DCD2BE"/>
+          </g>
+
+          <!-- feuille en cours d'impression -->
+          <g>
+            <path d="M186 378h252l40 200H146z" fill="url(#sheet)"/>
+            <path d="M186 378h252l4 20H182z" fill="#16150F" opacity=".07"/>
+            <path d="M186 378h252l40 200H146z" fill="none" stroke="#E0D6C0" stroke-width="1.5"/>
+            <text x="312" y="428" text-anchor="middle" font-family="'Playfair Display', Georgia, serif" font-weight="900" font-size="27" letter-spacing="1.5" fill="#16150F">MORNING PAPER</text>
+            <path d="M196 440h232" stroke="#16150F" stroke-width="1.6"/>
+            <text x="312" y="456" text-anchor="middle" font-family="Inter, Helvetica, Arial, sans-serif" font-size="9.5" letter-spacing="2.4" fill="#8E8975">MARDI 14 MAI · 07:00</text>
+            <path d="M193 466h240" stroke="#DAD0B8" stroke-width="1"/>
+            <g fill="#CFC5AE">
+              <rect x="192" y="476" width="112" height="5" rx="2.5"/>
+              <rect x="192" y="490" width="122" height="5" rx="2.5"/>
+              <rect x="191" y="504" width="104" height="5" rx="2.5"/>
+              <rect x="190" y="518" width="118" height="5" rx="2.5"/>
+              <rect x="189" y="532" width="96" height="5" rx="2.5"/>
+              <rect x="330" y="476" width="108" height="5" rx="2.5"/>
+              <rect x="331" y="490" width="96" height="5" rx="2.5"/>
+              <rect x="332" y="504" width="112" height="5" rx="2.5"/>
+            </g>
+            <g fill="#16150F" opacity=".78">
+              <rect x="334" y="530" width="14" height="16" rx="1"/>
+              <rect x="354" y="522" width="14" height="24" rx="1"/>
+              <rect x="374" y="534" width="14" height="12" rx="1"/>
+              <rect x="394" y="514" width="14" height="32" rx="1"/>
+            </g>
+            <rect x="414" y="506" width="14" height="40" rx="1" fill="#C3C93C"/>
+          </g>
+        </svg>
         <figcaption class="sr-only">Morning Paper s’imprime chez toi, chaque matin.</figcaption>
       </figure>
 

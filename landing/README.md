@@ -12,8 +12,7 @@ landing/
 ├── script.js             # menu mobile, apparitions, composer, FAQ, inscription
 ├── vercel.json           # cleanUrls + en-têtes de cache/sécurité
 └── assets/
-    ├── hero-printer.webp # visuel du héros (imprimante, 880×880)
-    └── og.jpg            # image de partage (1200×630)
+    └── hero-printer.webp # visuel du héros, sert aussi d’image de partage (640×640)
 ```
 
 ## Sections

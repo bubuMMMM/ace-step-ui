@@ -203,7 +203,7 @@ p{ margin:0; }
   background:var(--paper-hi);
   transform:rotate(.5deg);
 }
-.photo-frame img{ width:100%; height:auto; }
+.photo-frame img, .hero-art{ width:100%; height:auto; display:block; }
 
 .float-card{
   position:absolute; display:flex; align-items:center; gap:11px;
