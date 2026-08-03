@@ -6,13 +6,36 @@
 
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* ─── Header : état "collé" ─────────────────────────── */
+  /* ─── Header collé + barre de progression ───────────── */
   var header = document.getElementById('siteHeader');
-  var onScroll = function () {
-    header.classList.toggle('is-stuck', window.scrollY > 8);
+  var bar = document.getElementById('scrollBar');
+  var cup = document.querySelector('.front-cup');
+  var ticking = false;
+
+  var paint = function () {
+    var y = window.scrollY;
+    header.classList.toggle('is-stuck', y > 8);
+
+    if (bar) {
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      bar.style.transform = 'scaleX(' + (max > 0 ? Math.min(y / max, 1) : 0) + ')';
+    }
+
+    /* Léger parallaxe sur la tasse */
+    if (cup && !reduceMotion) {
+      cup.style.setProperty('--shift', (y * -0.045).toFixed(1) + 'px');
+    }
+    ticking = false;
   };
+
+  var onScroll = function () {
+    if (ticking) return;
+    ticking = true;
+    window.requestAnimationFrame(paint);
+  };
+
   window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
+  paint();
 
   /* ─── Menu mobile ───────────────────────────────────── */
   var burger = document.getElementById('burger');
