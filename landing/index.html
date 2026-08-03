@@ -5,39 +5,36 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Morning Paper — Ta journée, imprimée avant ton réveil.</title>
 <meta name="description" content="De 1 à 8 pages personnalisées avec tes messages importants, ton agenda, la météo, les actualités et ce qui compte vraiment. Imprimé chez toi, chaque matin à 07:00. Zéro écran, zéro distraction." />
-<meta name="theme-color" content="#F4EFE2" />
+<meta name="theme-color" content="#08090B" />
 
 <meta property="og:type" content="website" />
 <meta property="og:locale" content="fr_FR" />
 <meta property="og:site_name" content="Morning Paper" />
 <meta property="og:title" content="Morning Paper — Ta journée, imprimée avant ton réveil." />
 <meta property="og:description" content="De 1 à 8 pages personnalisées, imprimées chez toi chaque matin à 07:00. Zéro écran. Zéro distraction. 100% toi." />
+<meta property="og:image" content="/assets/imprimante.webp" />
+<meta property="og:image:width" content="430" />
+<meta property="og:image:height" content="566" />
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="Morning Paper — Ta journée, imprimée avant ton réveil." />
 <meta name="twitter:description" content="De 1 à 8 pages personnalisées, imprimées chez toi chaque matin à 07:00." />
+<meta name="twitter:image" content="/assets/imprimante.webp" />
 
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23141210'/%3E%3Ccircle cx='32' cy='32' r='17' fill='%23E9DCC0'/%3E%3Ccircle cx='32' cy='32' r='11' fill='%231B1006'/%3E%3C/svg%3E" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23101114'/%3E%3Crect x='16' y='14' width='32' height='38' rx='3' fill='%23F2EADA'/%3E%3Crect x='22' y='22' width='20' height='2.5' fill='%23101114'/%3E%3Crect x='22' y='29' width='14' height='2' fill='%23A9A296'/%3E%3Crect x='22' y='35' width='18' height='2' fill='%23A9A296'/%3E%3Crect x='22' y='41' width='11' height='2' fill='%23E9B563'/%3E%3C/svg%3E" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;0,800;0,900;1,400;1,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="/styles.css" />
 </head>
 <body>
 
-<a class="skip-link" href="#front">Aller au contenu</a>
-
-<!-- Texture papier : fibres, marbrures, vignettage -->
-<div class="paper-fx" aria-hidden="true"></div>
+<a class="skip-link" href="#hero">Aller au contenu</a>
+<div class="grain" aria-hidden="true"></div>
 <div class="scroll-bar" id="scrollBar" aria-hidden="true"></div>
 
-<!-- Filtres partagés -->
 <svg class="defs-only" aria-hidden="true" focusable="false">
   <defs>
-    <filter id="fx-rough">
-      <feTurbulence type="fractalNoise" baseFrequency=".022" numOctaves="3" seed="9" result="n"/>
-      <feDisplacementMap in="SourceGraphic" in2="n" scale="26" xChannelSelector="R" yChannelSelector="G"/>
-    </filter>
     <filter id="fx-foam">
       <feTurbulence type="fractalNoise" baseFrequency=".82" numOctaves="3" seed="4" result="n"/>
       <feComponentTransfer in="n" result="a">
@@ -53,22 +50,22 @@
 <!-- ══════════════ HEADER ══════════════ -->
 <header class="site-header" id="siteHeader">
   <div class="wrap header-inner">
-    <a class="brand" href="#front" aria-label="Morning Paper, accueil">
+    <a class="brand" href="#hero" aria-label="Morning Paper, accueil">
       <span class="brand-mark" aria-hidden="true"></span>
       <span class="brand-name">Morning&nbsp;Paper</span>
     </a>
 
     <nav class="nav" aria-label="Navigation principale">
       <a href="#concept">Concept</a>
-      <a href="#edition">L’édition</a>
       <a href="#composer">Composer</a>
+      <a href="#comment">Comment ça marche</a>
       <a href="#tarifs">Tarifs</a>
       <a href="#faq">FAQ</a>
     </nav>
 
     <div class="header-actions">
       <a class="link-quiet" href="#tarifs">Connexion</a>
-      <a class="btn btn-ink btn-sm" href="#final">Commencer</a>
+      <a class="btn btn-primary btn-sm" href="#final">Commencer</a>
       <button class="burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobileMenu">
         <span></span><span></span>
       </button>
@@ -77,212 +74,58 @@
 
   <div class="mobile-menu" id="mobileMenu" hidden>
     <a href="#concept">Concept</a>
-    <a href="#edition">L’édition</a>
     <a href="#composer">Composer</a>
     <a href="#comment">Comment ça marche</a>
     <a href="#tarifs">Tarifs</a>
     <a href="#faq">FAQ</a>
-    <a class="btn btn-ink" href="#final">Créer mon Morning Paper</a>
+    <a class="btn btn-primary" href="#final">Créer mon Morning Paper</a>
   </div>
 </header>
 
 <main>
 
-<!-- ══════════════ UNE ══════════════ -->
-<section class="front" id="front">
-  <div class="wrap">
+<!-- ══════════════ HERO ══════════════ -->
+<section class="hero" id="hero">
+  <div class="glow glow-a" aria-hidden="true"></div>
+  <div class="glow glow-b" aria-hidden="true"></div>
 
-    <div class="front-meta reveal">
-      <span>Édition personnelle</span>
-      <span class="dotsep" aria-hidden="true"></span>
-      <span>N° 001</span>
-      <span class="dotsep" aria-hidden="true"></span>
-      <span>Mardi 14 mai</span>
+  <div class="wrap hero-inner">
+    <a class="pill reveal" href="#tarifs">
+      <span class="pill-dot" aria-hidden="true"></span>
+      Offre fondateur — les 500 premiers
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+    </a>
+
+    <h1 class="reveal" data-delay="1">
+      Ta journée, <em>imprimée</em><br />avant ton réveil.
+    </h1>
+
+    <p class="hero-sub reveal" data-delay="2">
+      De 1 à 8 pages personnalisées avec tes messages importants, ton agenda, la météo,
+      les actualités et ce qui compte vraiment. Zéro écran. Zéro distraction.
+    </p>
+
+    <div class="cta-row reveal" data-delay="3">
+      <a class="btn btn-primary btn-lg" href="#composer">
+        Créer mon Morning Paper
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
+      </a>
+      <a class="btn btn-ghost btn-lg" href="#comment">Voir comment ça marche</a>
     </div>
 
-    <p class="masthead reveal" data-delay="1">Morning Paper</p>
+    <p class="hero-fine reveal" data-delay="4">19€/mois · sans engagement · 30 jours satisfait ou remboursé</p>
 
-    <div class="front-strap reveal" data-delay="2">
-      <span>Ta journée en un coup d’œil</span>
-      <span class="strap-time">07:00</span>
-    </div>
+    <!-- L'édition imprimée : l'objet chaud sur fond sombre -->
+    <div class="showcase reveal" data-delay="4">
+      <div class="showcase-glow" aria-hidden="true"></div>
 
-    <div class="front-grid">
-      <div class="front-copy">
-        <h1 class="reveal" data-delay="2">
-          Ta journée,<br />
-          <span class="marker">imprimée</span><br />
-          avant ton réveil.
-        </h1>
-
-        <p class="lead reveal" data-delay="3">
-          De 1 à 8 pages personnalisées avec tes messages importants, ton agenda,
-          la météo, les actualités et ce qui compte vraiment.
-        </p>
-        <p class="lead-strong reveal" data-delay="4">Zéro écran. Zéro distraction. 100% toi.</p>
-
-        <div class="cta-row reveal" data-delay="5">
-          <a class="btn btn-ink" href="#composer">
-            Créer mon Morning Paper
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
-          </a>
-          <a class="btn btn-line" href="#concept">Voir le concept</a>
-        </div>
-      </div>
-
-      <!-- La tasse, vue de dessus -->
-      <div class="front-cup reveal" data-delay="3">
-        <div class="stain stain-a" aria-hidden="true"></div>
-
-        <svg class="steam" viewBox="0 0 200 150" aria-hidden="true">
-          <path d="M64 140c-16-26 14-34-2-58s10-38 6-56"/>
-          <path d="M100 144c-18-28 16-36-2-62s12-40 8-58"/>
-          <path d="M136 140c-16-26 14-34-2-58s10-38 6-56"/>
-        </svg>
-
-        <svg class="cup" viewBox="0 0 640 640" role="img" aria-labelledby="cupTitle">
-          <title id="cupTitle">Une tasse de café noir vue de dessus, la crema en couronne autour du café.</title>
-          <defs>
-            <radialGradient id="ceramic" cx="36%" cy="28%" r="78%">
-              <stop offset="0%" stop-color="#FCF8F0"/>
-              <stop offset="52%" stop-color="#EDE4D3"/>
-              <stop offset="100%" stop-color="#CFC3A9"/>
-            </radialGradient>
-            <radialGradient id="wall" cx="40%" cy="32%" r="72%">
-              <stop offset="0%" stop-color="#E7DCC5"/>
-              <stop offset="100%" stop-color="#C9BB9E"/>
-            </radialGradient>
-            <radialGradient id="crema" cx="42%" cy="34%" r="72%">
-              <stop offset="0%" stop-color="#E6C48E"/>
-              <stop offset="46%" stop-color="#C2955A"/>
-              <stop offset="100%" stop-color="#7E5628"/>
-            </radialGradient>
-            <radialGradient id="brew" cx="44%" cy="36%" r="76%">
-              <stop offset="0%" stop-color="#2E1C0C"/>
-              <stop offset="58%" stop-color="#160C04"/>
-              <stop offset="100%" stop-color="#080401"/>
-            </radialGradient>
-            <clipPath id="clipCrema"><circle cx="300" cy="316" r="170"/></clipPath>
-          </defs>
-
-          <ellipse cx="312" cy="352" rx="216" ry="204" fill="#3A2B16" opacity=".22" filter="url(#fx-blur)"/>
-
-          <path d="M488 236a104 82 0 0 1 0 160" fill="none" stroke="url(#ceramic)" stroke-width="52" stroke-linecap="round"/>
-          <path d="M492 262a74 56 0 0 1 0 108" fill="none" stroke="#C7B99C" stroke-width="6" opacity=".45"/>
-
-          <circle cx="300" cy="316" r="210" fill="url(#ceramic)"/>
-          <circle cx="300" cy="316" r="182" fill="url(#wall)"/>
-          <circle cx="300" cy="316" r="170" fill="url(#crema)"/>
-
-          <g clip-path="url(#clipCrema)">
-            <circle cx="300" cy="316" r="170" filter="url(#fx-foam)" opacity=".85"/>
-          </g>
-
-          <path d="M300 168c68 0 132 30 145 84 13 54 0 112-46 141-46 29-112 31-157 3-45-28-64-89-50-141 14-54 50-87 108-87z" fill="url(#brew)"/>
-          <path d="M300 168c68 0 132 30 145 84 13 54 0 112-46 141" fill="none" stroke="#7A5124" stroke-width="8" opacity=".3"/>
-
-          <path d="M156 232a196 196 0 0 1 122-92" fill="none" stroke="#FFFDF6" stroke-width="15" stroke-linecap="round" opacity=".8"/>
-          <path d="M452 424a196 196 0 0 1-166 96" fill="none" stroke="#B7A98B" stroke-width="11" stroke-linecap="round" opacity=".45"/>
-        </svg>
-
-        <figcaption class="cup-cap">Le temps d’un café,<br />tu as lu ta journée.</figcaption>
-      </div>
-    </div>
-
-    <ul class="front-trust reveal" data-delay="5">
-      <li><span class="num">01</span><strong>100% personnalisé</strong><span class="sub">Composé pour toi, chaque nuit.</span></li>
-      <li><span class="num">02</span><strong>Imprimé en 3 min</strong><span class="sub">Prêt avant ton réveil.</span></li>
-      <li><span class="num">03</span><strong>Sans engagement</strong><span class="sub">Pause ou résiliation en un clic.</span></li>
-    </ul>
-
-  </div>
-</section>
-
-<!-- ══════════════ TICKER ══════════════ -->
-<div class="ticker" aria-hidden="true">
-  <div class="ticker-track">
-    <span>Météo 18° ensoleillé</span><b>◆</b><span>4 rendez-vous</span><b>◆</b><span>8 messages triés</span><b>◆</b>
-    <span>Focus : lancement produit</span><b>◆</b><span>Imprimé à 07:00</span><b>◆</b><span>Zéro notification</span><b>◆</b>
-    <span>Agenda · Gmail · WhatsApp · Slack · Notion</span><b>◆</b>
-    <span>Météo 18° ensoleillé</span><b>◆</b><span>4 rendez-vous</span><b>◆</b><span>8 messages triés</span><b>◆</b>
-    <span>Focus : lancement produit</span><b>◆</b><span>Imprimé à 07:00</span><b>◆</b><span>Zéro notification</span><b>◆</b>
-    <span>Agenda · Gmail · WhatsApp · Slack · Notion</span><b>◆</b>
-  </div>
-</div>
-
-<!-- ══════════════ CONCEPT ══════════════ -->
-<section class="section" id="concept">
-  <div class="wrap">
-    <div class="head">
-      <p class="kicker reveal"><span class="kdash" aria-hidden="true"></span>Le concept</p>
-      <h2 class="reveal" data-delay="1">Tout ce qui compte.<br />Rien que <span class="marker marker-thin">l’essentiel</span>.</h2>
-      <p class="head-lead reveal" data-delay="2">
-        Morning Paper lit, résume et hiérarchise ce qui mérite ton attention — puis l’imprime.
-        Ta première info de la journée n’est plus un écran.
-      </p>
-    </div>
-
-    <div class="compare">
-      <article class="sheet sheet-dim reveal">
-        <span class="chip chip-line">Sans</span>
-        <h3>Ton réveil aujourd’hui</h3>
-        <svg class="scribble" viewBox="0 0 220 76" aria-hidden="true">
-          <path d="M10 52c26-38 44 12 62-16s16 32 40 6 22 22 46-8 28 20 48 2"/>
-          <path d="M18 32c30 26 40-20 66 8s24-28 44-4 30-16 56 12"/>
-        </svg>
-        <ul class="li-x">
-          <li>Trop de distractions dès la première minute</li>
-          <li>Le réveil, c’est déjà un écran</li>
-          <li>Notifications permanentes, infos éparpillées</li>
-          <li>Vingt minutes de scroll, rien de retenu</li>
-        </ul>
-      </article>
-
-      <article class="sheet sheet-warm reveal" data-delay="1">
-        <span class="chip">Avec Morning Paper</span>
-        <h3>Ton réveil demain</h3>
-        <div class="mini" aria-hidden="true">
-          <div class="mini-mast">MORNING PAPER</div>
-          <div class="mini-rule"></div>
-          <div class="mini-cols">
-            <div><i style="width:100%"></i><i style="width:86%"></i><i style="width:94%"></i><i style="width:58%"></i></div>
-            <div><i style="width:92%"></i><i style="width:100%"></i><i style="width:68%"></i><i style="width:82%"></i></div>
-          </div>
-        </div>
-        <ul class="li-check">
-          <li>Tout tient sur une poignée de pages</li>
-          <li>Trié du plus important au moins urgent</li>
-          <li>Aucune notification, aucun fil infini</li>
-          <li>Tu bois ton café, tu sais quoi faire</li>
-        </ul>
-      </article>
-    </div>
-  </div>
-</section>
-
-<div class="tear" aria-hidden="true"><svg viewBox="0 0 1200 22" preserveAspectRatio="none"><path d="M0 22V9q25-9 50 0t50 2 50-8 50 4 50 3 50-9 50 5 50 1 50-7 50 3 50 4 50-8 50 4 50 2 50-8 50 5 50 1 50-7 50 4 50 3 50-9 50 5 50 2v13z"/></svg></div>
-
-<!-- ══════════════ ÉDITION ══════════════ -->
-<section class="section section-alt" id="edition">
-  <div class="wrap">
-    <div class="head center">
-      <p class="kicker reveal"><span class="kdash" aria-hidden="true"></span>L’édition du jour</p>
-      <h2 class="reveal" data-delay="1">Voilà à quoi ressemble<br />ton <span class="marker marker-thin">14 mai</span>.</h2>
-      <p class="head-lead reveal" data-delay="2">
-        Une vraie une, composée pendant la nuit. Mise en page pensée pour l’encre, pas pour le scroll.
-      </p>
-    </div>
-
-    <div class="paper-stack reveal" data-delay="2">
-      <div class="stain stain-b" aria-hidden="true"></div>
-
-      <div class="newspaper">
+      <div class="edition" id="edition">
         <div class="np-meta">
           <span>Édition personnelle</span>
           <span>Mardi 14 mai 2024</span>
         </div>
 
-        <div class="np-mast"><h3>Morning Paper</h3></div>
+        <div class="np-mast"><h2>Morning Paper</h2></div>
 
         <div class="np-sub">
           <span>Ta journée en un coup d’œil.</span>
@@ -315,7 +158,7 @@
                 <circle cx="200" cy="84" r="5" fill="#8f8878"/>
               </svg>
             </div>
-            <h4 class="np-head">SpaceX réussit le lancement de Starship lors du 4<sup>e</sup> test</h4>
+            <h3 class="np-head">SpaceX réussit le lancement de Starship lors du 4<sup>e</sup> test</h3>
             <p class="np-text">
               Tentative cruciale vers une mission habitée vers Mars. Progrès majeurs sur le moteur et
               la structure : la rentrée atmosphérique a été maîtrisée pour la première fois.
@@ -332,8 +175,7 @@
                   <path d="M24 4v6M24 38v6M4 24h6M38 24h6M10 10l4 4M34 34l4 4M38 10l-4 4M14 34l-4 4"/>
                 </svg>
               </div>
-              <p class="np-cap">Ensoleillé</p>
-              <p class="np-minmax"><span>↑ 21°</span><span>↓ 13°</span></p>
+              <p class="np-cap">Ensoleillé · ↑ 21° ↓ 13°</p>
             </div>
 
             <div>
@@ -382,21 +224,100 @@
         <p class="np-foot">Déconnecte le bruit. Reconnecte-toi à l’essentiel.</p>
       </div>
     </div>
+
+    <div class="sources reveal" data-delay="5">
+      <span class="sources-label">Se connecte à</span>
+      <div class="sources-row">
+        <span>Google Agenda</span><span>Gmail</span><span>Outlook</span><span>WhatsApp</span><span>Slack</span><span>Notion</span><span>LinkedIn</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ CONCEPT ══════════════ -->
+<section class="section" id="concept">
+  <div class="wrap concept-grid">
+    <div class="concept-copy">
+      <p class="kicker reveal"><span class="kdot" aria-hidden="true"></span>Le concept</p>
+      <h2 class="reveal" data-delay="1">Tout ce qui compte.<br />Rien que <em>l’essentiel</em>.</h2>
+      <p class="lead reveal" data-delay="2">
+        Morning Paper lit, résume et hiérarchise ce qui mérite ton attention — puis l’imprime.
+        Ta première info de la journée n’est plus un écran.
+      </p>
+
+      <div class="split reveal" data-delay="3">
+        <div class="split-col">
+          <p class="split-h">Sans</p>
+          <ul class="li-x">
+            <li>Le réveil, c’est déjà un écran</li>
+            <li>Notifications permanentes</li>
+            <li>20 min de scroll, rien de retenu</li>
+          </ul>
+        </div>
+        <div class="split-col">
+          <p class="split-h split-h-on">Avec Morning Paper</p>
+          <ul class="li-check">
+            <li>Tout tient sur une poignée de pages</li>
+            <li>Trié du plus important au moins urgent</li>
+            <li>Tu bois ton café, tu sais quoi faire</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="front-cup reveal" data-delay="2">
+      <div class="cup-glow" aria-hidden="true"></div>
+
+      <svg class="steam" viewBox="0 0 200 150" aria-hidden="true">
+        <path d="M64 140c-16-26 14-34-2-58s10-38 6-56"/>
+        <path d="M100 144c-18-28 16-36-2-62s12-40 8-58"/>
+        <path d="M136 140c-16-26 14-34-2-58s10-38 6-56"/>
+      </svg>
+
+      <svg class="cup" viewBox="0 0 640 640" role="img" aria-labelledby="cupTitle">
+        <title id="cupTitle">Une tasse de café noir vue de dessus, la crema en couronne autour du café.</title>
+        <defs>
+          <radialGradient id="ceramic" cx="36%" cy="28%" r="78%">
+            <stop offset="0%" stop-color="#FCF8F0"/><stop offset="52%" stop-color="#EDE4D3"/><stop offset="100%" stop-color="#B9AC93"/>
+          </radialGradient>
+          <radialGradient id="wall" cx="40%" cy="32%" r="72%">
+            <stop offset="0%" stop-color="#E7DCC5"/><stop offset="100%" stop-color="#B6A88C"/>
+          </radialGradient>
+          <radialGradient id="crema" cx="42%" cy="34%" r="72%">
+            <stop offset="0%" stop-color="#E6C48E"/><stop offset="46%" stop-color="#C2955A"/><stop offset="100%" stop-color="#6F4A22"/>
+          </radialGradient>
+          <radialGradient id="brew" cx="44%" cy="36%" r="76%">
+            <stop offset="0%" stop-color="#2E1C0C"/><stop offset="58%" stop-color="#160C04"/><stop offset="100%" stop-color="#050301"/>
+          </radialGradient>
+          <clipPath id="clipCrema"><circle cx="300" cy="316" r="170"/></clipPath>
+        </defs>
+
+        <ellipse cx="312" cy="356" rx="216" ry="200" fill="#000" opacity=".55" filter="url(#fx-blur)"/>
+        <path d="M488 236a104 82 0 0 1 0 160" fill="none" stroke="url(#ceramic)" stroke-width="52" stroke-linecap="round"/>
+        <circle cx="300" cy="316" r="210" fill="url(#ceramic)"/>
+        <circle cx="300" cy="316" r="182" fill="url(#wall)"/>
+        <circle cx="300" cy="316" r="170" fill="url(#crema)"/>
+        <g clip-path="url(#clipCrema)"><circle cx="300" cy="316" r="170" filter="url(#fx-foam)" opacity=".85"/></g>
+        <path d="M300 168c68 0 132 30 145 84 13 54 0 112-46 141-46 29-112 31-157 3-45-28-64-89-50-141 14-54 50-87 108-87z" fill="url(#brew)"/>
+        <path d="M156 232a196 196 0 0 1 122-92" fill="none" stroke="#FFFDF6" stroke-width="15" stroke-linecap="round" opacity=".85"/>
+      </svg>
+    </div>
   </div>
 </section>
 
 <!-- ══════════════ COMPOSER ══════════════ -->
 <section class="section" id="composer">
-  <div class="wrap composer-grid">
-
-    <div>
-      <p class="kicker reveal"><span class="kdash" aria-hidden="true"></span>Composer</p>
-      <h2 class="reveal" data-delay="1">Composer ton édition.</h2>
-      <p class="head-lead reveal" data-delay="2">
+  <div class="wrap">
+    <div class="head center">
+      <p class="kicker reveal"><span class="kdot" aria-hidden="true"></span>Composer</p>
+      <h2 class="reveal" data-delay="1">Ton édition, <em>à ta main</em>.</h2>
+      <p class="lead reveal" data-delay="2">
         Choisis tes rubriques et le nombre de pages. Essaie — l’aperçu se met à jour en direct.
       </p>
+    </div>
 
-      <form class="composer-form reveal" data-delay="3" id="composerForm">
+    <div class="composer-grid">
+      <form class="panel reveal" data-delay="2" id="composerForm">
         <fieldset class="rubriques">
           <legend class="flabel">Tes rubriques</legend>
           <div class="rub-grid" id="rubriqueGrid">
@@ -429,27 +350,18 @@
           </div>
         </div>
 
-        <ul class="li-check li-sm">
-          <li>Le nombre de pages peut changer chaque jour</li>
-          <li>Chaque page peut être dédiée à une rubrique</li>
-          <li>Contenu résumé et hiérarchisé par l’IA</li>
-          <li>Mise en page optimisée pour l’impression</li>
-        </ul>
-
         <div class="composer-actions">
-          <button class="btn btn-ink btn-block" type="submit" id="saveBtn">Enregistrer mon édition</button>
+          <button class="btn btn-primary btn-block" type="submit" id="saveBtn">Enregistrer mon édition</button>
           <p class="save-state" id="saveState" role="status" aria-live="polite">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
             Modifications sauvegardées
           </p>
         </div>
       </form>
-    </div>
 
-    <div class="composer-preview reveal" data-delay="2">
-      <div class="preview-card">
+      <div class="preview-wrap reveal" data-delay="3">
         <div class="preview-head">
-          <span>Aperçu de ton Morning Paper</span>
+          <span>Aperçu de ton édition</span>
           <span class="pages-badge" id="pagesBadge">8 pages</span>
         </div>
         <div class="preview-paper">
@@ -462,18 +374,15 @@
         <p class="preview-foot" id="previewFoot">5 rubriques · 8 pages · noir &amp; blanc</p>
       </div>
     </div>
-
   </div>
 </section>
 
-<div class="tear" aria-hidden="true"><svg viewBox="0 0 1200 22" preserveAspectRatio="none"><path d="M0 22V9q25-9 50 0t50 2 50-8 50 4 50 3 50-9 50 5 50 1 50-7 50 3 50 4 50-8 50 4 50 2 50-8 50 5 50 1 50-7 50 4 50 3 50-9 50 5 50 2v13z"/></svg></div>
-
 <!-- ══════════════ COMMENT ══════════════ -->
-<section class="section section-alt" id="comment">
+<section class="section" id="comment">
   <div class="wrap">
     <div class="head center">
-      <p class="kicker reveal"><span class="kdash" aria-hidden="true"></span>Comment ça marche</p>
-      <h2 class="reveal" data-delay="1">Trois minutes à installer.<br />Puis plus rien à faire.</h2>
+      <p class="kicker reveal"><span class="kdot" aria-hidden="true"></span>Comment ça marche</p>
+      <h2 class="reveal" data-delay="1">Trois minutes à installer.<br />Puis <em>plus rien à faire</em>.</h2>
     </div>
 
     <div class="bento">
@@ -522,14 +431,15 @@
 <section class="section" id="tarifs">
   <div class="wrap">
     <div class="head center">
-      <p class="kicker reveal"><span class="kdash" aria-hidden="true"></span>Tarifs</p>
-      <h2 class="reveal" data-delay="1">Une offre. <span class="marker marker-thin">Fondateur</span>.</h2>
-      <p class="head-lead reveal" data-delay="2">Prix bloqué à vie pour les 500 premiers. Sans engagement.</p>
+      <p class="kicker reveal"><span class="kdot" aria-hidden="true"></span>Tarifs</p>
+      <h2 class="reveal" data-delay="1">Une offre. <em>Fondateur</em>.</h2>
+      <p class="lead reveal" data-delay="2">Prix bloqué à vie pour les 500 premiers. Sans engagement.</p>
     </div>
 
     <div class="pricing reveal" data-delay="2">
+      <div class="price-glow" aria-hidden="true"></div>
       <div class="price-main">
-        <span class="chip">Offre fondateur</span>
+        <span class="tag">Offre fondateur</span>
         <div class="price-row"><span class="price">19€</span><span class="per">/ mois</span></div>
         <p class="price-sub">Soit 63 centimes par matin. Moins qu’un café.</p>
 
@@ -541,14 +451,16 @@
           <li>Prix fondateur bloqué à vie</li>
         </ul>
 
-        <a class="btn btn-ink btn-block" href="#final">Créer mon Morning Paper</a>
+        <a class="btn btn-primary btn-block btn-lg" href="#final">Créer mon Morning Paper</a>
         <p class="price-fine">Pause ou résiliation en un clic. Papier et encre à ta charge (≈ 2€/mois).</p>
       </div>
 
       <aside class="price-aside">
-        <div class="stamp" aria-hidden="true"><span class="stamp-n">30</span><span class="stamp-t">jours</span></div>
-        <p class="stamp-legend"><strong>Satisfait ou remboursé.</strong> Essaie un mois complet. Si ton réveil n’a pas changé, on te rembourse, sans question.</p>
-        <div class="aside-div"></div>
+        <div class="guarantee">
+          <span class="g-num">30</span>
+          <span class="g-txt">jours</span>
+        </div>
+        <p class="g-legend"><strong>Satisfait ou remboursé.</strong> Essaie un mois complet. Si ton réveil n’a pas changé, on te rembourse, sans question.</p>
         <blockquote class="quote">« Tout ce que tu ouvres chaque matin. Réuni et trié pour toi. »</blockquote>
       </aside>
     </div>
@@ -556,10 +468,10 @@
 </section>
 
 <!-- ══════════════ FAQ ══════════════ -->
-<section class="section section-alt" id="faq">
+<section class="section" id="faq">
   <div class="wrap wrap-narrow">
     <div class="head center">
-      <p class="kicker reveal"><span class="kdash" aria-hidden="true"></span>FAQ</p>
+      <p class="kicker reveal"><span class="kdot" aria-hidden="true"></span>FAQ</p>
       <h2 class="reveal" data-delay="1">Questions fréquentes.</h2>
     </div>
 
@@ -594,22 +506,22 @@
 
 <!-- ══════════════ FINAL ══════════════ -->
 <section class="final" id="final">
+  <div class="glow glow-c" aria-hidden="true"></div>
   <div class="wrap final-inner">
-    <p class="kicker kicker-light reveal"><span class="kdash" aria-hidden="true"></span>Demain matin</p>
-    <h2 class="reveal" data-delay="1">Ta journée t’attendra<br />sur le papier.</h2>
-    <p class="final-lead reveal" data-delay="2">Rejoins les 500 premiers. Première édition imprimée dès demain, 07:00.</p>
+    <h2 class="reveal">Demain matin, ta journée<br />t’attendra <em>sur le papier</em>.</h2>
+    <p class="lead reveal" data-delay="1">Rejoins les 500 premiers. Première édition imprimée dès demain, 07:00.</p>
 
-    <form class="signup reveal" data-delay="3" id="signupForm" novalidate>
+    <form class="signup reveal" data-delay="2" id="signupForm" novalidate>
       <label class="sr-only" for="email">Ton adresse e-mail</label>
       <input id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="ton@email.com" required />
-      <button class="btn btn-paper" type="submit">
+      <button class="btn btn-primary" type="submit">
         Commencer
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
       </button>
       <p class="signup-msg" id="signupMsg" role="status" aria-live="polite"></p>
     </form>
 
-    <p class="final-fine reveal" data-delay="4">19€/mois · sans engagement · 30 jours satisfait ou remboursé</p>
+    <p class="hero-fine reveal" data-delay="3">19€/mois · sans engagement · 30 jours satisfait ou remboursé</p>
   </div>
 </section>
 
@@ -624,11 +536,11 @@
     <nav class="footer-nav" aria-label="Pied de page">
       <div>
         <h4>Produit</h4>
-        <a href="#concept">Le concept</a><a href="#edition">L’édition</a><a href="#composer">Composer</a><a href="#tarifs">Tarifs</a>
+        <a href="#concept">Le concept</a><a href="#composer">Composer</a><a href="#comment">Comment ça marche</a><a href="#tarifs">Tarifs</a>
       </div>
       <div>
         <h4>Ressources</h4>
-        <a href="#faq">FAQ</a><a href="#comment">Comment ça marche</a><a href="#final">Nous écrire</a>
+        <a href="#faq">FAQ</a><a href="#final">Nous écrire</a>
       </div>
       <div>
         <h4>Légal</h4>
