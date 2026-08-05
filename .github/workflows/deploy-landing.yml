@@ -2,23 +2,21 @@ name: Déployer la landing sur Vercel
 
 # Déploie landing/ en production sur le projet Vercel « morning-paper ».
 #
+# Roue de secours. Le déploiement courant passe par le connecteur Vercel, qui
+# n'a pas besoin de ce workflow. Il existe pour le cas où ce connecteur est
+# indisponible : un runner GitHub, lui, atteint toujours api.vercel.com.
+#
+# Déclenchement manuel uniquement — onglet Actions → « Déployer la landing sur
+# Vercel » → Run workflow. Volontairement pas de trigger « push » : sans le
+# secret ci-dessous, chaque push échouerait pour rien.
+#
 # Prérequis : un seul secret de dépôt, VERCEL_TOKEN
 #   Vercel → Account Settings → Tokens → Create Token (scope : bubummmm's projects)
 #   GitHub → Settings → Secrets and variables → Actions → New repository secret
 #             Name: VERCEL_TOKEN    Secret: <le jeton>
-#
-# Ensuite : ce workflow part à chaque push sur landing/, ou à la demande
-# (onglet Actions → « Déployer la landing sur Vercel » → Run workflow).
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - claude/landing-page-vercel-lc5dlg
-      - main
-    paths:
-      - 'landing/**'
-      - '.github/workflows/deploy-landing.yml'
 
 concurrency:
   group: deploy-landing
