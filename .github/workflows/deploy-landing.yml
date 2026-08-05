@@ -1,0 +1,72 @@
+name: Déployer la landing sur Vercel
+
+# Déploie landing/ en production sur le projet Vercel « morning-paper ».
+#
+# Prérequis : un seul secret de dépôt, VERCEL_TOKEN
+#   Vercel → Account Settings → Tokens → Create Token (scope : bubummmm's projects)
+#   GitHub → Settings → Secrets and variables → Actions → New repository secret
+#             Name: VERCEL_TOKEN    Secret: <le jeton>
+#
+# Ensuite : ce workflow part à chaque push sur landing/, ou à la demande
+# (onglet Actions → « Déployer la landing sur Vercel » → Run workflow).
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - claude/landing-page-vercel-lc5dlg
+      - main
+    paths:
+      - 'landing/**'
+      - '.github/workflows/deploy-landing.yml'
+
+concurrency:
+  group: deploy-landing
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Production
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: ${{ steps.deploy.outputs.url }}
+    env:
+      VERCEL_ORG_ID: team_UiBCzWjmTg1C1V8XgcYUT8Bd
+      VERCEL_PROJECT_ID: prj_vgDq63iVVtkXUpFw8SXqnBOYwhwe
+
+    steps:
+      - name: Récupérer le dépôt
+        uses: actions/checkout@v4
+
+      - name: Vérifier que le jeton est présent
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          if [ -z "$VERCEL_TOKEN" ]; then
+            echo "::error::Le secret VERCEL_TOKEN est absent. Crée-le dans Settings → Secrets and variables → Actions."
+            exit 1
+          fi
+          echo "Jeton présent."
+
+      - name: Installer Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Installer la CLI Vercel
+        run: npm install --global vercel@latest
+
+      - name: Déployer en production
+        id: deploy
+        working-directory: landing
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          set -euo pipefail
+          url=$(vercel deploy --prod --yes --token="$VERCEL_TOKEN")
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+          echo "### Déployé" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Déploiement : $url" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Production : https://morning-paper-one.vercel.app" >> "$GITHUB_STEP_SUMMARY"
