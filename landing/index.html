@@ -69,7 +69,7 @@
   <div class="wrap header-inner">
     <a class="brand" href="#hero" aria-label="Morning Paper, accueil">
       <img class="brand-logo" src="/assets/logo.webp" width="26" height="39" alt="" />
-      <span class="brand-name">Morning&nbsp;Paper</span>
+      <span class="brand-name" translate="no">Morning&nbsp;Paper</span>
     </a>
 
     <nav class="nav" aria-label="Navigation principale">
@@ -141,7 +141,7 @@
         </div>
         <div class="feat">
           <svg class="feat-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 9V3h10v6"/><rect x="3.5" y="9" width="17" height="8" rx="2"/><path d="M7 17h10v4H7z"/></svg>
-          <b>Installé en 3 min</b>
+          <b>Installé en 3&nbsp;min</b>
           <span>Imprimante Wi-Fi</span>
         </div>
         <div class="feat">
@@ -302,7 +302,7 @@
           <span>Mardi 14 mai 2024</span>
         </div>
 
-        <div class="np-mast"><h3>Morning Paper</h3></div>
+        <div class="np-mast"><h3 translate="no">Morning Paper</h3></div>
 
         <div class="np-sub">
           <span>Ta journée en un coup d’œil.</span>
@@ -418,8 +418,8 @@
       <div class="studio reveal" data-delay="1">
         <div class="studio-side">
           <div class="studio-brand">
-            <span>Morning Paper Studio</span>
-            <span class="studio-x" aria-hidden="true">×</span>
+            <span translate="no">Morning Paper Studio</span>
+            <button type="button" class="studio-x" id="studioReset" aria-label="Réinitialiser mes rubriques">×</button>
           </div>
 
           <fieldset class="rub-list" id="rubriqueGrid">
@@ -497,7 +497,7 @@
           </div>
 
           <div class="preview-paper">
-            <div class="pp-mast">Morning Paper</div>
+            <div class="pp-mast" translate="no">Morning Paper</div>
             <div class="pp-date">Mardi 14 mai · 07:00</div>
             <div class="pp-rule"></div>
             <ul class="pp-blocks" id="previewBlocks"></ul>
@@ -536,7 +536,7 @@
           <button class="btn btn-primary btn-block btn-lg" type="submit" id="saveBtn">Enregistrer mon édition</button>
           <p class="save-state" id="saveState" role="status" aria-live="polite">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
-            Modifications sauvegardées
+            <span id="saveStateText">Modifications sauvegardées</span>
           </p>
         </div>
       </div>
@@ -585,8 +585,8 @@
         <span class="b-num">07:00</span>
         <p class="b-stat-lead">Chaque matin, ton édition t’attend déjà — pendant que la machine à café chauffe.</p>
         <ul class="b-facts">
-          <li><strong>3 min</strong><span>d’impression</span></li>
-          <li><strong>8 pages</strong><span>maximum</span></li>
+          <li><strong>3&nbsp;min</strong><span>d’impression</span></li>
+          <li><strong>8&nbsp;pages</strong><span>maximum</span></li>
           <li><strong>0</strong><span>notification</span></li>
         </ul>
       </div>
@@ -680,7 +680,8 @@
     <form class="signup reveal" data-delay="2" id="signupForm" novalidate>
       <label class="sr-only" for="email">Ton adresse e-mail</label>
       <input id="email" name="email" type="email" inputmode="email" autocomplete="email"
-             enterkeyhint="go" aria-describedby="signupMsg" placeholder="ton@email.com" required />
+             enterkeyhint="go" aria-describedby="signupMsg" spellcheck="false" autocapitalize="off"
+             placeholder="ton@email.com…" required />
       <button class="btn btn-primary" type="submit">
         Commencer
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
@@ -697,7 +698,7 @@
 <footer class="site-footer">
   <div class="wrap footer-inner">
     <div class="footer-brand">
-      <span class="brand-name">Morning&nbsp;Paper</span>
+      <span class="brand-name" translate="no">Morning&nbsp;Paper</span>
       <p>Fait à Paris. Imprimé chez toi.</p>
     </div>
     <nav class="footer-nav" aria-label="Pied de page">

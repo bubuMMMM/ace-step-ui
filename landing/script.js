@@ -109,6 +109,8 @@
     var foot = document.getElementById('previewFoot');
     var saveBtn = document.getElementById('saveBtn');
     var saveState = document.getElementById('saveState');
+    var saveStateText = document.getElementById('saveStateText');
+    var studioReset = document.getElementById('studioReset');
 
     /* Nombre de lignes d'aperçu par rubrique */
     var LINES = {
@@ -171,16 +173,33 @@
       badge.textContent = pages + (pages > 1 ? ' pages' : ' page');
       foot.textContent = chosen.length + ' rubrique' + (chosen.length > 1 ? 's' : '') +
         ' · ' + pages + (pages > 1 ? ' pages' : ' page') + ' · noir & blanc';
-      /* L'apparence du bouton désactivé vit dans la feuille de style : une
-         opacity posée ici délavait fond et texte ensemble et faisait tomber
-         le contraste à 2.98:1. */
-      saveBtn.disabled = chosen.length === 0;
+      /* Le bouton n'est plus pré-désactivé. Un bouton grisé n'explique jamais
+         pourquoi il l'est : on laisse envoyer, et on répond par une validation
+         à l'envoi. La règle :disabled reste en CSS pour l'état « envoi en
+         cours » d'un formulaire réellement branché. */
     };
 
+    var clearState = function () { saveState.classList.remove('is-on', 'is-err'); };
+
     grid.addEventListener('change', function () {
-      saveState.classList.remove('is-on');
+      clearState();
       render();
     });
+
+    /* Le « × » du Studio avait l'apparence d'un bouton de fermeture sans en
+       être un — une zone morte au sens strict. Il remet maintenant les
+       rubriques dans leur état de départ : une vraie action, qui justifie
+       l'icône au lieu de la démentir. */
+    if (studioReset) {
+      studioReset.addEventListener('click', function () {
+        var defauts = ['À la une', 'Messages', 'Agenda', 'Météo', 'Actualités', 'Focus du jour'];
+        Array.prototype.forEach.call(grid.querySelectorAll('input[name="rubrique"]'), function (i) {
+          i.checked = defauts.indexOf(i.value) !== -1;
+        });
+        clearState();
+        render();
+      });
+    }
 
     var pageBtns = Array.prototype.slice.call(picker.querySelectorAll('button'));
 
@@ -196,7 +215,7 @@
         b.tabIndex = on ? 0 : -1;
       });
       if (focus) btn.focus();
-      saveState.classList.remove('is-on');
+      clearState();
       render();
     };
 
@@ -228,7 +247,16 @@
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
-      if (checkedRubriques().length === 0) return;
+
+      if (checkedRubriques().length === 0) {
+        saveStateText.textContent = 'Choisis au moins une rubrique avant d’enregistrer.';
+        saveState.classList.add('is-on', 'is-err');
+        grid.querySelector('input[name="rubrique"]').focus();
+        return;
+      }
+
+      saveStateText.textContent = 'Modifications sauvegardées';
+      saveState.classList.remove('is-err');
       saveState.classList.add('is-on');
       saveBtn.textContent = 'Édition enregistrée';
       clearTimeout(saveTimer);
