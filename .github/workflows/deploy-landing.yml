@@ -64,9 +64,46 @@ jobs:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: |
           set -euo pipefail
-          url=$(vercel deploy --prod --yes --token="$VERCEL_TOKEN")
+
+          # La CLI écrit sa progression sur stderr et l'URL sur stdout, mais on
+          # ne parie pas là-dessus : on garde tout, on affiche tout, puis on
+          # extrait la dernière URL vue. Une valeur multi-ligne dans
+          # GITHUB_OUTPUT casserait l'étape.
+          vercel deploy --prod --yes --token="$VERCEL_TOKEN" > deploy.out 2> deploy.err || {
+            echo "::error::Le déploiement Vercel a échoué."
+            cat deploy.err
+            exit 1
+          }
+          cat deploy.err
+          cat deploy.out
+
+          url=$(grep -Eo 'https://[a-zA-Z0-9._-]+\.vercel\.app' deploy.out | tail -1 || true)
+          if [ -z "$url" ]; then
+            echo "::error::Impossible de lire l'URL de déploiement dans la sortie de la CLI."
+            exit 1
+          fi
           echo "url=$url" >> "$GITHUB_OUTPUT"
-          echo "### Déployé" >> "$GITHUB_STEP_SUMMARY"
-          echo "" >> "$GITHUB_STEP_SUMMARY"
-          echo "- Déploiement : $url" >> "$GITHUB_STEP_SUMMARY"
-          echo "- Production : https://morning-paper-one.vercel.app" >> "$GITHUB_STEP_SUMMARY"
+
+          {
+            echo "### Déployé"
+            echo ""
+            echo "- Déploiement : $url"
+            echo "- Production : https://morning-paper-one.vercel.app"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Vérifier que la page répond
+        env:
+          URL: ${{ steps.deploy.outputs.url }}
+        run: |
+          set -euo pipefail
+          fail=0
+          for path in / /styles.css /script.js /assets/journaux.webp /assets/logo.webp; do
+            code=$(curl -s -o /dev/null -w '%{http_code}' --retry 4 --retry-delay 3 "$URL$path")
+            echo "$code  $path"
+            [ "$code" = "200" ] || fail=1
+          done
+          if [ "$fail" = "1" ]; then
+            echo "::error::Au moins une ressource ne renvoie pas 200."
+            exit 1
+          fi
+          echo "Toutes les ressources répondent 200."
