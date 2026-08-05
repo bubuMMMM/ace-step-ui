@@ -37,14 +37,14 @@
   --card:     #F6F3EC;
 
   --ink:      #15140F;
-  --ink-2:    #56524A;
-  /* Assombri depuis #8A8478 : l'ancienne valeur plafonnait à 3.10:1 sur le
-     papier et 2.85:1 sur --paper-2, sous le minimum AA de 4.5:1 — or c'est la
-     couleur de toutes les légendes et mentions de la page. Calibré sur la
-     surface la plus foncée du système (--paper-3, 4.51) pour rester lisible
-     partout : 5.39 sur le papier, 4.96 / 5.83 / 5.97 ailleurs. --ink-2 reste
-     à 6.48, l'écart de hiérarchie tient. */
-  --ink-3:    #625E55;
+  /* APCA : 74.8 pour un palier à 75 sur le corps de texte. Poussé à 80.2,
+     ce qui laisse 12.7 Lc d'écart avec --ink et préserve la hiérarchie. */
+  --ink-2:    #48443E;
+  /* Deux passes : d'abord depuis #8A8478, qui plafonnait à 3.10:1 sur le
+     papier — sous le minimum WCAG de 4.5:1 alors que c'est la couleur de
+     toutes les légendes. Puis, l'audit APCA le donnant à 69.9 pour un palier
+     à 75, jusqu'ici. WCAG ≥5.51 sur les cinq surfaces, APCA 75.2. */
+  --ink-3:    #55514A;
 
   --line:     rgba(21,20,15,.12);
   --line-2:   rgba(21,20,15,.26);
@@ -347,7 +347,7 @@ p{ margin:0; }
 .feat{ display:flex; flex-direction:column; gap:7px; }
 .feat-ico{ width:21px; height:21px; fill:none; stroke:var(--ink); stroke-width:1.4; stroke-linecap:round; stroke-linejoin:round; }
 .feat b{ font-size:.938rem; font-weight:600; letter-spacing:-.02em; }
-.feat span{ font-size:.781rem; color:var(--ink-3); line-height:1.4; }
+.feat span{ font-size:.844rem; color:var(--ink-3); line-height:1.4; }
 
 /* La pile de journaux : l'objet */
 .hero-art{ position:relative; }
@@ -416,7 +416,7 @@ p{ margin:0; }
 .pcard h3{ font-size:clamp(1.3rem,2.4vw,1.8rem); line-height:1.22; margin-bottom:24px; max-width:20ch; }
 
 .p-list{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:15px; }
-.p-list li{ display:flex; align-items:center; gap:13px; font-size:.938rem; color:var(--ink-2); }
+.p-list li{ display:flex; align-items:center; gap:13px; font-size:1rem; color:var(--ink-2); }
 .p-list svg{ width:19px; height:19px; flex:none; fill:none; stroke:var(--ink-2); stroke-width:1.4; stroke-linecap:round; stroke-linejoin:round; }
 
 /* Carte « sans » : le gribouillis et le téléphone débordent volontairement */
@@ -620,7 +620,7 @@ p{ margin:0; }
 .composer-foot{ max-width:960px; margin:clamp(26px,3vw,36px) auto 0; }
 .pages-head{ display:flex; align-items:baseline; justify-content:space-between; gap:14px; flex-wrap:wrap }
 .flabel{ display:block; font-family:var(--serif); font-weight:700; font-size:1.32rem; letter-spacing:-.02em; padding:0 }
-.fhint{ font-size:.875rem; color:var(--ink-3) }
+.fhint{ font-size:.938rem; color:var(--ink-3) }
 /* Contrôle segmenté, une seule rangée.
    C'étaient huit boutons carrés (aspect-ratio:1) : sur mobile, deux rangées
    de ~83px, soit près de 175px de hauteur pour choisir un chiffre. Réunis en
@@ -649,6 +649,15 @@ p{ margin:0; }
 
 .composer-checks{ margin:clamp(24px,3vw,32px) 0 26px }
 .composer-actions{ max-width:420px; margin-inline:auto }
+/* Action secondaire, en texte : elle accompagne le bouton principal sans
+   lui disputer l'attention. Marge verticale calée pour atteindre 44px. */
+.btn-link{
+  display:block; margin:6px auto 0; padding:11px 8px; border:0; background:none;
+  cursor:pointer; font-family:var(--sans); font-size:.875rem; color:var(--ink-2);
+  text-decoration:underline; text-underline-offset:3px; text-decoration-thickness:1px;
+  transition:color .2s;
+}
+.btn-link:hover{ color:var(--ink) }
 .save-state{
   display:flex; align-items:center; justify-content:center; gap:7px; margin-top:14px;
   font-size:.781rem; color:var(--ink-3); opacity:0; transform:translateY(-3px);
@@ -662,7 +671,7 @@ p{ margin:0; }
 
 /* ─── Listes cochées / barrées ──────────── */
 .li-check, .li-x{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:13px; }
-.li-check li, .li-x li{ position:relative; padding-left:27px; font-size:.938rem; color:var(--ink-2); }
+.li-check li, .li-x li{ position:relative; padding-left:27px; font-size:1rem; color:var(--ink-2); }
 .li-check li{ color:var(--ink); }
 .li-check li::before{
   content:""; position:absolute; left:2px; top:.4em; width:13px; height:7px;
@@ -692,7 +701,7 @@ p{ margin:0; }
 
 .step-n{ font-family:var(--serif); font-weight:700; font-size:2rem; line-height:1; display:block; margin-bottom:16px; color:var(--ink-3) }
 .b-cell h3{ margin-bottom:11px }
-.b-cell p{ font-size:.906rem; color:var(--ink-2); flex:1 }
+.b-cell p{ font-size:1rem; color:var(--ink-2); flex:1 }
 .chips{ display:flex; flex-wrap:wrap; gap:7px; margin-top:20px }
 .chips span{ font-size:.75rem; color:var(--ink-2); background:var(--paper-2); border:1px solid var(--line); border-radius:var(--r-pill); padding:5px 11px }
 
@@ -735,9 +744,10 @@ p{ margin:0; }
 .price-row{ display:flex; align-items:baseline; gap:8px; margin:20px 0 5px }
 .price{ font-family:var(--serif); font-weight:700; font-size:clamp(3rem,7vw,4.2rem); letter-spacing:-.04em; line-height:1 }
 .per{ font-size:1rem; color:var(--ink-3) }
-.price-sub{ font-size:.938rem; color:var(--ink-2); margin-bottom:28px }
+.price-sub{ font-size:1rem; color:var(--ink-2); margin-bottom:28px }
 .price-main .li-check{ margin-bottom:30px }
-.price-fine{ margin-top:14px; font-size:.75rem; color:var(--ink-3); text-align:center }
+/* Conditions tarifaires : de l'information matérielle, pas une légende. */
+.price-fine{ margin-top:14px; font-size:.844rem; color:var(--ink-2); text-align:center }
 
 .price-aside{
   position:relative; padding:clamp(28px,4vw,40px); border-left:1px solid var(--line); background:var(--paper-2);
@@ -778,7 +788,10 @@ p{ margin:0; }
 .chev::after{ transform:rotate(90deg) }
 .qa[open] .chev::after{ transform:rotate(0) }
 .qa-body{ padding:0 46px 26px 0 }
-.qa-body p{ font-size:.938rem; color:var(--ink-2); max-width:64ch }
+/* 16px et non 15 : APCA exige Lc 90 entre 14 et 16px, et 75 seulement
+   au-delà. Or le plafond de ce papier est 93.8 — à 15px, aucune encre
+   secondaire ne pouvait passer. Le corps règle ce que la couleur ne peut pas. */
+.qa-body p{ font-size:1rem; color:var(--ink-2); max-width:64ch }
 .qa[open] .qa-body{ animation:blockIn .3s ease both }
 /* La réponse s'ouvrait en fondu mais se refermait d'un coup — l'accordéon
    ferme aussi la question précédente, et cette disparition sèche se voyait.

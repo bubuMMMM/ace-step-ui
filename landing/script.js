@@ -111,6 +111,7 @@
     var saveState = document.getElementById('saveState');
     var saveStateText = document.getElementById('saveStateText');
     var studioReset = document.getElementById('studioReset');
+    var shareBtn = document.getElementById('shareBtn');
 
     /* Nombre de lignes d'aperçu par rubrique */
     var LINES = {
@@ -184,6 +185,7 @@
     grid.addEventListener('change', function () {
       clearState();
       render();
+      ecrireURL();
     });
 
     /* Le « × » du Studio avait l'apparence d'un bouton de fermeture sans en
@@ -198,6 +200,29 @@
         });
         clearState();
         render();
+        ecrireURL();
+      });
+    }
+
+    /* Sans affordance, un état dans l'URL reste une fonctionnalité que
+       personne ne découvre. */
+    if (shareBtn) {
+      shareBtn.addEventListener('click', function () {
+        ecrireURL();
+        var dire = function (texte, erreur) {
+          saveStateText.textContent = texte;
+          saveState.classList.toggle('is-err', !!erreur);
+          saveState.classList.add('is-on');
+        };
+        if (navigator.clipboard && window.isSecureContext) {
+          navigator.clipboard.writeText(location.href).then(function () {
+            dire('Lien copié — il rouvrira ta composition à l’identique.', false);
+          }, function () {
+            dire('Copie refusée par le navigateur, mais l’adresse de la page contient déjà ta composition.', true);
+          });
+        } else {
+          dire('L’adresse de la page contient ta composition — copie-la depuis la barre d’adresse.', true);
+        }
       });
     }
 
@@ -206,7 +231,7 @@
     /* Tabulation glissante : un groupe de boutons radio compte pour UN seul
        arrêt de tabulation, pas huit. Seule l'option retenue reste
        atteignable par Tab ; à l'intérieur, on circule aux flèches. */
-    var selectPage = function (btn, focus) {
+    var majPages = function (btn) {
       pages = Number(btn.dataset.pages);
       pageBtns.forEach(function (b) {
         var on = b === btn;
@@ -214,9 +239,43 @@
         b.setAttribute('aria-checked', String(on));
         b.tabIndex = on ? 0 : -1;
       });
+    };
+
+    /* ─── L'état vit dans l'adresse ───────────────────────
+       Une composition doit pouvoir se partager, se recharger et survivre à un
+       Précédent. On écrit en replaceState : cocher une case ne mérite pas une
+       entrée d'historique, mais l'adresse reste exacte à chaque instant.
+       Rien n'est écrit tant que l'utilisateur n'a rien touché — une page
+       d'arrivée garde une URL propre. */
+    var ecrireURL = function () {
+      var q = new URLSearchParams();
+      q.set('r', checkedRubriques().map(function (i) { return i.dataset.k; }).join('.'));
+      q.set('p', String(pages));
+      history.replaceState(null, '', location.pathname + '?' + q.toString() + location.hash);
+    };
+
+    var lireURL = function () {
+      var q = new URLSearchParams(location.search);
+      var r = q.get('r');
+      if (r !== null) {
+        var voulues = r ? r.split('.') : [];
+        Array.prototype.forEach.call(grid.querySelectorAll('input[name="rubrique"]'), function (i) {
+          i.checked = voulues.indexOf(i.dataset.k) !== -1;
+        });
+      }
+      var n = Number(q.get('p'));
+      if (n >= 1 && n <= 8) {
+        var btn = picker.querySelector('button[data-pages="' + n + '"]');
+        if (btn) majPages(btn);
+      }
+    };
+
+    var selectPage = function (btn, focus) {
+      majPages(btn);
       if (focus) btn.focus();
       clearState();
       render();
+      ecrireURL();
     };
 
     picker.addEventListener('click', function (e) {
@@ -240,7 +299,9 @@
       selectPage(pageBtns[to], true);
     });
 
-    /* État initial de la tabulation, aligné sur le bouton déjà coché. */
+    /* On restaure d'abord ce que l'adresse demande, puis on aligne la
+       tabulation sur le bouton réellement coché. */
+    lireURL();
     pageBtns.forEach(function (b) {
       b.tabIndex = b.classList.contains('is-on') ? 0 : -1;
     });
