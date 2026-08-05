@@ -12,18 +12,34 @@
 <meta property="og:site_name" content="Morning Paper" />
 <meta property="og:title" content="Morning Paper — Ta journée, imprimée avant ton réveil." />
 <meta property="og:description" content="De 1 à 8 pages personnalisées, imprimées chez toi chaque matin à 07:00. Zéro écran. Zéro distraction. 100% toi." />
-<meta property="og:image" content="/assets/journaux.webp" />
-<meta name="twitter:card" content="summary" />
+<meta property="og:url" content="https://morning-paper-one.vercel.app/" />
+<!-- Carte 1200×630 composée pour l'emplacement. L'ancien visuel était le
+     dessin de journaux en 400×557, soit un portrait recadré de force dans un
+     cadre panoramique, en chemin relatif (que la plupart des robots ne savent
+     pas résoudre) et en WebP (inégalement accepté par les aperçus). -->
+<meta property="og:image" content="https://morning-paper-one.vercel.app/assets/og.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Morning Paper — Ta journée, imprimée avant ton réveil." />
+<meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Morning Paper — Ta journée, imprimée avant ton réveil." />
 <meta name="twitter:description" content="De 1 à 8 pages personnalisées, imprimées chez toi chaque matin à 07:00." />
-<meta name="twitter:image" content="/assets/journaux.webp" />
+<meta name="twitter:image" content="https://morning-paper-one.vercel.app/assets/og.jpg" />
 
 <link rel="icon" href="/assets/logo.webp" />
 
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&display=swap" rel="stylesheet" />
+<!-- Polices servies depuis notre domaine : plus de requête vers Google, donc
+     plus de résolution DNS ni de poignée de main TLS en série avant le premier
+     texte. Les deux fichiers du haut de page sont préchargés (crossorigin est
+     exigé pour les polices, même en même origine). L'italique n'apparaît pas
+     avant la ligne de flottaison : il se charge normalement. -->
+<link rel="preload" href="/assets/fonts/playfair-var.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/assets/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="/styles.css" />
+<!-- Marque la page comme scriptée AVANT le premier rendu : les apparitions
+     ne partent en opacity:0 que si le script peut effectivement les révéler. -->
+<script>document.documentElement.classList.add("js")</script>
 </head>
 <body>
 
@@ -156,7 +172,7 @@
     <div class="concept-grid">
       <div class="concept-copy">
         <p class="kicker reveal"><span class="kdot" aria-hidden="true"></span>Le concept</p>
-        <h2 class="reveal" data-delay="1">Tout ce qui compte.<br />Rien que l’essentiel.</h2>
+        <h2 class="reveal" data-delay="1">Tout ce qui compte.<br class="br-md" />Rien que l’essentiel.</h2>
         <p class="lead reveal" data-delay="2">
           Morning Paper lit, résume et hiérarchise ce qui mérite ton attention — puis l’imprime.
           Ta première info de la journée n’est plus un écran.
@@ -219,11 +235,11 @@
           <p class="p-clock">07:02</p>
           <p class="p-day">Mardi 14 mai</p>
           <ul class="p-notifs">
-            <li><span class="p-ico p-ico-wa" aria-hidden="true">W</span><div><strong>WhatsApp</strong><em>4 messages</em></div><time>06:30</time></li>
-            <li><span class="p-ico p-ico-gm" aria-hidden="true">M</span><div><strong>Gmail</strong><em>18 nouveaux messages</em></div><time>06:41</time></li>
-            <li><span class="p-ico p-ico-li" aria-hidden="true">in</span><div><strong>LinkedIn</strong><em>3 notifications</em></div><time>06:21</time></li>
-            <li><span class="p-ico p-ico-ig" aria-hidden="true">◎</span><div><strong>Instagram</strong><em>7 notifications</em></div><time>06:18</time></li>
-            <li><span class="p-ico p-ico-x" aria-hidden="true">X</span><div><strong>X</strong><em>11 notifications</em></div><time>06:17</time></li>
+            <li><span class="p-ico p-ico-wa" aria-hidden="true">W</span><div><strong>WhatsApp</strong><em>4 messages</em></div><time datetime="06:30">06:30</time></li>
+            <li><span class="p-ico p-ico-gm" aria-hidden="true">M</span><div><strong>Gmail</strong><em>18 nouveaux messages</em></div><time datetime="06:41">06:41</time></li>
+            <li><span class="p-ico p-ico-li" aria-hidden="true">in</span><div><strong>LinkedIn</strong><em>3 notifications</em></div><time datetime="06:21">06:21</time></li>
+            <li><span class="p-ico p-ico-ig" aria-hidden="true">◎</span><div><strong>Instagram</strong><em>7 notifications</em></div><time datetime="06:18">06:18</time></li>
+            <li><span class="p-ico p-ico-x" aria-hidden="true">X</span><div><strong>X</strong><em>11 notifications</em></div><time datetime="06:17">06:17</time></li>
           </ul>
           <p class="p-more" aria-hidden="true">•••</p>
         </div>
@@ -232,7 +248,7 @@
       <article class="pcard pcard-good reveal" data-delay="1">
         <div class="pcard-copy">
           <p class="pcard-label">Avec Morning Paper</p>
-          <h3>Tu sais ce qui compte.<br />Tu commences ta journée.</h3>
+          <h3>Tu sais ce qui compte.<br class="br-md" />Tu commences ta journée.</h3>
 
           <ul class="p-list p-list-ok">
             <li>
@@ -272,7 +288,7 @@
   <div class="wrap">
     <div class="head center">
       <p class="kicker reveal"><span class="kdot" aria-hidden="true"></span>L’édition du jour</p>
-      <h2 class="reveal" data-delay="1">Voilà à quoi ressemble<br />ton <em>14 mai</em>.</h2>
+      <h2 class="reveal" data-delay="1">Voilà à quoi ressemble<br class="br-md" />ton <em>14 mai</em>.</h2>
       <p class="lead reveal" data-delay="2">Une vraie une, composée pendant la nuit. Mise en page pensée pour l’encre, pas pour le scroll.</p>
     </div>
 
@@ -365,10 +381,10 @@
           <div class="np-msgs">
             <p class="np-kick np-kick-row">Messages <span>Voir tout (8)</span></p>
             <ul class="np-msg-list">
-              <li><span class="av av-1">T</span><div><strong>Thomas</strong><em>On se voit à 11h30 ?</em></div><time>06:58</time></li>
-              <li><span class="av av-2">C</span><div><strong>Claire</strong><em>Le deck est prêt ✨</em></div><time>06:41</time></li>
-              <li><span class="av av-3">M</span><div><strong>Marc</strong><em>Envoie-moi ton avis</em></div><time>06:33</time></li>
-              <li><span class="av av-4">in</span><div><strong>LinkedIn</strong><em>8 nouvelles notifications</em></div><time>06:21</time></li>
+              <li><span class="av av-1">T</span><div><strong>Thomas</strong><em>On se voit à 11h30 ?</em></div><time datetime="06:58">06:58</time></li>
+              <li><span class="av av-2">C</span><div><strong>Claire</strong><em>Le deck est prêt ✨</em></div><time datetime="06:41">06:41</time></li>
+              <li><span class="av av-3">M</span><div><strong>Marc</strong><em>Envoie-moi ton avis</em></div><time datetime="06:33">06:33</time></li>
+              <li><span class="av av-4">in</span><div><strong>LinkedIn</strong><em>8 nouvelles notifications</em></div><time datetime="06:21">06:21</time></li>
             </ul>
           </div>
 
@@ -485,7 +501,7 @@
             <p class="pp-empty" id="previewEmpty" hidden>Choisis au moins une rubrique pour composer ton édition.</p>
           </div>
 
-          <p class="preview-foot" id="previewFoot">5 rubriques · 8 pages · noir &amp; blanc</p>
+          <p class="preview-foot" id="previewFoot">6 rubriques · 8 pages · noir &amp; blanc</p>
         </div>
       </div>
 
@@ -526,11 +542,11 @@
 </section>
 
 <!-- ══════════════ COMMENT ══════════════ -->
-<section class="section" id="comment">
+<section class="section section-alt" id="comment">
   <div class="wrap">
     <div class="head center">
       <p class="kicker reveal"><span class="kdot" aria-hidden="true"></span>Comment ça marche</p>
-      <h2 class="reveal" data-delay="1">Trois minutes à installer.<br />Puis <em>plus rien à faire</em>.</h2>
+      <h2 class="reveal" data-delay="1">Trois minutes à installer.<br class="br-md" />Puis <em>plus rien à faire</em>.</h2>
     </div>
 
     <div class="bento">
@@ -539,7 +555,7 @@
              alt="Une imprimante qui sort une pile d’éditions Morning Paper, dessinée au fusain." />
         <figcaption>
           <span class="b-live"><i aria-hidden="true"></i>07:02</span>
-          <span class="b-cap">Ton édition sort toute seule,<br />avant même que tu te lèves.</span>
+          <span class="b-cap">Ton édition sort toute seule,<br class="br-md" />avant même que tu te lèves.</span>
         </figcaption>
       </figure>
 
@@ -615,7 +631,7 @@
 </section>
 
 <!-- ══════════════ FAQ ══════════════ -->
-<section class="section" id="faq">
+<section class="section section-alt" id="faq">
   <div class="wrap wrap-narrow">
     <div class="head center">
       <p class="kicker reveal"><span class="kdot" aria-hidden="true"></span>FAQ</p>
@@ -655,7 +671,7 @@
 <section class="final" id="final">
   <div class="glow glow-c" aria-hidden="true"></div>
   <div class="wrap final-inner">
-    <h2 class="reveal">Demain matin, ta journée<br />t’attendra <em>sur le papier</em>.</h2>
+    <h2 class="reveal">Demain matin, ta journée<br class="br-md" />t’attendra <em>sur le papier</em>.</h2>
     <p class="lead reveal" data-delay="1">Rejoins les 500 premiers. Première édition imprimée dès demain, 07:00.</p>
 
     <form class="signup reveal" data-delay="2" id="signupForm" novalidate>
@@ -696,7 +712,7 @@
     </nav>
   </div>
   <div class="wrap footer-bottom">
-    <span>© 2024 Morning Paper</span>
+    <span>© 2026 Morning Paper</span>
     <span>Déconnecte le bruit. Reconnecte-toi à l’essentiel.</span>
   </div>
 </footer>

@@ -11,6 +11,14 @@
   var bar = document.getElementById('scrollBar');
   var ticking = false;
 
+  /* Section courante. Sur une page de cette longueur, la navigation ne disait
+     jamais où l'on se trouve. On se greffe sur la boucle de défilement
+     existante plutôt que d'ajouter un second écouteur. */
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll('.nav a[href^="#"]'));
+  var sections = navLinks.map(function (a) {
+    return document.querySelector(a.getAttribute('href'));
+  });
+
   var paint = function () {
     var y = window.scrollY;
     header.classList.toggle('is-stuck', y > 8);
@@ -19,6 +27,16 @@
       var max = document.documentElement.scrollHeight - window.innerHeight;
       bar.style.transform = 'scaleX(' + (max > 0 ? Math.min(y / max, 1) : 0) + ')';
     }
+
+    /* La dernière section dont le haut est passé sous l'en-tête. */
+    var current = -1;
+    sections.forEach(function (el, i) {
+      if (el && el.getBoundingClientRect().top <= 100) current = i;
+    });
+    navLinks.forEach(function (a, i) {
+      if (i === current) a.setAttribute('aria-current', 'true');
+      else a.removeAttribute('aria-current');
+    });
 
     ticking = false;
   };
@@ -162,29 +180,48 @@
       render();
     });
 
-    picker.addEventListener('click', function (e) {
-      var btn = e.target.closest('button[data-pages]');
-      if (!btn) return;
+    var pageBtns = Array.prototype.slice.call(picker.querySelectorAll('button'));
+
+    /* Tabulation glissante : un groupe de boutons radio compte pour UN seul
+       arrêt de tabulation, pas huit. Seule l'option retenue reste
+       atteignable par Tab ; à l'intérieur, on circule aux flèches. */
+    var selectPage = function (btn, focus) {
       pages = Number(btn.dataset.pages);
-      Array.prototype.forEach.call(picker.querySelectorAll('button'), function (b) {
+      pageBtns.forEach(function (b) {
         var on = b === btn;
         b.classList.toggle('is-on', on);
         b.setAttribute('aria-checked', String(on));
+        b.tabIndex = on ? 0 : -1;
       });
+      if (focus) btn.focus();
       saveState.classList.remove('is-on');
       render();
+    };
+
+    picker.addEventListener('click', function (e) {
+      var btn = e.target.closest('button[data-pages]');
+      if (btn) selectPage(btn, false);
     });
 
-    /* Flèches gauche/droite dans le sélecteur de pages */
     picker.addEventListener('keydown', function (e) {
-      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
-      var buttons = Array.prototype.slice.call(picker.querySelectorAll('button'));
-      var i = buttons.indexOf(document.activeElement);
+      var i = pageBtns.indexOf(document.activeElement);
       if (i === -1) return;
+      var last = pageBtns.length - 1;
+      var to;
+
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') to = i === last ? 0 : i + 1;
+      else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') to = i === 0 ? last : i - 1;
+      else if (e.key === 'Home') to = 0;
+      else if (e.key === 'End') to = last;
+      else return;
+
       e.preventDefault();
-      var next = buttons[(i + (e.key === 'ArrowRight' ? 1 : buttons.length - 1)) % buttons.length];
-      next.focus();
-      next.click();
+      selectPage(pageBtns[to], true);
+    });
+
+    /* État initial de la tabulation, aligné sur le bouton déjà coché. */
+    pageBtns.forEach(function (b) {
+      b.tabIndex = b.classList.contains('is-on') ? 0 : -1;
     });
 
     form.addEventListener('submit', function (e) {
