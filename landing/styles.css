@@ -232,6 +232,19 @@ p{ margin:0; }
 .btn-ghost{ background:var(--card); color:var(--ink); border-color:var(--line-2); }
 .btn-ghost:hover{ border-color:var(--ink); box-shadow:var(--sh-1); }
 
+/* État désactivé.
+   Il était posé en style inline par le script, sous forme d'opacity:.45 sur
+   le bouton entier — ce qui délave le fond ET le texte ensemble : le rapport
+   de contraste tombait de 16.78:1 à 2.98:1, très en dessous du seuil. Un
+   couple de couleurs franches vaut mieux qu'une transparence : 4.51:1, et
+   l'état vit dans la feuille de style plutôt que dans le JavaScript. */
+.btn:disabled{
+  cursor:not-allowed; background:var(--paper-3); color:var(--ink-3);
+  border-color:var(--line-2); box-shadow:none;
+}
+.btn:disabled:hover{ transform:none; box-shadow:none; }
+.btn:disabled svg{ opacity:.7 }
+
 /* ─── Header ────────────────────────────── */
 .site-header{
   position:sticky; top:0; z-index:100; background:rgba(239,234,224,.74);
@@ -241,7 +254,7 @@ p{ margin:0; }
 .site-header.is-stuck{ border-bottom-color:var(--line); background:rgba(239,234,224,.93); }
 .header-inner{ display:flex; align-items:center; justify-content:space-between; gap:24px; height:68px; }
 
-.brand{ display:flex; align-items:center; gap:10px; }
+.brand{ display:flex; align-items:center; gap:10px; padding-block:4px; }  /* 36 → 44px */
 .brand-logo{ width:24px; height:auto; flex:none; mix-blend-mode:multiply; }
 .brand-name{ font-family:var(--serif); font-weight:700; font-size:1.12rem; letter-spacing:-.02em; }
 
@@ -259,8 +272,9 @@ p{ margin:0; }
 .link-quiet{ font-size:.875rem; color:var(--ink-2); transition:color .2s; }
 .link-quiet:hover{ color:var(--ink); }
 
+/* 38px mesurés : sous le seuil de confort tactile. */
 .burger{
-  display:none; width:38px; height:38px; border:1px solid var(--line-2); border-radius:var(--r-sm);
+  display:none; width:44px; height:44px; border:1px solid var(--line-2); border-radius:var(--r-sm);
   background:var(--card); cursor:pointer; padding:0;
   flex-direction:column; align-items:center; justify-content:center; gap:5px;
 }
@@ -287,7 +301,7 @@ p{ margin:0; }
 
 .pill{
   display:inline-flex; align-items:center; gap:9px; margin-bottom:26px;
-  padding:7px 15px; border-radius:var(--r-pill);
+  padding:11px 17px; border-radius:var(--r-pill);  /* 37 → 44px */
   border:1px solid var(--line-2); background:var(--card);
   font-size:.813rem; color:var(--ink-2); box-shadow:var(--sh-1);
   transition:border-color .2s, color .2s, box-shadow .2s;
@@ -523,7 +537,7 @@ p{ margin:0; }
 .rub-list{ display:flex; flex-direction:column; border:0; margin:0; padding:0; min-width:0; }
 .rub{
   display:flex; align-items:center; gap:11px; cursor:pointer; user-select:none;
-  padding:10px 20px; border-left:2px solid transparent;
+  padding:11px 20px; border-left:2px solid transparent;  /* 42 → 44px */
   transition:background .2s, border-color .2s;
 }
 .rub:hover{ background:rgba(242,239,231,.05) }
@@ -789,6 +803,26 @@ p{ margin:0; }
   transition-delay:calc(var(--d,0) * 90ms);
 }
 
+/* Les blocs qui portent une illustration en multiply n'ont droit ni au fondu
+   ni au glissement : opacité comme transform créent un contexte d'empilement,
+   et l'image perd alors le papier à multiplier — un rectangle blanc apparaît
+   pendant les 0,8s de l'apparition, à chaque défilement.
+   Mesuré au pixel : un transform sur le PARENT casse le fondu (251,251,251),
+   un transform sur l'IMAGE elle-même ne le casse pas (232,221,208). C'est
+   pourquoi l'animation « lift » du hero, portée par l'image, est sans danger,
+   et pourquoi l'entrée de la tasse se joue elle aussi sur l'image.
+   Quatrième variante du même piège, après le z-index et le filter : trois
+   propriétés sans rapport apparent, un seul mécanisme. */
+.js .hero-art.reveal,
+.js .concept-art.reveal,
+.js .b-photo.reveal{ opacity:1; transform:none }
+
+/* La tasse n'a pas d'effet de survol : son entrée peut vivre sur l'image.
+   Le visuel du bento en a un (zoom au survol) — on le laisse statique plutôt
+   que d'entrer en conflit avec lui. */
+.js .concept-art.reveal img{ transform:translateY(20px); transition:transform .8s var(--ease) }
+.js .concept-art.reveal.is-in img{ transform:none }
+
 /* ─── Responsive ────────────────────────── */
 @media (max-width:1080px){
   .hero-inner{ gap:36px }
@@ -875,8 +909,54 @@ p{ margin:0; }
   .mark::after{ clip-path:none }
 }
 
+/* Mode contrastes forcés (contraste élevé de Windows, notamment).
+   Le système remplace alors toutes les couleurs par sa propre palette. Cette
+   page repose entièrement sur des teintes personnalisées : sans ces règles,
+   le surligneur, les cases cochées et la pastille de pages perdent leur
+   seul signe distinctif et deviennent indiscernables de leur voisinage. */
+@media (forced-colors: active){
+  .mark::after{ display:none }              /* le multiply ne survit pas */
+  .mark{ text-decoration:underline 3px }    /* on marque autrement */
+  .rub input:checked ~ .box{ background:Highlight; border-color:Highlight }
+  .pages-picker button.is-on,
+  .pages-badge, .tag{ background:Highlight; color:HighlightText; forced-color-adjust:none }
+  .b-cell, .pcard, .edition, .studio, .pricing, .preview-paper{ border:1px solid CanvasText }
+  .grain, .glow{ display:none }
+  :focus-visible{ outline:3px solid Highlight; outline-offset:2px }
+}
+
+/* ─── Impression ─────────────────────────────
+   Une page qui vend du papier imprimé mérite de s'imprimer proprement. Il n'y
+   avait ici que trois masquages : les réponses de la FAQ sortaient fermées,
+   les cartes se coupaient au milieu d'un saut de page, et les liens
+   perdaient leur destination. */
 @media print{
-  .site-header, .final, .site-footer, .scroll-bar, .grain, .glow{ display:none }
-  body{ background:#fff }
+  @page{ margin:16mm }
+  .site-header, .final, .site-footer, .scroll-bar, .grain, .glow,
+  .mobile-menu, .skip-link, .composer-actions, .pages-picker{ display:none }
+
+  body{ background:#fff; color:#000; font-size:11pt }
+  main{ background:#fff }
   .js .reveal{ opacity:1; transform:none }
+  .section{ padding:14mm 0 }
+  .wrap{ max-width:none; padding-inline:0 }
+
+  /* Les illustrations sont en multiply sur du papier crème : sur du blanc
+     elles restent justes, mais on coupe les ombres portées qui noircissent
+     inutilement la page. */
+  .b-cell, .pcard, .edition, .studio, .pricing, .preview-paper, .art-note{ box-shadow:none }
+
+  /* Rien ne se coupe au milieu. */
+  .pcard, .b-cell, .edition, .qa, .price-main, .price-aside{
+    break-inside:avoid; page-break-inside:avoid;
+  }
+  h1, h2, h3{ break-after:avoid; page-break-after:avoid }
+
+  /* Toutes les réponses de la FAQ, ouvertes ou non. */
+  .qa .qa-body{ display:block !important; animation:none }
+  .qa .chev{ display:none }
+
+  /* Un lien imprimé sans son adresse ne mène nulle part — sauf les ancres
+     internes, dont l'adresse n'apprendrait rien sur papier. */
+  a[href^="http"]::after{ content:" (" attr(href) ")"; font-size:9pt; color:#444 }
 }

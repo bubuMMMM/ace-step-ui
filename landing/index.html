@@ -27,7 +27,10 @@
 <meta name="twitter:description" content="De 1 à 8 pages personnalisées, imprimées chez toi chaque matin à 07:00." />
 <meta name="twitter:image" content="https://morning-paper-one.vercel.app/assets/og.jpg" />
 
+<link rel="canonical" href="https://morning-paper-one.vercel.app/" />
 <link rel="icon" href="/assets/logo.webp" />
+<!-- Safari ignore le favicon WebP pour l'ajout à l'écran d'accueil. -->
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
 
 <!-- Polices servies depuis notre domaine : plus de requête vers Google, donc
      plus de résolution DNS ni de poignée de main TLS en série avant le premier
@@ -512,14 +515,14 @@
         </div>
 
         <div class="pages-picker" id="pagesPicker" role="radiogroup" aria-label="Nombre de pages">
-          <button type="button" role="radio" aria-checked="false" data-pages="1">1</button>
-          <button type="button" role="radio" aria-checked="false" data-pages="2">2</button>
-          <button type="button" role="radio" aria-checked="false" data-pages="3">3</button>
-          <button type="button" role="radio" aria-checked="false" data-pages="4">4</button>
-          <button type="button" role="radio" aria-checked="false" data-pages="5">5</button>
-          <button type="button" role="radio" aria-checked="false" data-pages="6">6</button>
-          <button type="button" role="radio" aria-checked="false" data-pages="7">7</button>
-          <button type="button" role="radio" aria-checked="true" class="is-on" data-pages="8">8</button>
+          <button type="button" role="radio" aria-checked="false" data-pages="1" aria-label="1 page">1</button>
+          <button type="button" role="radio" aria-checked="false" data-pages="2" aria-label="2 pages">2</button>
+          <button type="button" role="radio" aria-checked="false" data-pages="3" aria-label="3 pages">3</button>
+          <button type="button" role="radio" aria-checked="false" data-pages="4" aria-label="4 pages">4</button>
+          <button type="button" role="radio" aria-checked="false" data-pages="5" aria-label="5 pages">5</button>
+          <button type="button" role="radio" aria-checked="false" data-pages="6" aria-label="6 pages">6</button>
+          <button type="button" role="radio" aria-checked="false" data-pages="7" aria-label="7 pages">7</button>
+          <button type="button" role="radio" aria-checked="true" class="is-on" data-pages="8" aria-label="8 pages">8</button>
         </div>
 
         <ul class="li-check composer-checks">
@@ -676,7 +679,8 @@
 
     <form class="signup reveal" data-delay="2" id="signupForm" novalidate>
       <label class="sr-only" for="email">Ton adresse e-mail</label>
-      <input id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="ton@email.com" required />
+      <input id="email" name="email" type="email" inputmode="email" autocomplete="email"
+             enterkeyhint="go" aria-describedby="signupMsg" placeholder="ton@email.com" required />
       <button class="btn btn-primary" type="submit">
         Commencer
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg>

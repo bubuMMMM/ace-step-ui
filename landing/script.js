@@ -171,8 +171,10 @@
       badge.textContent = pages + (pages > 1 ? ' pages' : ' page');
       foot.textContent = chosen.length + ' rubrique' + (chosen.length > 1 ? 's' : '') +
         ' · ' + pages + (pages > 1 ? ' pages' : ' page') + ' · noir & blanc';
+      /* L'apparence du bouton désactivé vit dans la feuille de style : une
+         opacity posée ici délavait fond et texte ensemble et faisait tomber
+         le contraste à 2.98:1. */
       saveBtn.disabled = chosen.length === 0;
-      saveBtn.style.opacity = chosen.length === 0 ? '.45' : '';
     };
 
     grid.addEventListener('change', function () {
@@ -265,6 +267,9 @@
 
       msg.classList.toggle('is-err', !valid);
       email.classList.toggle('is-err', !valid);
+      /* La bordure rouge est le seul signal d'erreur pour qui voit la page ;
+         aria-invalid en est l'équivalent pour qui l'écoute. */
+      email.setAttribute('aria-invalid', String(!valid));
 
       if (!valid) {
         msg.textContent = 'Il nous faut une adresse e-mail valide pour t’envoyer ton édition.';
@@ -279,6 +284,7 @@
     email.addEventListener('input', function () {
       if (!email.classList.contains('is-err')) return;
       email.classList.remove('is-err');
+      email.removeAttribute('aria-invalid');
       msg.classList.remove('is-err');
       msg.textContent = '';
     });
