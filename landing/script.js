@@ -9,7 +9,6 @@
   /* ─── Header collé + barre de progression ───────────── */
   var header = document.getElementById('siteHeader');
   var bar = document.getElementById('scrollBar');
-  var cup = document.querySelector('.front-cup');
   var ticking = false;
 
   var paint = function () {
@@ -21,10 +20,6 @@
       bar.style.transform = 'scaleX(' + (max > 0 ? Math.min(y / max, 1) : 0) + ')';
     }
 
-    /* Léger parallaxe sur la tasse */
-    if (cup && !reduceMotion) {
-      cup.style.setProperty('--shift', (y * -0.045).toFixed(1) + 'px');
-    }
     ticking = false;
   };
 
@@ -146,7 +141,7 @@
 
       if (chosen.length > 6) {
         var more = document.createElement('li');
-        more.style.borderLeftColor = 'var(--rule)';
+        more.style.borderLeftColor = 'var(--line-2)';
         var moreLabel = document.createElement('span');
         moreLabel.className = 'pb-name';
         moreLabel.textContent = '+ ' + (chosen.length - 6) + ' rubrique' + (chosen.length - 6 > 1 ? 's' : '') + ' en page 2';
