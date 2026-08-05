@@ -578,14 +578,31 @@ p{ margin:0; }
 .pages-head{ display:flex; align-items:baseline; justify-content:space-between; gap:14px; flex-wrap:wrap }
 .flabel{ display:block; font-family:var(--serif); font-weight:700; font-size:1.32rem; letter-spacing:-.02em; padding:0 }
 .fhint{ font-size:.875rem; color:var(--ink-3) }
-.pages-picker{ display:grid; grid-template-columns:repeat(8,1fr); gap:8px; margin-top:16px }
-.pages-picker button{
-  aspect-ratio:1; border:1px solid var(--line-2); border-radius:var(--r-sm); background:var(--card);
-  cursor:pointer; color:var(--ink-2); font-size:1rem; font-variant-numeric:tabular-nums;
-  transition:background .2s, border-color .2s, transform .2s var(--ease), color .2s;
+/* Contrôle segmenté, une seule rangée.
+   C'étaient huit boutons carrés (aspect-ratio:1) : sur mobile, deux rangées
+   de ~83px, soit près de 175px de hauteur pour choisir un chiffre. Réunis en
+   une barre unique, ils tiennent en 44px et se lisent comme un seul réglage
+   plutôt que huit boutons indépendants — sans rien perdre : chaque valeur
+   reste atteignable en un geste, ce qu'un pas-à-pas « − / + » ne permet pas. */
+.pages-picker{
+  display:grid; grid-template-columns:repeat(8,minmax(0,1fr)); margin-top:14px;
+  max-width:420px; background:var(--card);
+  border:1px solid var(--line-2); border-radius:var(--r-md);
 }
-.pages-picker button:hover{ border-color:var(--ink); transform:translateY(-1px) }
-.pages-picker button.is-on{ background:var(--mark); border-color:var(--mark); color:#15140F; font-weight:700 }
+.pages-picker button{
+  height:44px; padding:0; border:0; border-left:1px solid var(--line);
+  background:transparent; cursor:pointer; color:var(--ink-2);
+  font-size:.938rem; font-variant-numeric:tabular-nums;
+  transition:background .2s, color .2s;
+}
+.pages-picker button:first-child{ border-left:0 }
+/* Rayons portés par les extrémités plutôt qu'un overflow:hidden sur le
+   parent, qui rognerait l'anneau de focus. */
+.pages-picker button:first-child{ border-radius:11px 0 0 11px }
+.pages-picker button:last-child{ border-radius:0 11px 11px 0 }
+.pages-picker button:focus-visible{ position:relative; z-index:1 }
+.pages-picker button:hover{ background:rgba(21,20,15,.05); color:var(--ink) }
+.pages-picker button.is-on{ background:var(--mark); color:#15140F; font-weight:700 }
 
 .composer-checks{ margin:clamp(24px,3vw,32px) 0 26px }
 .composer-actions{ max-width:420px; margin-inline:auto }
@@ -819,7 +836,6 @@ p{ margin:0; }
   .hero-feats{ grid-template-columns:1fr; gap:18px; text-align:left }
   .feat{ align-items:flex-start; text-align:left }
   .rub-list{ grid-template-columns:1fr }
-  .pages-picker{ grid-template-columns:repeat(4,1fr) }
   .composer-checks.li-check{ grid-template-columns:1fr }
   .footer-nav{ grid-template-columns:1fr 1fr }
   .bento{ grid-template-columns:1fr; grid-template-areas:"photo" "wide" "two" "three" "stat" }
@@ -846,8 +862,7 @@ p{ margin:0; }
    réservés aux pointeurs qui savent survoler. */
 @media (hover:none){
   .btn:hover, .btn:hover svg,
-  .b-cell:hover, .b-photo:hover img,
-  .pages-picker button:hover{ transform:none }
+  .b-cell:hover, .b-photo:hover img{ transform:none }
   .b-cell:hover{ box-shadow:var(--sh-1); border-color:var(--line) }
 }
 
