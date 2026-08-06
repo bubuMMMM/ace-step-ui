@@ -329,6 +329,91 @@
     render();
   }
 
+  /* ─── L'édition : feuilletage des pages A4 ────────────
+     Le défilement à aimantation fait le gros du travail — glissement
+     tactile, molette horizontale, et l'aimantation elle-même viennent du
+     navigateur. Ce script ne fait que deux choses : dire où l'on en est, et
+     offrir des boutons à qui préfère cliquer plutôt que glisser. */
+  var stage = document.getElementById('a4Stage');
+
+  if (stage) {
+    var feuilles = Array.prototype.slice.call(stage.querySelectorAll('.a4-wrap'));
+    var titres = ['La une', 'Messages & Agenda', 'Actualités', 'Marchés & Veille'];
+    var aPrev = document.getElementById('a4Prev');
+    var aNext = document.getElementById('a4Next');
+    var aDots = document.getElementById('a4Dots');
+    var aCount = document.getElementById('a4Count');
+    var courante = 0;
+    var tickingA4 = false;
+
+    var aller = function (i) {
+      i = Math.max(0, Math.min(feuilles.length - 1, i));
+      feuilles[i].scrollIntoView({
+        behavior: reduceMotion ? 'auto' : 'smooth',
+        inline: 'center',
+        block: 'nearest'   /* sans quoi la page entière défilerait aussi */
+      });
+    };
+
+    var puces = feuilles.map(function (_, i) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'a4-dot';
+      b.setAttribute('aria-label', 'Page ' + (i + 1) + ' sur ' + feuilles.length + ' · ' + titres[i]);
+      b.addEventListener('click', function () { aller(i); });
+      aDots.appendChild(b);
+      return b;
+    });
+
+    var majUI = function () {
+      puces.forEach(function (d, i) {
+        if (i === courante) d.setAttribute('aria-current', 'true');
+        else d.removeAttribute('aria-current');
+      });
+      aPrev.disabled = courante === 0;
+      aNext.disabled = courante === feuilles.length - 1;
+      aCount.textContent = 'Page ' + (courante + 1) + ' sur ' + feuilles.length + ' · ' + titres[courante];
+    };
+
+    /* La page courante est celle dont le centre est le plus proche du centre
+       du cadre. Plus fiable qu'un seuil de visibilité : à cette largeur, deux
+       feuilles peuvent être visibles à plus de moitié en même temps. */
+    var mesurer = function () {
+      var r = stage.getBoundingClientRect();
+      var centre = r.left + r.width / 2;
+      var best = 0, bestD = Infinity;
+      feuilles.forEach(function (f, i) {
+        var fr = f.getBoundingClientRect();
+        var d = Math.abs(fr.left + fr.width / 2 - centre);
+        if (d < bestD) { bestD = d; best = i; }
+      });
+      if (best !== courante) { courante = best; majUI(); }
+      tickingA4 = false;
+    };
+
+    stage.addEventListener('scroll', function () {
+      if (tickingA4) return;
+      tickingA4 = true;
+      window.requestAnimationFrame(mesurer);
+    }, { passive: true });
+
+    aPrev.addEventListener('click', function () { aller(courante - 1); });
+    aNext.addEventListener('click', function () { aller(courante + 1); });
+
+    stage.addEventListener('keydown', function (e) {
+      var to;
+      if (e.key === 'ArrowRight') to = courante + 1;
+      else if (e.key === 'ArrowLeft') to = courante - 1;
+      else if (e.key === 'Home') to = 0;
+      else if (e.key === 'End') to = feuilles.length - 1;
+      else return;
+      e.preventDefault();
+      aller(to);
+    });
+
+    majUI();
+  }
+
   /* ─── FAQ : une seule réponse ouverte ───────────────── */
   var accordion = document.getElementById('accordion');
   if (accordion) {

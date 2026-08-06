@@ -163,7 +163,7 @@ p, .lead, li{ text-wrap:pretty; }
 p{ margin:0; }
 
 /* Chiffres à chasse fixe partout où ils se comparent ou s'alignent. */
-.price, .g-num, .p-clock, .np-temp, .b-num, .step-n, .np-time{ font-variant-numeric:tabular-nums; }
+.price, .g-num, .p-clock, .b-num, .step-n{ font-variant-numeric:tabular-nums; }
 
 /* ─── Le surligneur ─────────────────────────
    Un trait de marqueur passé sur le mot, pas derrière : le multiply
@@ -457,87 +457,203 @@ p{ margin:0; }
 .p-smiley{ width:clamp(110px,14vw,150px); flex:none; }
 .p-smiley svg{ width:100%; height:auto; fill:none; stroke:var(--mark); stroke-width:3.4; stroke-linecap:round; stroke-linejoin:round; }
 
-/* ─── L'édition (papier dans le papier) ── */
-.showcase{ position:relative; max-width:1000px; margin-inline:auto; }
-.edition{
-  position:relative; background:#F8F6EF; color:var(--ink);
-  border:1px solid var(--line-2); border-radius:var(--r-lg);
-  padding:clamp(20px,3vw,40px); box-shadow:var(--sh-3);
+/* ─── L'édition : quatre pages A4 qu'on feuillette ───────────
+   La page est un vrai A4 (210 × 297, soit 1:1,4142) et non un bloc à la
+   hauteur de son contenu. Sa typographie est exprimée en unités de
+   conteneur : une seule déclaration en cqw fixe le corps de la page, tout
+   le reste suit en em. La feuille se met donc à l'échelle exactement comme
+   un aperçu avant impression, sans point de rupture à écrire.
+   Le feuilletage passe par un défilement à aimantation : le glissement
+   tactile et le clavier viennent du navigateur, pas de nous. */
+.showcase{ position:relative; max-width:1100px; margin-inline:auto; }
+.a4-viewer{ --pw:clamp(260px, 78vw, 470px); }
+
+.a4-stage{
+  display:flex; gap:clamp(14px,2vw,28px);
+  overflow-x:auto; overscroll-behavior-x:contain;
+  scroll-snap-type:x mandatory; scroll-behavior:smooth;
+  padding:8px max(12px, calc((100% - var(--pw)) / 2)) 20px;
+  scrollbar-width:none; -ms-overflow-style:none;
 }
-.np-meta{
-  display:flex; justify-content:space-between; gap:16px;
-  font-family:var(--sans); font-size:.625rem; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-3);
-  padding-bottom:11px; border-bottom:1.5px solid var(--ink);
+.a4-stage::-webkit-scrollbar{ display:none }
+.a4-stage:focus-visible{ outline:2px solid var(--ink); outline-offset:4px; box-shadow:0 0 0 2px var(--mark) }
+
+.a4-wrap{ flex:0 0 auto; width:var(--pw); container-type:inline-size; scroll-snap-align:center }
+
+.a4{
+  aspect-ratio:210/297; overflow:hidden;
+  background:#FCFBF7; color:var(--ink);
+  border:1px solid rgba(21,20,15,.16); border-radius:2px;
+  box-shadow:0 1px 2px rgba(21,20,15,.10), 0 18px 40px -18px rgba(21,20,15,.34);
+  padding:5.2% 5.6%;
+  display:flex; flex-direction:column;
+  /* Le corps de la feuille. Tout l'intérieur est en em, relatif à celui-ci. */
+  font-size:clamp(6.5px, 2.15cqw, 11px);
+  line-height:1.42;
+  transition:box-shadow .3s var(--ease);
 }
-.np-mast{ text-align:center; padding:clamp(12px,1.8vw,20px) 0 clamp(8px,1vw,12px); }
-.np-mast h3{
-  font-family:var(--serif); font-weight:900; text-transform:uppercase;
-  font-size:clamp(1.9rem,6.6vw,4.2rem); letter-spacing:-.015em; line-height:1; white-space:nowrap;
+.a4-wrap:hover .a4{ box-shadow:0 1px 2px rgba(21,20,15,.10), 0 24px 52px -18px rgba(21,20,15,.42) }
+
+/* ── Manchette de la une ── */
+.pg-mast{ border-bottom:1.5px solid var(--ink); padding-bottom:.5em; margin-bottom:.9em }
+.pg-over, .pg-under{
+  display:flex; justify-content:space-between; gap:1em;
+  font-size:.62em; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-3);
 }
-.np-sub{
-  display:flex; justify-content:space-between; align-items:center; gap:16px;
-  border-block:1px solid var(--ink); padding:7px 0;
-  font-family:var(--sans); font-size:.625rem; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-2);
+.pg-under{ border-top:1px solid rgba(21,20,15,.5); margin-top:.5em; padding-top:.4em; color:var(--ink-2) }
+.pg-title{
+  font-family:var(--serif); font-weight:900; text-transform:uppercase; text-align:center;
+  font-size:2.9em; line-height:1; letter-spacing:-.02em; margin:.28em 0 .1em; white-space:nowrap;
 }
-.np-time{ font-variant-numeric:tabular-nums; letter-spacing:.08em; }
 
-.np-body{ display:grid; grid-template-columns:1.62fr 1fr; }
-.np-main{ padding:20px 26px 22px 0; }
-.np-side{ padding:20px 0 22px 26px; border-left:1px solid var(--line-2); display:flex; flex-direction:column; gap:20px; }
-
-.np-kick{
-  font-family:var(--sans); font-size:.625rem; font-weight:600; letter-spacing:.16em;
-  text-transform:uppercase; color:var(--ink-3);
-  padding-bottom:6px; margin-bottom:12px; border-bottom:1px solid var(--line-2);
+/* ── Titre courant des pages intérieures ── */
+.pg-run{
+  display:flex; justify-content:space-between; gap:1em;
+  border-bottom:1px solid var(--ink); padding-bottom:.45em; margin-bottom:1.1em;
+  font-size:.62em; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-3);
 }
-.np-kick-row{ display:flex; justify-content:space-between; align-items:baseline; }
-.np-kick-row span{ letter-spacing:.04em; text-transform:none; color:var(--ink-2); font-size:.688rem; }
+.pg-run span:nth-child(2){ color:var(--ink); font-weight:600 }
 
-.np-photo{ aspect-ratio:16/9.2; overflow:hidden; border-radius:var(--r-xs); margin-bottom:13px; background:#2a2a28; }
-.np-photo svg{ width:100%; height:100%; display:block; }
-.np-head{ font-family:var(--serif); font-weight:700; font-size:clamp(1.15rem,2vw,1.55rem); line-height:1.16; letter-spacing:-.01em; margin-bottom:10px; }
-.np-head sup{ font-size:.6em; }
-.np-text{ font-family:var(--sans); font-size:.844rem; line-height:1.6; color:var(--ink-2); }
+/* ── Grilles de page ── */
+.pg-body{ flex:1; display:grid; grid-template-columns:1.62fr 1fr; gap:1.4em; min-height:0 }
+.pg-main{ min-width:0; border-right:1px solid rgba(21,20,15,.16); padding-right:1.4em }
+.pg-rail{ min-width:0; display:flex; flex-direction:column; gap:1.1em }
+.pg-split{ flex:1; display:grid; grid-template-columns:1fr 1fr; gap:1.6em; min-height:0 }
+/* Colonnes en pleine hauteur : sans quoi un bloc calé en bas (« Fin de
+   l'édition ») n'a pas de bas où se caler. */
+.pg-split > section{ min-width:0; display:flex; flex-direction:column }
+.pg-split > section + section{ border-left:1px solid rgba(21,20,15,.16); padding-left:1.6em }
 
-.np-weather{ display:flex; align-items:center; justify-content:space-between; gap:12px; }
-.np-temp{ font-family:var(--serif); font-weight:700; font-size:clamp(2rem,4.2vw,2.8rem); line-height:1; letter-spacing:-.03em; }
-.np-sun{ width:32px; height:32px; fill:none; stroke:var(--ink); stroke-width:1.4; stroke-linecap:round; }
-.np-cap{ font-size:.781rem; color:var(--ink-2); margin-top:6px; }
-
-.np-agenda{ list-style:none; margin:0; padding:0; }
-.np-agenda li{ display:flex; gap:12px; font-size:.781rem; color:var(--ink-2); padding:6px 0; border-bottom:1px dotted var(--line-2); }
-.np-agenda li:last-child{ border-bottom:0 }
-.np-agenda span{ font-variant-numeric:tabular-nums; font-weight:600; color:var(--ink); min-width:42px; }
-
-.np-mk-block{ margin-top:auto }
-.np-mk{ list-style:none; margin:0; padding:0 }
-.np-mk li{ display:flex; justify-content:space-between; align-items:baseline; gap:10px; font-size:.781rem; color:var(--ink-2); padding:4px 0; border-bottom:1px dotted var(--line-2); }
-.np-mk b{ font-weight:600; font-variant-numeric:tabular-nums; font-size:.719rem }
-.np-mk .up{ color:#3F6A46 } .np-mk .down{ color:#8A4A38 }
-.np-bars{ display:flex; align-items:flex-end; gap:4px; height:40px; margin-top:12px }
-.np-bars i{ flex:1; background:var(--ink); opacity:.62; border-radius:2px 2px 0 0 }
-.np-bars i:last-child{ opacity:1 }
-
-.np-bottom{ display:grid; grid-template-columns:1.62fr 1fr; border-top:1.5px solid var(--ink); }
-.np-msgs{ padding:17px 26px 4px 0 }
-.np-focus{ padding:17px 0 4px 26px; border-left:1px solid var(--line-2) }
-
-.np-msg-list{ list-style:none; margin:0; padding:0 }
-.np-msg-list li{ display:flex; align-items:center; gap:11px; padding:7px 0; border-bottom:1px dotted var(--line-2) }
-.np-msg-list li:last-child{ border-bottom:0 }
-.np-msg-list div{ flex:1; min-width:0; display:flex; flex-direction:column; line-height:1.35 }
-.np-msg-list strong{ font-size:.781rem; font-weight:600 }
-.np-msg-list em{ font-style:normal; font-size:.719rem; color:var(--ink-3); overflow:hidden; text-overflow:ellipsis; white-space:nowrap }
-.np-msg-list time{ font-size:.688rem; color:var(--ink-3); font-variant-numeric:tabular-nums }
-.av{ width:26px; height:26px; border-radius:50%; flex:none; display:grid; place-items:center; font-size:.656rem; font-weight:600; color:#fff }
-.av-1{ background:#4C6B4F } .av-2{ background:#8A5340 } .av-3{ background:#3F4A66 } .av-4{ background:#0A66C2; font-size:.594rem }
-
-.np-focus-t{ font-family:var(--serif); font-weight:700; font-size:clamp(1.05rem,1.9vw,1.4rem); line-height:1.16; margin-bottom:12px }
-.np-prio{ display:inline-block; font-size:.688rem; background:var(--mark-dim); color:var(--ink); border:1px solid rgba(21,20,15,.18); padding:4px 10px; border-radius:var(--r-xs) }
-.np-foot{
-  text-align:center; font-size:.625rem; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-3);
-  border-top:1.5px solid var(--ink); margin-top:18px; padding-top:14px;
+/* ── Intertitres ── */
+.pg-kick{
+  font-size:.62em; font-weight:700; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--ink-3); padding-bottom:.4em; margin-bottom:.7em;
+  border-bottom:1px solid rgba(21,20,15,.28);
 }
+.pg-kick-2{ margin-top:1.4em }
+.pg-h1{ font-family:var(--serif); font-weight:700; font-size:1.62em; line-height:1.1; letter-spacing:-.01em; margin:.15em 0 .3em }
+.pg-h1 sup{ font-size:.58em }
+.pg-h2{ font-family:var(--serif); font-weight:700; font-size:1.5em; line-height:1.1; margin-bottom:.7em }
+.pg-chapo{ font-family:var(--serif); font-style:italic; font-size:.95em; color:var(--ink-2); margin-bottom:.6em }
+
+/* ── Photo ── */
+.pg-photo{ margin:0 0 .5em }
+.pg-photo svg{ width:100%; aspect-ratio:40/21; display:block; border-radius:1px }
+.pg-photo figcaption{ font-size:.6em; color:var(--ink-3); margin-top:.35em; line-height:1.3 }
+
+/* ── Colonnes de texte ── */
+.pg-cols{ columns:2; column-gap:1.1em; column-rule:1px solid rgba(21,20,15,.12); font-size:.78em; color:var(--ink-2) }
+.pg-cols p{ margin-bottom:.55em }
+.pg-brief{ margin-top:.9em }
+.pg-brief ul{ list-style:none; margin:0; padding:0; font-size:.76em; color:var(--ink-2) }
+.pg-brief li{ padding:.3em 0; border-bottom:1px dotted rgba(21,20,15,.2) }
+.pg-brief li:last-child{ border-bottom:0 }
+.pg-brief b{ color:var(--ink) }
+
+/* ── Encadrés du bandeau latéral ── */
+.pg-box{ min-width:0 }
+.pg-box-focus{ background:rgba(215,226,79,.26); border:1px solid rgba(21,20,15,.18); padding:.7em .8em; margin-top:auto }
+.pg-box-focus .pg-kick{ border-bottom-color:rgba(21,20,15,.3) }
+.pg-weather{ display:flex; align-items:center; justify-content:space-between; gap:.6em }
+.pg-temp{ font-family:var(--serif); font-weight:700; font-size:2.3em; line-height:1; letter-spacing:-.03em; font-variant-numeric:tabular-nums }
+.pg-sun{ width:2em; height:2em; fill:none; stroke:var(--ink); stroke-width:1.4; stroke-linecap:round }
+.pg-cap{ font-size:.68em; color:var(--ink-2); margin-top:.35em }
+.pg-hours{ list-style:none; margin:.6em 0 0; padding:0; display:flex; align-items:flex-end; gap:.35em; height:3.2em }
+.pg-hours li{ flex:1; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; height:100% }
+.pg-hours i{ display:block; width:100%; background:var(--ink); opacity:.5; border-radius:1px 1px 0 0 }
+.pg-hours span{ font-size:.55em; color:var(--ink-3); margin-top:.25em; order:2 }
+.pg-agenda{ list-style:none; margin:0; padding:0; font-size:.72em; color:var(--ink-2) }
+.pg-agenda li{ padding:.32em 0; border-bottom:1px dotted rgba(21,20,15,.2) }
+.pg-agenda li:last-child{ border-bottom:0 }
+.pg-agenda span{ font-variant-numeric:tabular-nums; font-weight:700; color:var(--ink); margin-right:.5em }
+.pg-agenda em{ font-style:normal; color:var(--ink-3); display:block; font-size:.9em }
+.pg-mini{ list-style:none; margin:0; padding:0; font-size:.7em; color:var(--ink-3) }
+.pg-mini li{ padding:.26em 0; border-bottom:1px dotted rgba(21,20,15,.2); overflow:hidden; text-overflow:ellipsis; white-space:nowrap }
+.pg-mini li:last-child{ border-bottom:0 }
+.pg-mini b{ color:var(--ink); font-weight:600; margin-right:.35em }
+.pg-focus{ font-family:var(--serif); font-weight:700; font-size:1.05em; line-height:1.15 }
+.pg-prio{ font-size:.62em; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-2); margin-top:.4em }
+
+/* ── Messages ── */
+.pg-msgs{ list-style:none; margin:0; padding:0 }
+.pg-msgs li{ display:flex; align-items:center; gap:.6em; padding:.42em 0; border-bottom:1px dotted rgba(21,20,15,.2) }
+.pg-msgs li:last-child{ border-bottom:0 }
+.pg-msgs div{ flex:1; min-width:0; line-height:1.25 }
+.pg-msgs strong{ display:block; font-size:.74em }
+.pg-msgs em{ font-style:normal; font-size:.68em; color:var(--ink-3); display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap }
+.pg-msgs time{ font-size:.64em; color:var(--ink-3); font-variant-numeric:tabular-nums; flex:none }
+.av{ width:1.85em; height:1.85em; border-radius:50%; flex:none; display:grid; place-items:center; font-size:.72em; font-weight:600; color:#fff }
+.av-1{ background:#3F5A42 } .av-2{ background:#7A4938 } .av-3{ background:#374057 }
+.av-4{ background:#6B4A6E } .av-5{ background:#0A66C2; font-size:.6em }
+.pg-note{ font-size:.64em; color:var(--ink-3); margin-top:.6em; font-style:italic }
+
+/* ── Journée heure par heure ── */
+.pg-day{ list-style:none; margin:0; padding:0 }
+.pg-day li{ display:grid; grid-template-columns:2.4em .5em 1fr; align-items:start; gap:.5em; font-size:.7em; color:var(--ink-3); padding:.24em 0 }
+.pg-day span{ font-variant-numeric:tabular-nums; text-align:right; padding-top:.1em }
+.pg-day i{ position:relative; height:100%; min-height:1.4em }
+.pg-day i::before{ content:""; position:absolute; left:50%; top:.35em; width:1px; bottom:-.5em; background:rgba(21,20,15,.2); transform:translateX(-50%) }
+.pg-day li:last-child i::before{ display:none }
+.pg-day i::after{ content:""; position:absolute; left:50%; top:.3em; width:.34em; height:.34em; border-radius:50%; background:rgba(21,20,15,.3); transform:translateX(-50%) }
+.pg-day li.on{ color:var(--ink-2) }
+.pg-day li.on i::after{ background:var(--ink); width:.46em; height:.46em }
+.pg-day b{ color:var(--ink) }
+.pg-day em{ font-style:normal; color:var(--ink-3); font-size:.9em }
+
+/* ── Actualités en briques ── */
+.pg-news{ flex:1; columns:2; column-gap:1.4em; column-rule:1px solid rgba(21,20,15,.14) }
+.pg-news article{ break-inside:avoid; margin-bottom:1.1em }
+.pg-news h5{ font-family:var(--serif); font-weight:700; font-size:1.02em; line-height:1.14; margin:0 0 .3em }
+.pg-news p{ font-size:.74em; color:var(--ink-2); margin-bottom:.35em }
+.pg-news .pg-kick{ font-size:.58em; margin-bottom:.4em }
+
+/* ── Tableaux et graphiques ── */
+.pg-table{ width:100%; border-collapse:collapse; font-size:.72em }
+.pg-table th{ text-align:left; font-size:.85em; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3); font-weight:600; padding-bottom:.3em; border-bottom:1px solid rgba(21,20,15,.3) }
+.pg-table th:not(:first-child), .pg-table td:not(:first-child){ text-align:right }
+.pg-table td{ padding:.3em 0; border-bottom:1px dotted rgba(21,20,15,.2); color:var(--ink-2); font-variant-numeric:tabular-nums }
+.pg-table tr:last-child td{ border-bottom:0 }
+.pg-table .up{ color:#35603D } .pg-table .down{ color:#7E4231 }
+.pg-chart{ display:flex; align-items:flex-end; gap:.3em; height:3.4em; margin-top:.9em }
+.pg-chart i{ flex:1; background:var(--ink); opacity:.55; border-radius:1px 1px 0 0 }
+.pg-chart i:last-child{ opacity:1 }
+.pg-watch{ list-style:none; margin:0; padding:0; font-size:.74em; color:var(--ink-2) }
+.pg-watch li{ padding:.34em 0; border-bottom:1px dotted rgba(21,20,15,.2) }
+.pg-watch li:last-child{ border-bottom:0 }
+.pg-watch b{ color:var(--ink) }
+.pg-end{ margin-top:auto; padding-top:1em; text-align:center }
+.pg-end p:first-child{ font-family:var(--serif); font-style:italic; font-size:.9em; color:var(--ink-2) }
+
+/* ── Pied de page ── */
+.pg-folio{
+  display:flex; justify-content:space-between; align-items:center; gap:1em;
+  margin-top:1em; padding-top:.5em; border-top:1px solid var(--ink);
+  font-size:.58em; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-3);
+}
+.pg-n{ font-family:var(--serif); font-size:1.5em; letter-spacing:0; color:var(--ink); font-variant-numeric:tabular-nums }
+
+/* ── Barre de feuilletage ── */
+.a4-bar{ display:flex; align-items:center; justify-content:center; gap:14px; margin-top:6px; flex-wrap:wrap }
+.a4-nav{
+  width:44px; height:44px; flex:none; display:grid; place-items:center;
+  background:var(--card); border:1px solid var(--line-2); border-radius:50%;
+  cursor:pointer; color:var(--ink); transition:border-color .2s, background .2s, opacity .2s;
+}
+.a4-nav svg{ width:17px; height:17px; fill:none; stroke:currentColor; stroke-width:1.9; stroke-linecap:round; stroke-linejoin:round }
+.a4-nav:hover{ border-color:var(--ink) }
+.a4-nav:disabled{ opacity:.32; cursor:not-allowed; border-color:var(--line) }
+.a4-dots{ display:flex; gap:8px }
+.a4-dot{
+  width:32px; height:44px; padding:0; border:0; background:none; cursor:pointer;
+  display:grid; place-items:center;
+}
+.a4-dot::before{
+  content:""; width:26px; height:4px; border-radius:2px;
+  background:var(--line-2); transition:background .2s;
+}
+.a4-dot:hover::before{ background:var(--ink-3) }
+.a4-dot[aria-current="true"]::before{ background:var(--ink) }
+.a4-count{ font-size:.813rem; color:var(--ink-3); min-width:16ch; text-align:center }
 
 /* ─── Composer : le Studio ──────────────── */
 .studio{
@@ -913,11 +1029,9 @@ p{ margin:0; }
 }
 @media (max-width:720px){
   html{ scroll-padding-top:80px }
-  .np-body, .np-bottom{ grid-template-columns:1fr }
-  .np-main{ padding:16px 0 }
-  .np-side{ padding:16px 0; border-left:0; border-top:1px solid var(--line-2) }
-  .np-msgs{ padding:16px 0 0 }
-  .np-focus{ padding:16px 0; border-left:0; border-top:1px solid var(--line-2) }
+  /* La feuille A4 garde ses colonnes intérieures à toutes les largeurs :
+     elle se met à l'échelle, elle ne se réorganise pas. C'est une page
+     imprimée, pas une mise en page adaptative. */
   .hero-feats{ grid-template-columns:1fr; gap:18px; text-align:left }
   .feat{ align-items:flex-start; text-align:left }
   .rub-list{ grid-template-columns:1fr }
@@ -954,6 +1068,7 @@ p{ margin:0; }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{ animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important }
   html{ scroll-behavior:auto }
+  .a4-stage{ scroll-behavior:auto }
   /* Sélecteur aligné sur .js .reveal : à spécificité inférieure, cette règle
      perdrait l'arbitrage et la page resterait masquée. */
   .js .reveal{ opacity:1; transform:none }
