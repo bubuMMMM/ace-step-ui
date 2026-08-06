@@ -124,80 +124,7 @@
     var ORDRE = ['l', 'm', 'e', 'j', 'v', 's', 'd'];
     var NOMS = { l:'lundi', m:'mardi', e:'mercredi', j:'jeudi', v:'vendredi', s:'samedi', d:'dimanche' };
 
-    /* Réglages propres à chaque rubrique. Toute l'interface d'affinage est
-       engendrée à partir d'ici : ajouter une option, c'est ajouter une ligne.
-       « seg » = choix unique, « chips » = choix multiple. Les valeurs sont
-       stockées et transmises par leur indice, jamais par leur libellé —
-       l'URL reste ainsi courte et insensible aux accents. */
-    var OPTIONS = {
-      une: [
-        { k:'n', nom:'Articles à la une', type:'seg', val:['1','2','3'], def:1, suf:'article' },
-        { k:'p', nom:'Illustration', type:'seg', val:['Avec photo','Sans photo'], def:0 },
-        { k:'e', nom:'Encadré', type:'seg', val:['Aucun','Le chiffre du jour','La phrase du jour'], def:1 }
-      ],
-      focus: [
-        { k:'s', nom:'D’où vient le focus', type:'seg', val:['Je le choisis','Depuis l’agenda','Depuis la to-do'], def:0 },
-        { k:'c', nom:'Ce qu’il contient', type:'chips', val:['Objectif','Préparation','Points de vigilance','Contacts utiles'], def:[0,1] },
-        { k:'t', nom:'Ton', type:'seg', val:['Factuel','Encourageant'], def:0 }
-      ],
-      agenda: [
-        { k:'c', nom:'Calendriers', type:'chips', val:['Perso','Pro','Famille','Anniversaires'], def:[0,1] },
-        { k:'h', nom:'Plage horaire', type:'seg', val:['Journée','Jusqu’à 18 h','24 h'], def:0 },
-        { k:'d', nom:'Détails affichés', type:'chips', val:['Lieu','Participants','Trajet','Notes'], def:[0,2] }
-      ],
-      msg: [
-        { k:'s', nom:'Sources', type:'chips', val:['WhatsApp','Gmail','Slack','LinkedIn','SMS'], def:[0,1] },
-        { k:'f', nom:'Filtre', type:'seg', val:['Tout','Importants seulement'], def:1 },
-        { k:'r', nom:'Mise en forme', type:'seg', val:['Liste','Groupé par expéditeur'], def:0 }
-      ],
-      todo: [
-        { k:'s', nom:'Source', type:'seg', val:['Notion','Todoist','Rappels'], def:0 },
-        { k:'n', nom:'Tâches affichées', type:'seg', val:['3','5','8'], def:1, suf:'tâche' },
-        { k:'t', nom:'Tri', type:'seg', val:['Par échéance','Par priorité','Par projet'], def:0 },
-        { k:'c', nom:'Cases à cocher', type:'seg', val:['Imprimées','Sans'], def:0 }
-      ],
-      actus: [
-        { k:'t', nom:'Thèmes', type:'chips', val:['France','Monde','Économie','Tech','Culture','Sciences'], def:[0,1,3] },
-        { k:'s', nom:'Sources', type:'chips', val:['AFP','Le Monde','Reuters','France Info','Courrier international'], def:[0,1] },
-        { k:'n', nom:'Articles', type:'seg', val:['3','5','8'], def:1, suf:'article' },
-        { k:'g', nom:'Traitement', type:'seg', val:['Factuel','Avec analyses'], def:0 }
-      ],
-      meteo: [
-        { k:'l', nom:'Lieux', type:'chips', val:['Domicile','Bureau','Week-end'], def:[0] },
-        { k:'d', nom:'Détail', type:'seg', val:['Résumé','Heure par heure'], def:0 },
-        { k:'a', nom:'En complément', type:'chips', val:['Qualité de l’air','Alertes','Éphéméride','Pollens'], def:[1] }
-      ],
-      finance: [
-        { k:'i', nom:'À suivre', type:'chips', val:['CAC 40','Nasdaq','S&P 500','Or','Brent','Crypto'], def:[0,1] },
-        { k:'v', nom:'Variation', type:'seg', val:['Sur la journée','Sur la semaine','Depuis janvier'], def:0 },
-        { k:'p', nom:'Ton portefeuille', type:'seg', val:['Affiché','Masqué'], def:1 }
-      ],
-      sport: [
-        { k:'s', nom:'Disciplines', type:'chips', val:['Football','Rugby','Tennis','Cyclisme','Basket','F1'], def:[0] },
-        { k:'c', nom:'Compétitions', type:'chips', val:['Championnat','Coupes','International'], def:[0,2] },
-        { k:'r', nom:'Contenu', type:'seg', val:['Résultats','Résultats et analyses'], def:0 }
-      ],
-      culture: [
-        { k:'d', nom:'Domaines', type:'chips', val:['Cinéma','Musique','Livres','Expositions','Séries'], def:[0,2] },
-        { k:'f', nom:'Angle', type:'chips', val:['Critiques','Sorties de la semaine','Agenda près de chez toi'], def:[0,1] },
-        { k:'n', nom:'Recommandations', type:'seg', val:['1','2','4'], def:1, suf:'reco' }
-      ],
-      sciences: [
-        { k:'d', nom:'Domaines', type:'chips', val:['Espace','Santé','Climat','Numérique','Biologie'], def:[0,2] },
-        { k:'n', nom:'Niveau', type:'seg', val:['Vulgarisé','Détaillé'], def:0 }
-      ],
-      ia: [
-        { k:'d', nom:'Domaines', type:'chips', val:['Modèles','Produits','Recherche','Régulation'], def:[1] },
-        { k:'v', nom:'Volume', type:'seg', val:['3 liens','5 liens','10 liens'], def:0 },
-        { k:'f', nom:'Format', type:'seg', val:['Titres seuls','Titres et résumés'], def:1 }
-      ],
-      citation: [
-        { k:'r', nom:'Registre', type:'chips', val:['Philosophie','Littérature','Sciences','Sport'], def:[1] },
-        { k:'l', nom:'Langue', type:'seg', val:['Français','Version originale'], def:0 }
-      ]
-    };
-
-    var etat = { pages:8, format:'A4', verso:1, heure:'07:00', jours:['l','m','e','j','v'], opts:{} };
+    var etat = { pages:8, format:'A4', verso:1, heure:'07:00', jours:['l','m','e','j','v'] };
     var saveTimer;
 
     var cochees = function () {
@@ -290,86 +217,19 @@
       return Math.max(0.5, Math.round(parMois * 0.025 * 2) / 2);
     };
 
-    /* ─── L'état fin, par rubrique ────────────────────────
-       Seul ce qui s'écarte du réglage d'origine est retenu : etat.opts ne
-       contient que les écarts, ce qui rend « est-ce affiné ? » lisible
-       d'un coup d'œil, ici comme dans l'URL. */
-    var valeurDe = function (rk, champ) {
-      var o = etat.opts[rk];
-      if (o && Object.prototype.hasOwnProperty.call(o, champ.k)) return o[champ.k];
-      return champ.type === 'chips' ? champ.def.slice() : champ.def;
-    };
-
-    var estDefaut = function (rk, champ) {
-      var v = valeurDe(rk, champ);
-      if (champ.type === 'chips') {
-        return v.length === champ.def.length && v.every(function (x) { return champ.def.indexOf(x) !== -1; });
-      }
-      return v === champ.def;
-    };
-
-    var poserValeur = function (rk, champ, v) {
-      if (!etat.opts[rk]) etat.opts[rk] = {};
-      etat.opts[rk][champ.k] = v;
-      if (estDefaut(rk, champ)) {
-        delete etat.opts[rk][champ.k];
-        if (!Object.keys(etat.opts[rk]).length) delete etat.opts[rk];
-      }
-    };
-
-    var resumeDe = function (rk) {
-      var champs = OPTIONS[rk] || [];
-      var bouts = [];
-      champs.forEach(function (c) {
-        var v = valeurDe(rk, c);
-        if (c.type === 'chips') {
-          if (!v.length) bouts.push('aucun ' + c.nom.toLowerCase());
-          else if (v.length > 2) bouts.push(v.length + ' ' + c.nom.toLowerCase());
-          else bouts.push(v.map(function (i) { return c.val[i]; }).join(', '));
-        } else if (c.suf) {
-          /* « 5 » seul ne dit rien : on rend l'unité au nombre. */
-          bouts.push(pluriel(Number(c.val[v]), c.suf));
-        } else {
-          bouts.push(c.val[v]);
-        }
-      });
-      return bouts.join(' · ');
-    };
-
-    /* Le réglage qui compte des éléments, s'il existe : c'est lui qui donne
-       sa hauteur au bloc dans l'aperçu. */
-    var nombreDe = function (rk) {
-      var trouve = 0;
-      (OPTIONS[rk] || []).forEach(function (c) {
-        if (c.suf) trouve = Number(c.val[valeurDe(rk, c)]);
-      });
-      return trouve;
-    };
-
     var render = function () {
       var choisies = cochees();
 
       blocks.innerHTML = '';
       choisies.slice(0, 6).forEach(function (input, index) {
         var nom = input.value;
-        var rk = input.getAttribute('data-k');
         var li = document.createElement('li');
         li.style.animationDelay = (index * 45) + 'ms';
         var label = document.createElement('span');
         label.className = 'pb-name';
         label.textContent = nom;
         li.appendChild(label);
-
-        /* L'affinage se voit dans l'aperçu : le résumé sous le titre, et la
-           hauteur du bloc suit le nombre d'éléments demandé. */
-        if (etat.opts[rk]) {
-          var fin = document.createElement('span');
-          fin.className = 'pb-fin';
-          fin.textContent = resumeDe(rk);
-          li.appendChild(fin);
-        }
-
-        var n = nombreDe(rk) || LIGNES[nom] || 2;
+        var n = LIGNES[nom] || 2;
         for (var l = 0; l < n; l++) {
           var trait = document.createElement('i');
           trait.style.width = (58 + ((index * 17 + l * 29) % 42)) + '%';
@@ -387,13 +247,6 @@
         blocks.appendChild(plus);
       }
 
-      /* Le Studio porte la marque des rubriques qu'on a réglées, pour les
-         retrouver sans redescendre dans la liste. */
-      Array.prototype.forEach.call(grid.querySelectorAll('input[name="rubrique"]'), function (i) {
-        i.parentElement.classList.toggle(
-          'is-fin', i.checked && !!etat.opts[i.getAttribute('data-k')]);
-      });
-
       empty.hidden = choisies.length > 0;
       badge.textContent = etat.pages + (etat.pages > 1 ? ' pages' : ' page');
       foot.textContent = pluriel(choisies.length, 'rubrique') + ' · ' +
@@ -403,161 +256,13 @@
       var f = document.getElementById('recapFmt');
       var v = document.getElementById('recapLiv');
       var e = document.getElementById('recapEncre');
-      var affinees = Object.keys(etat.opts).length;
-      if (r) r.textContent = !choisies.length ? 'Aucune rubrique choisie'
-        : pluriel(choisies.length, 'rubrique') + (affinees ? ' · ' + affinees + ' affinée' + (affinees > 1 ? 's' : '') : '');
+      if (r) r.textContent = choisies.length ? pluriel(choisies.length, 'rubrique') : 'Aucune rubrique choisie';
       if (f) f.textContent = pluriel(etat.pages, 'page') + ' ' + etat.format + (etat.verso ? ' recto-verso' : ' recto');
       if (v) v.textContent = libelleJours() + ' à ' + etat.heure;
       if (e) e.textContent = 'Noir & blanc · ≈ ' + coutMensuel().toString().replace('.', ',') + '€ par mois';
       if (joursNote) {
         joursNote.textContent = libelleJours() + '. ' +
           (etat.jours.length === 7 ? 'Y compris le week-end.' : 'Aucune impression les autres jours.');
-      }
-    };
-
-    /* ─── Affinage par rubrique ─────────────────────────
-       Un <details> par rubrique retenue, replié. Le résumé affiché dans
-       l'en-tête reprend les réglages en cours, pour se relire sans déplier. */
-    var affineList = document.getElementById('affineList');
-    var affineNote = document.getElementById('affineNote');
-    /* Les rubriques présentes au rendu précédent. Celles qui apparaissent
-       s'ouvrent d'elles-mêmes : cocher un intérêt, c'est demander à le
-       régler. « null » vaut premier rendu — on n'ouvre alors rien. */
-    var connues = null;
-
-    var champChips = function (rk, champ) {
-      var box = document.createElement('div');
-      box.className = 'aff-chips';
-      champ.val.forEach(function (lib, i) {
-        var b = document.createElement('button');
-        b.type = 'button';
-        var actif = valeurDe(rk, champ).indexOf(i) !== -1;
-        b.className = actif ? 'is-on' : '';
-        b.setAttribute('aria-pressed', String(actif));
-        b.textContent = lib;
-        b.addEventListener('click', function () {
-          var v = valeurDe(rk, champ).slice();
-          var j = v.indexOf(i);
-          if (j === -1) v.push(i);
-          else if (v.length > 1) v.splice(j, 1);
-          else return;   /* on ne vide pas complètement un choix multiple */
-          v.sort(function (a, b2) { return a - b2; });
-          poserValeur(rk, champ, v);
-          majTout();
-        });
-        box.appendChild(b);
-      });
-      return box;
-    };
-
-    var champSeg = function (rk, champ) {
-      var box = document.createElement('div');
-      box.className = 'aff-seg';
-      box.style.gridTemplateColumns = 'repeat(' + champ.val.length + ',minmax(0,1fr))';
-      box.setAttribute('role', 'radiogroup');
-      box.setAttribute('aria-label', champ.nom);
-      var actuel = valeurDe(rk, champ);
-      champ.val.forEach(function (lib, i) {
-        var b = document.createElement('button');
-        b.type = 'button';
-        b.setAttribute('role', 'radio');
-        b.setAttribute('aria-checked', String(i === actuel));
-        b.className = i === actuel ? 'is-on' : '';
-        b.tabIndex = i === actuel ? 0 : -1;
-        b.textContent = lib;
-        b.addEventListener('click', function () { poserValeur(rk, champ, i); majTout(); });
-        box.appendChild(b);
-      });
-      return box;
-    };
-
-    var renderAffine = function () {
-      if (!affineList) return;
-      var choisies = cochees();
-      var ouvertes = {};
-      Array.prototype.forEach.call(affineList.querySelectorAll('details[data-rk]'), function (d) {
-        if (d.open) ouvertes[d.getAttribute('data-rk')] = true;
-      });
-      affineList.innerHTML = '';
-
-      var actuelles = choisies.map(function (i) { return i.getAttribute('data-k'); });
-      var nouvelles = connues
-        ? actuelles.filter(function (k) { return connues.indexOf(k) === -1; })
-        : [];
-      connues = actuelles;
-
-      if (!choisies.length) {
-        var vide = document.createElement('p');
-        vide.className = 'affine-vide';
-        vide.textContent = 'Coche une rubrique pour ouvrir ses réglages.';
-        affineList.appendChild(vide);
-        if (affineNote) affineNote.textContent = '';
-        return;
-      }
-
-      choisies.forEach(function (input) {
-        var rk = input.getAttribute('data-k');
-        var champs = OPTIONS[rk];
-        if (!champs) return;
-
-        var d = document.createElement('details');
-        d.className = 'aff';
-        d.setAttribute('data-rk', rk);
-        if (ouvertes[rk] || nouvelles.indexOf(rk) !== -1) d.open = true;
-
-        var sum = document.createElement('summary');
-        var ico = input.parentElement.querySelector('.rub-ico');
-        if (ico) {
-          var c = ico.cloneNode(true);
-          c.setAttribute('class', 'aff-ico');
-          sum.appendChild(c);
-        }
-        var nom = document.createElement('span');
-        nom.className = 'aff-nom';
-        nom.textContent = input.value;
-        sum.appendChild(nom);
-
-        var res = document.createElement('span');
-        res.className = 'aff-resume';
-        res.textContent = resumeDe(rk);
-        sum.appendChild(res);
-
-        var chev = document.createElement('span');
-        chev.className = 'chev';
-        chev.setAttribute('aria-hidden', 'true');
-        sum.appendChild(chev);
-        d.appendChild(sum);
-
-        var body = document.createElement('div');
-        body.className = 'aff-body';
-        champs.forEach(function (champ) {
-          var f = document.createElement('fieldset');
-          f.className = 'aff-champ' + (champ.type === 'chips' ? ' aff-champ--wide' : '');
-          var lg = document.createElement('legend');
-          lg.textContent = champ.nom;
-          f.appendChild(lg);
-          f.appendChild(champ.type === 'chips' ? champChips(rk, champ) : champSeg(rk, champ));
-          body.appendChild(f);
-        });
-
-        if (etat.opts[rk]) {
-          var raz = document.createElement('button');
-          raz.type = 'button';
-          raz.className = 'aff-reset';
-          raz.textContent = 'Revenir aux réglages par défaut';
-          raz.addEventListener('click', function () { delete etat.opts[rk]; majTout(); });
-          body.appendChild(raz);
-        }
-
-        d.appendChild(body);
-        affineList.appendChild(d);
-      });
-
-      if (affineNote) {
-        var n = Object.keys(etat.opts).length;
-        affineNote.textContent = n
-          ? pluriel(n, 'rubrique') + ' affinée' + (n > 1 ? 's' : '') + ' sur ' + choisies.length + '.'
-          : 'Toutes au réglage par défaut. Déplie une rubrique pour l’ajuster.';
       }
     };
 
@@ -569,17 +274,6 @@
       q.set('v', String(etat.verso));
       q.set('h', etat.heure);
       q.set('j', ORDRE.filter(function (k) { return etat.jours.indexOf(k) !== -1; }).join(''));
-
-      /* Réglages fins : seuls ceux qui s'écartent du défaut voyagent, et
-         par indices — « actus~t0-1-3.n2!meteo~d1 » reste lisible et court. */
-      var fins = Object.keys(etat.opts).map(function (rk) {
-        var champs = etat.opts[rk];
-        return rk + '~' + Object.keys(champs).map(function (ck) {
-          var v = champs[ck];
-          return ck + (Array.isArray(v) ? v.join('-') : v);
-        }).join('.');
-      });
-      if (fins.length) q.set('o', fins.join('!')); else q.delete('o');
       history.replaceState(null, '', location.pathname + '?' + q.toString() + location.hash);
     };
 
@@ -609,31 +303,6 @@
         etat.heure = h; gHeure.poser(h);
       }
 
-      /* Lecture stricte : toute rubrique, tout champ ou tout indice inconnu
-         est ignoré plutôt que de faire échouer la restauration. */
-      etat.opts = {};
-      var o = q.get('o');
-      if (o) {
-        o.split('!').forEach(function (part) {
-          var m = part.split('~');
-          var champs = OPTIONS[m[0]];
-          if (!champs || !m[1]) return;
-          m[1].split('.').forEach(function (bout) {
-            var ck = bout.charAt(0), brut = bout.slice(1);
-            var champ = null;
-            champs.forEach(function (c) { if (c.k === ck) champ = c; });
-            if (!champ || !brut) return;
-            if (champ.type === 'chips') {
-              var idx = brut.split('-').map(Number).filter(function (i) { return i >= 0 && i < champ.val.length; });
-              if (idx.length) poserValeur(m[0], champ, idx.sort(function (a, b2) { return a - b2; }));
-            } else {
-              var i = Number(brut);
-              if (i >= 0 && i < champ.val.length) poserValeur(m[0], champ, i);
-            }
-          });
-        });
-      }
-
       var j = q.get('j');
       if (j) {
         var voulus = j.split('').filter(function (k) { return ORDRE.indexOf(k) !== -1; });
@@ -649,7 +318,7 @@
     };
 
     /* Un seul point de sortie : tout changement repasse par ici. */
-    function majTout() { clearState(); render(); renderAffine(); ecrireURL(); }
+    function majTout() { clearState(); render(); ecrireURL(); }
 
     grid.addEventListener('change', majTout);
 
@@ -659,8 +328,6 @@
         Array.prototype.forEach.call(grid.querySelectorAll('input[name="rubrique"]'), function (i) {
           i.checked = DEFAUTS.indexOf(i.value) !== -1;
         });
-        etat.opts = {};
-        connues = null;   /* remettre à zéro ne doit rien déplier */
         majTout();
       });
     }
@@ -706,7 +373,6 @@
 
     lireURL();
     render();
-    renderAffine();
   }
 
   /* ─── L'édition : feuilletage des pages A4 ────────────
