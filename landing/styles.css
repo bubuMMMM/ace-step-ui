@@ -135,7 +135,6 @@ a, button, summary, label, input{
 /* Groupes de contrôles : le conteneur signale que le focus est chez lui,
    en plus de l'anneau porté par l'élément atteint. */
 .signup:focus-within input{ border-color:var(--ink) }
-.pages-picker:focus-within{ border-color:var(--ink) }
 
 /* Fibres de papier.
    Posée AU-DESSUS du contenu, pas dessous : main ouvre un contexte
@@ -794,38 +793,83 @@ p{ margin:0; }
 .pp-empty{ text-align:center; font-size:.781rem; color:var(--ink-3); padding:60px 20px }
 .preview-foot{ text-align:center; font-size:.75rem; color:rgba(242,239,231,.58) }
 
-/* Sous le Studio : pages, garanties, validation */
-.composer-foot{ max-width:var(--w-panel); margin:var(--gap-block) auto 0; }
-.pages-head{ display:flex; align-items:baseline; justify-content:space-between; gap:12px; flex-wrap:wrap }
-.flabel{ display:block; font-family:var(--serif); font-weight:700; font-size:1.32rem; letter-spacing:-.02em; padding:0 }
-.fhint{ font-size:.938rem; color:var(--ink-3) }
-/* Contrôle segmenté, une seule rangée.
-   C'étaient huit boutons carrés (aspect-ratio:1) : sur mobile, deux rangées
-   de ~83px, soit près de 175px de hauteur pour choisir un chiffre. Réunis en
-   une barre unique, ils tiennent en 44px et se lisent comme un seul réglage
-   plutôt que huit boutons indépendants — sans rien perdre : chaque valeur
-   reste atteignable en un geste, ce qu'un pas-à-pas « − / + » ne permet pas. */
-.pages-picker{
-  display:grid; grid-template-columns:repeat(8,minmax(0,1fr)); margin-top:12px;
-  max-width:var(--w-form); background:var(--card);
+/* ─── Le composer, en quatre sous-sections ───────────────────
+   La section n'était qu'un panneau suivi d'un sélecteur et d'un bouton.
+   Elle se lit maintenant comme un vrai formulaire de commande : rubriques,
+   format, livraison, récapitulatif — chaque étape numérotée et séparée. */
+.cstep{ padding-top:var(--gap-sub); border:0; margin:0 }
+.cstep + .cstep{ border-top:1px solid var(--line); }
+.cstep-head{
+  display:flex; align-items:flex-start; gap:16px;
+  max-width:var(--w-panel); margin:0 auto var(--gap-block);
+}
+.cstep-n{
+  width:32px; height:32px; flex:none; display:grid; place-items:center; border-radius:50%;
+  background:var(--ink); color:var(--paper);
+  font-family:var(--serif); font-weight:700; font-size:.938rem; line-height:1;
+}
+.cstep-head h3{ font-size:1.32rem; letter-spacing:-.02em; margin-bottom:4px }
+.cstep-head p{ font-size:.938rem; color:var(--ink-2) }
+
+.cgrid{
+  max-width:var(--w-panel); margin-inline:auto;
+  display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:var(--gap-grid);
+}
+.cfield{ border:0; margin:0; padding:0; min-width:0 }
+.cfield-wide{ grid-column:1 / -1 }
+.cfield legend{
+  padding:0 0 12px; font-size:.75rem; font-weight:600; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--ink-3);
+}
+.cnote{ margin-top:12px; font-size:.875rem; color:var(--ink-3) }
+
+/* Contrôle segmenté générique : une barre, des segments jointifs.
+   Les rayons sont portés par les extrémités et non par un overflow:hidden
+   du conteneur, qui rognerait l'anneau de focus. */
+.seg{
+  display:grid; background:var(--card);
   border:1px solid var(--line-2); border-radius:var(--r-md);
 }
-.pages-picker button{
-  height:44px; padding:0; border:0; border-left:1px solid var(--line);
+.seg:focus-within{ border-color:var(--ink) }
+.seg-8{ grid-template-columns:repeat(8,minmax(0,1fr)) }
+.seg-5{ grid-template-columns:repeat(5,minmax(0,1fr)) }
+.seg-2{ grid-template-columns:repeat(2,minmax(0,1fr)) }
+.seg button{
+  height:48px; padding:0; border:0; border-left:1px solid var(--line);
   background:transparent; cursor:pointer; color:var(--ink-2);
   font-size:.938rem; font-variant-numeric:tabular-nums;
   transition:background .2s, color .2s;
 }
-.pages-picker button:first-child{ border-left:0 }
-/* Rayons portés par les extrémités plutôt qu'un overflow:hidden sur le
-   parent, qui rognerait l'anneau de focus. */
-.pages-picker button:first-child{ border-radius:11px 0 0 11px }
-.pages-picker button:last-child{ border-radius:0 11px 11px 0 }
-.pages-picker button:focus-visible{ position:relative; z-index:1 }
-.pages-picker button:hover{ background:rgba(21,20,15,.05); color:var(--ink) }
-.pages-picker button.is-on{ background:var(--mark); color:#15140F; font-weight:700 }
+.seg button:first-child{ border-left:0; border-radius:11px 0 0 11px }
+.seg button:last-child{ border-radius:0 11px 11px 0 }
+.seg button:focus-visible{ position:relative; z-index:1 }
+.seg button:hover{ background:rgba(21,20,15,.05); color:var(--ink) }
+.seg button.is-on{ background:var(--mark); color:#15140F; font-weight:700 }
 
-.composer-checks{ margin:var(--gap-grid) 0 24px }
+/* Jours de parution : sept bascules indépendantes, pas un groupe radio. */
+.jours{ display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); gap:8px }
+.jours button{
+  height:48px; border:1px solid var(--line-2); border-radius:var(--r-sm);
+  background:var(--card); cursor:pointer; color:var(--ink-2);
+  font-size:.938rem; font-weight:600;
+  transition:background .2s, color .2s, border-color .2s;
+}
+.jours button:hover{ border-color:var(--ink); color:var(--ink) }
+.jours button.is-on{ background:var(--ink); border-color:var(--ink); color:var(--paper) }
+
+/* Récapitulatif : la commande relue avant validation. */
+.recap{
+  max-width:var(--w-panel); margin:0 auto var(--gap-block); padding:0;
+  display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0;
+  border:1px solid var(--line-2); border-radius:var(--r-lg); background:var(--card);
+  overflow:hidden;
+}
+.recap > div{ padding:20px 24px; border-top:1px solid var(--line); border-left:1px solid var(--line) }
+.recap > div:nth-child(-n+2){ border-top:0 }
+.recap > div:nth-child(odd){ border-left:0 }
+.recap dt{ font-size:.75rem; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-3); margin-bottom:6px }
+.recap dd{ margin:0; font-size:1rem; color:var(--ink) }
+
 .composer-actions{ max-width:var(--w-form); margin-inline:auto }
 /* Action secondaire, en texte : elle accompagne le bouton principal sans
    lui disputer l'attention. Marge verticale calée pour atteindre 44px. */
@@ -859,7 +903,13 @@ p{ margin:0; }
   content:""; position:absolute; left:1px; top:.72em; width:12px; height:1.5px; background:var(--ink-3);
 }
 .li-x li::before{ transform:rotate(45deg) } .li-x li::after{ transform:rotate(-45deg) }
-.composer-checks.li-check{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:var(--gap-tile) var(--gap-grid) }
+/* La marge est portée par le sélecteur double : la règle générique
+   .li-check{margin:0}, déclarée plus bas, l'emportait sinon. */
+.composer-checks.li-check{
+  display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:var(--gap-tile) var(--gap-grid);
+  max-width:var(--w-panel); margin:var(--gap-block) auto 0;
+  padding-top:var(--gap-block); border-top:1px solid var(--line);
+}
 
 /* ─── Bento ─────────────────────────────── */
 .bento{
@@ -1134,6 +1184,17 @@ p{ margin:0; }
 
   .rub-list{ grid-template-columns:1fr }
   .composer-checks.li-check{ grid-template-columns:1fr }
+  .cgrid{ grid-template-columns:1fr }
+  .recap{ grid-template-columns:1fr }
+  .recap > div:nth-child(2){ border-top:1px solid var(--line) }
+  .recap > div{ border-left:0 }
+  .seg-8{ grid-template-columns:repeat(4,minmax(0,1fr)) }
+  .seg-8 button:nth-child(4){ border-radius:0 11px 0 0 }
+  .seg-8 button:nth-child(5){ border-left:0; border-top:1px solid var(--line); border-radius:0 0 0 11px }
+  .seg-8 button:nth-child(-n+4){ border-top:0 }
+  .seg-8 button:nth-child(n+5){ border-top:1px solid var(--line) }
+  .seg-8 button:first-child{ border-radius:11px 0 0 0 }
+  .seg-8 button:last-child{ border-radius:0 0 11px 0 }
   .signup .btn{ flex:1 1 100% }
 
   .footer-nav{ grid-template-columns:1fr 1fr }
@@ -1176,7 +1237,7 @@ p{ margin:0; }
   .mark::after{ display:none }              /* le multiply ne survit pas */
   .mark{ text-decoration:underline 3px }    /* on marque autrement */
   .rub input:checked ~ .box{ background:Highlight; border-color:Highlight }
-  .pages-picker button.is-on,
+  .seg button.is-on, .jours button.is-on,
   .pages-badge, .tag{ background:Highlight; color:HighlightText; forced-color-adjust:none }
   .b-cell, .pcard, .edition, .studio, .pricing, .preview-paper{ border:1px solid CanvasText }
   .grain, .glow{ display:none }
@@ -1191,7 +1252,7 @@ p{ margin:0; }
 @media print{
   @page{ margin:16mm }
   .site-header, .final, .site-footer, .scroll-bar, .grain, .glow,
-  .mobile-menu, .skip-link, .composer-actions, .pages-picker{ display:none }
+  .mobile-menu, .skip-link, .composer-actions, .seg, .jours{ display:none }
 
   body{ background:#fff; color:#000; font-size:11pt }
   main{ background:#fff }

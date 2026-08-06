@@ -801,7 +801,17 @@
     </div>
 
     <form id="composerForm">
-      <div class="studio reveal" data-delay="1">
+      <!-- ── 1 · Tes rubriques ── -->
+      <section class="cstep reveal" data-delay="1">
+        <header class="cstep-head">
+          <span class="cstep-n">1</span>
+          <div>
+            <h3>Tes rubriques</h3>
+            <p>Ce qui compose ta une. L’aperçu se recompose à mesure.</p>
+          </div>
+        </header>
+
+      <div class="studio">
         <div class="studio-side">
           <div class="studio-brand">
             <span translate="no">Morning Paper Studio</span>
@@ -893,22 +903,51 @@
           <p class="preview-foot" id="previewFoot">6 rubriques · 8 pages · noir &amp; blanc</p>
         </div>
       </div>
+      </section>
 
-      <div class="composer-foot reveal" data-delay="2">
-        <div class="pages-head">
-          <span class="flabel">De 1 à 8 pages</span>
-          <span class="fhint">Le format s’adapte à ton matin.</span>
-        </div>
+      <!-- ── 2 · Le format ── -->
+      <section class="cstep reveal" data-delay="2">
+        <header class="cstep-head">
+          <span class="cstep-n">2</span>
+          <div>
+            <h3>Le format</h3>
+            <p>La taille de l’objet qui sortira de l’imprimante.</p>
+          </div>
+        </header>
 
-        <div class="pages-picker" id="pagesPicker" role="radiogroup" aria-label="Nombre de pages">
-          <button type="button" role="radio" aria-checked="false" data-pages="1" aria-label="1 page">1</button>
-          <button type="button" role="radio" aria-checked="false" data-pages="2" aria-label="2 pages">2</button>
-          <button type="button" role="radio" aria-checked="false" data-pages="3" aria-label="3 pages">3</button>
-          <button type="button" role="radio" aria-checked="false" data-pages="4" aria-label="4 pages">4</button>
-          <button type="button" role="radio" aria-checked="false" data-pages="5" aria-label="5 pages">5</button>
-          <button type="button" role="radio" aria-checked="false" data-pages="6" aria-label="6 pages">6</button>
-          <button type="button" role="radio" aria-checked="false" data-pages="7" aria-label="7 pages">7</button>
-          <button type="button" role="radio" aria-checked="true" class="is-on" data-pages="8" aria-label="8 pages">8</button>
+        <div class="cgrid">
+          <fieldset class="cfield cfield-wide">
+            <legend>Nombre de pages</legend>
+            <div class="seg seg-8" id="pagesPicker" role="radiogroup" aria-label="Nombre de pages">
+              <button type="button" role="radio" aria-checked="false" aria-label="1 page" data-pages="1">1</button>
+              <button type="button" role="radio" aria-checked="false" aria-label="2 pages" data-pages="2">2</button>
+              <button type="button" role="radio" aria-checked="false" aria-label="3 pages" data-pages="3">3</button>
+              <button type="button" role="radio" aria-checked="false" aria-label="4 pages" data-pages="4">4</button>
+              <button type="button" role="radio" aria-checked="false" aria-label="5 pages" data-pages="5">5</button>
+              <button type="button" role="radio" aria-checked="false" aria-label="6 pages" data-pages="6">6</button>
+              <button type="button" role="radio" aria-checked="false" aria-label="7 pages" data-pages="7">7</button>
+              <button type="button" role="radio" aria-checked="true" class="is-on" aria-label="8 pages" data-pages="8">8</button>
+            </div>
+            <p class="cnote">Modifiable chaque jour. Huit le lundi, deux le dimanche.</p>
+          </fieldset>
+
+          <fieldset class="cfield">
+            <legend>Papier</legend>
+            <div class="seg seg-2" id="formatPicker" role="radiogroup" aria-label="Format de papier">
+              <button type="button" role="radio" aria-checked="true" class="is-on" data-format="A4">A4</button>
+              <button type="button" role="radio" aria-checked="false" data-format="A5">A5</button>
+            </div>
+            <p class="cnote">A5 pour glisser l’édition dans une poche.</p>
+          </fieldset>
+
+          <fieldset class="cfield">
+            <legend>Impression</legend>
+            <div class="seg seg-2" id="versoPicker" role="radiogroup" aria-label="Mode d’impression">
+              <button type="button" role="radio" aria-checked="false" data-verso="0">Recto</button>
+              <button type="button" role="radio" aria-checked="true" class="is-on" data-verso="1">Recto-verso</button>
+            </div>
+            <p class="cnote">Le recto-verso divise la consommation par deux.</p>
+          </fieldset>
         </div>
 
         <ul class="li-check composer-checks">
@@ -917,6 +956,63 @@
           <li>Contenu résumé et hiérarchisé par l’IA</li>
           <li>Mise en page optimisée pour l’impression</li>
         </ul>
+      </section>
+
+      <!-- ── 3 · La livraison ── -->
+      <section class="cstep reveal" data-delay="2">
+        <header class="cstep-head">
+          <span class="cstep-n">3</span>
+          <div>
+            <h3>La livraison</h3>
+            <p>Quand l’imprimante se met en route, et quels jours.</p>
+          </div>
+        </header>
+
+        <div class="cgrid">
+          <fieldset class="cfield cfield-wide">
+            <legend>Heure d’impression</legend>
+            <div class="seg seg-5" id="heurePicker" role="radiogroup" aria-label="Heure d’impression">
+              <button type="button" role="radio" aria-checked="false" data-heure="06:00">06:00</button>
+              <button type="button" role="radio" aria-checked="false" data-heure="06:30">06:30</button>
+              <button type="button" role="radio" aria-checked="true" class="is-on" data-heure="07:00">07:00</button>
+              <button type="button" role="radio" aria-checked="false" data-heure="07:30">07:30</button>
+              <button type="button" role="radio" aria-checked="false" data-heure="08:00">08:00</button>
+            </div>
+            <p class="cnote">L’édition est composée pendant la nuit et imprimée à l’heure dite.</p>
+          </fieldset>
+
+          <fieldset class="cfield cfield-wide">
+            <legend>Jours de parution</legend>
+            <div class="jours" id="joursPicker">
+              <button type="button" class="is-on" aria-pressed="true" data-jour="l"><span aria-hidden="true">L</span><span class="sr-only">Lundi</span></button>
+              <button type="button" class="is-on" aria-pressed="true" data-jour="m"><span aria-hidden="true">M</span><span class="sr-only">Mardi</span></button>
+              <button type="button" class="is-on" aria-pressed="true" data-jour="e"><span aria-hidden="true">M</span><span class="sr-only">Mercredi</span></button>
+              <button type="button" class="is-on" aria-pressed="true" data-jour="j"><span aria-hidden="true">J</span><span class="sr-only">Jeudi</span></button>
+              <button type="button" class="is-on" aria-pressed="true" data-jour="v"><span aria-hidden="true">V</span><span class="sr-only">Vendredi</span></button>
+              <button type="button" aria-pressed="false" data-jour="s"><span aria-hidden="true">S</span><span class="sr-only">Samedi</span></button>
+              <button type="button" aria-pressed="false" data-jour="d"><span aria-hidden="true">D</span><span class="sr-only">Dimanche</span></button>
+            </div>
+            <p class="cnote" id="joursNote">Du lundi au vendredi. Aucune impression le week-end.</p>
+          </fieldset>
+        </div>
+      </section>
+
+      <!-- ── 4 · Ton édition ── -->
+      <section class="cstep cstep-last reveal" data-delay="2">
+        <header class="cstep-head">
+          <span class="cstep-n">4</span>
+          <div>
+            <h3>Ton édition</h3>
+            <p>Le récapitulatif de ce que tu recevras demain matin.</p>
+          </div>
+        </header>
+
+        <dl class="recap" id="recap">
+          <div><dt>Rubriques</dt><dd id="recapRub">6 rubriques</dd></div>
+          <div><dt>Format</dt><dd id="recapFmt">8 pages A4 recto-verso</dd></div>
+          <div><dt>Livraison</dt><dd id="recapLiv">Du lundi au vendredi à 07:00</dd></div>
+          <div><dt>Encre</dt><dd id="recapEncre">Noir &amp; blanc · ≈ 2€ par mois</dd></div>
+        </dl>
 
         <div class="composer-actions">
           <button class="btn btn-primary btn-block btn-lg" type="submit" id="saveBtn">Enregistrer mon édition</button>
@@ -926,7 +1022,7 @@
             <span id="saveStateText">Modifications sauvegardées</span>
           </p>
         </div>
-      </div>
+      </section>
     </form>
   </div>
 </section>
