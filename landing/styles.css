@@ -772,6 +772,12 @@ p{ margin:0; }
 .rub:has(input:checked) .txt{ color:#F2EFE7 }
 .rub:has(input:checked) .rub-ico{ stroke:#F2EFE7 }
 .rub input:focus-visible ~ .box{ outline:2px solid var(--mark); outline-offset:2px }
+/* Rubrique dont les réglages ont été touchés. */
+.rub .txt{ flex:1; min-width:0 }
+.rub.is-fin::after{
+  content:"affinée"; flex:none; font-size:.625rem; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--mark); border:1px solid rgba(212,229,74,.4); border-radius:var(--r-pill); padding:2px 8px;
+}
 
 .studio-main{ padding:var(--pad-card-sm); display:flex; flex-direction:column; gap:12px; min-width:0; }
 .studio-head{ display:flex; align-items:center; justify-content:space-between; gap:12px; }
@@ -794,6 +800,11 @@ p{ margin:0; }
   background:rgba(21,20,15,.02); animation:blockIn .34s var(--ease) both;
 }
 .pp-blocks .pb-name{ font-size:.688rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; display:block; margin-bottom:4px }
+/* Le résumé d'affinage, repris sous le titre du bloc. */
+.pp-blocks .pb-fin{
+  display:block; margin:-2px 0 6px; font-size:.625rem; line-height:1.35; color:var(--ink-3);
+  overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+}
 .pp-blocks i{ display:block; height:3px; border-radius:2px; background:var(--line-2); margin-bottom:4px }
 .pp-blocks i:last-child{ margin-bottom:0 }
 @keyframes blockIn{ from{ opacity:0; transform:translateY(-6px) } to{ opacity:1; transform:none } }
@@ -897,6 +908,90 @@ p{ margin:0; }
 .save-state.is-err{ color:var(--danger) }
 .save-state.is-err svg{ display:none }
 .save-state svg{ width:14px; height:14px; fill:none; stroke:var(--ink); stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round }
+
+/* ─── Affiner tes rubriques ───────────────────────────
+   Cocher une rubrique ouvre ses propres réglages : sources, thèmes,
+   volume. C'est là que le journal devient sur mesure — un <details> par
+   rubrique, replié par défaut pour que treize d'entre elles ne forment
+   pas un mur. */
+.affine{ max-width:var(--w-panel); margin:var(--gap-block) auto 0 }
+.affine-head{ margin-bottom:var(--gap-grid) }
+.affine-head h4{ font-family:var(--serif); font-weight:700; font-size:1.12rem; letter-spacing:-.02em; margin-bottom:4px }
+.affine-head p{ font-size:.938rem; color:var(--ink-2) }
+.affine-list{
+  border:1px solid var(--line-2); border-radius:var(--r-lg);
+  background:var(--card); overflow:hidden;
+}
+.aff{ border-top:1px solid var(--line) }
+.aff:first-child{ border-top:0 }
+.aff > summary{
+  list-style:none; cursor:pointer; position:relative;
+  display:flex; align-items:center; gap:12px;
+  min-height:56px; padding:12px 44px 12px 20px;
+}
+.aff > summary::-webkit-details-marker{ display:none }
+.aff > summary:hover{ background:rgba(21,20,15,.03) }
+.aff-ico{ width:18px; height:18px; flex:none; fill:none; stroke:var(--ink-2); stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round }
+.aff-nom{ font-size:1rem; font-weight:500; flex:none }
+.aff-resume{
+  flex:1; min-width:0; text-align:right; font-size:.875rem; color:var(--ink-3);
+  overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+}
+.aff .chev{ position:absolute; right:20px; top:50%; width:12px; height:12px; margin-top:-7px }
+.aff .chev::before, .aff .chev::after{
+  content:""; position:absolute; left:0; top:6px; width:12px; height:1.5px; background:var(--ink-3);
+  transition:transform .3s var(--ease), background .2s;
+}
+.aff .chev::after{ transform:rotate(90deg) }
+.aff[open] .chev::after{ transform:rotate(0) }
+.aff > summary:hover .chev::before, .aff > summary:hover .chev::after,
+.aff[open] .chev::before, .aff[open] .chev::after{ background:var(--ink) }
+
+/* Deux colonnes : à pleine largeur, une barre segmentée de deux choix
+   s'étirerait sur 450 px pour dire « oui / non ». Les choix multiples,
+   eux, ont besoin de toute la largeur pour aligner leurs pastilles. */
+.aff-body{
+  padding:4px 20px 24px; display:grid; align-items:start;
+  grid-template-columns:repeat(2, minmax(0,1fr));
+  gap:var(--gap-grid) var(--gap-tile);
+}
+.aff-champ--wide, .aff-reset{ grid-column:1 / -1 }
+.aff-champ legend, .aff-champ > .aff-label{
+  display:block; padding:0 0 10px; font-size:.75rem; font-weight:600; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--ink-3);
+}
+.aff-champ{ border:0; margin:0; padding:0; min-width:0 }
+
+/* Choix multiple : des pastilles qui s'allument. */
+.aff-chips{ display:flex; flex-wrap:wrap; gap:8px }
+.aff-chips button{
+  min-height:44px; padding:0 16px; border:1px solid var(--line-2); border-radius:var(--r-pill);
+  background:var(--paper); cursor:pointer; color:var(--ink-2); font-size:.875rem;
+  transition:background .2s, color .2s, border-color .2s;
+}
+.aff-chips button:hover{ border-color:var(--ink); color:var(--ink) }
+.aff-chips button.is-on{ background:var(--ink); border-color:var(--ink); color:var(--paper); font-weight:600 }
+
+/* Choix unique : la barre segmentée déjà en place. */
+.aff-seg{ display:grid; background:var(--paper); border:1px solid var(--line-2); border-radius:var(--r-md) }
+.aff-seg button{
+  min-height:44px; padding:0 10px; border:0; border-left:1px solid var(--line);
+  background:transparent; cursor:pointer; color:var(--ink-2); font-size:.875rem;
+  transition:background .2s, color .2s;
+}
+.aff-seg button:first-child{ border-left:0; border-radius:11px 0 0 11px }
+.aff-seg button:last-child{ border-radius:0 11px 11px 0 }
+.aff-seg button:focus-visible{ position:relative; z-index:1 }
+.aff-seg button:hover{ background:rgba(21,20,15,.05); color:var(--ink) }
+.aff-seg button.is-on{ background:var(--mark); color:#15140F; font-weight:700 }
+
+.aff-reset{
+  align-self:flex-start; padding:11px 0; border:0; background:none; cursor:pointer;
+  font-family:var(--sans); font-size:.875rem; color:var(--ink-3);
+  text-decoration:underline; text-underline-offset:3px; text-decoration-thickness:1px;
+}
+.aff-reset:hover{ color:var(--ink) }
+.affine-vide{ padding:24px 20px; text-align:center; font-size:.938rem; color:var(--ink-3) }
 
 /* ─── Listes cochées / barrées ──────────── */
 .li-check, .li-x{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:12px; }
@@ -1193,6 +1288,16 @@ p{ margin:0; }
   .cta-row .btn{ width:100% }
 
   .rub-list{ grid-template-columns:1fr }
+  .aff-body{ grid-template-columns:1fr }
+  /* Le résumé n'a plus la place de tenir à droite du nom : il passe
+     dessous, où il dispose de toute la ligne. */
+  .aff > summary{ display:grid; grid-template-columns:18px 1fr; gap:4px 12px; padding-block:14px }
+  .aff-ico{ grid-row:1 }
+  .aff-resume{
+    grid-column:2; text-align:left; white-space:normal; line-height:1.4;
+    display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;
+  }
+  .aff-resume:empty{ display:none }
   .composer-checks.li-check{ grid-template-columns:1fr }
   .cgrid{ grid-template-columns:1fr }
   .recap{ grid-template-columns:1fr }
