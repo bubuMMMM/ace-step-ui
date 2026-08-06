@@ -741,6 +741,13 @@ p{ margin:0; }
 .studio-x:hover{ background:rgba(242,239,231,.12); color:#F2EFE7 }
 
 .rub-list{ display:flex; flex-direction:column; border:0; margin:0; padding:0; min-width:0; }
+/* Familles de rubriques : treize entrées en liste plate ne se lisent pas.
+   Trois intertitres suffisent à les rendre parcourables. */
+.rub-fam{
+  padding:20px 20px 8px; font-size:.688rem; font-weight:600; letter-spacing:.16em;
+  text-transform:uppercase; color:rgba(242,239,231,.5);
+}
+.rub-fam:first-of-type{ padding-top:4px }
 .rub{
   display:flex; align-items:center; gap:12px; cursor:pointer; user-select:none;
   padding:12px 20px; border-left:2px solid transparent;  /* 42 → 44px */
@@ -890,6 +897,37 @@ p{ margin:0; }
 .save-state.is-err{ color:var(--danger) }
 .save-state.is-err svg{ display:none }
 .save-state svg{ width:14px; height:14px; fill:none; stroke:var(--ink); stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round }
+
+/* ─── Le dosage ───────────────────────────────────────
+   Cocher une rubrique dit ce qu'on veut lire ; le dosage dit combien de
+   place on lui accorde. C'est là que la personnalisation devient réelle :
+   l'aperçu et le nombre de lignes suivent immédiatement. */
+.dosage{ max-width:var(--w-panel); margin:var(--gap-block) auto 0 }
+.dosage-head{ margin-bottom:var(--gap-grid) }
+.dosage-head h4{ font-family:var(--serif); font-weight:700; font-size:1.12rem; letter-spacing:-.02em; margin-bottom:4px }
+.dosage-head p{ font-size:.938rem; color:var(--ink-2) }
+.dosage-list{
+  list-style:none; margin:0; padding:0;
+  border:1px solid var(--line-2); border-radius:var(--r-lg); background:var(--card); overflow:hidden;
+}
+.dosage-list li{
+  display:flex; align-items:center; justify-content:space-between; gap:16px;
+  padding:12px 20px; border-top:1px solid var(--line);
+}
+.dosage-list li:first-child{ border-top:0 }
+.dosage-nom{ font-size:1rem; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap }
+.dosage-seg{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); flex:none; width:270px }
+.dosage-seg button{
+  height:44px; padding:0 12px; border:1px solid var(--line-2); border-left-width:0;
+  background:var(--paper); cursor:pointer; color:var(--ink-2); font-size:.875rem;
+  transition:background .2s, color .2s;
+}
+.dosage-seg button:first-child{ border-left-width:1px; border-radius:var(--r-sm) 0 0 var(--r-sm) }
+.dosage-seg button:last-child{ border-radius:0 var(--r-sm) var(--r-sm) 0 }
+.dosage-seg button:focus-visible{ position:relative; z-index:1 }
+.dosage-seg button:hover{ background:rgba(21,20,15,.05); color:var(--ink) }
+.dosage-seg button.is-on{ background:var(--ink); border-color:var(--ink); color:var(--paper); font-weight:600 }
+.dosage-vide{ padding:24px 20px; text-align:center; font-size:.938rem; color:var(--ink-3) }
 
 /* ─── Listes cochées / barrées ──────────── */
 .li-check, .li-x{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:12px; }
@@ -1150,6 +1188,9 @@ p{ margin:0; }
   .studio{ grid-template-columns:1fr }
   .studio-side{ border-right:0; border-bottom:1px solid rgba(242,239,231,.13) }
   .rub-list{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)) }
+  /* En grille, un intertitre de famille doit couvrir la rangée entière,
+     sinon il occupe une cellule et le groupement se défait. */
+  .rub-fam{ grid-column:1 / -1 }
 
   .pricing{ grid-template-columns:1fr }
   .price-aside{ border-left:0; border-top:1px solid var(--line) }
@@ -1185,6 +1226,8 @@ p{ margin:0; }
   .rub-list{ grid-template-columns:1fr }
   .composer-checks.li-check{ grid-template-columns:1fr }
   .cgrid{ grid-template-columns:1fr }
+  .dosage-list li{ flex-direction:column; align-items:stretch; gap:12px; padding:16px 16px }
+  .dosage-seg{ width:100% }
   .recap{ grid-template-columns:1fr }
   .recap > div:nth-child(2){ border-top:1px solid var(--line) }
   .recap > div{ border-left:0 }

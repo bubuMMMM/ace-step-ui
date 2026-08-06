@@ -117,13 +117,20 @@
 
     var LIGNES = {
       'À la une': 4, 'Messages': 3, 'Agenda': 3, 'Météo': 2, 'Actualités': 3,
-      'Finance': 2, 'Sport': 2, 'Focus du jour': 2, 'Veille & IA': 3
+      'Finance': 2, 'Sport': 2, 'Focus du jour': 2, 'Veille & IA': 3,
+      'Ma to-do': 3, 'Culture': 2, 'Sciences': 2, 'Citation du jour': 1
     };
-    var DEFAUTS = ['À la une', 'Messages', 'Agenda', 'Météo', 'Actualités', 'Focus du jour'];
+    var DEFAUTS = ['À la une', 'Focus du jour', 'Agenda', 'Messages', 'Actualités', 'Météo'];
+    /* Trois dosages, et ce qu'ils retirent ou ajoutent à l'aperçu. */
+    var TAILLES = [
+      { k:'s', nom:'Brève',     delta:-1 },
+      { k:'m', nom:'Standard',  delta:0  },
+      { k:'l', nom:'Développé', delta:2  }
+    ];
     var ORDRE = ['l', 'm', 'e', 'j', 'v', 's', 'd'];
     var NOMS = { l:'lundi', m:'mardi', e:'mercredi', j:'jeudi', v:'vendredi', s:'samedi', d:'dimanche' };
 
-    var etat = { pages:8, format:'A4', verso:1, heure:'07:00', jours:['l','m','e','j','v'] };
+    var etat = { pages:8, format:'A4', verso:1, heure:'07:00', jours:['l','m','e','j','v'], dosage:{} };
     var saveTimer;
 
     var cochees = function () {
@@ -228,7 +235,10 @@
         label.className = 'pb-name';
         label.textContent = nom;
         li.appendChild(label);
-        var n = LIGNES[nom] || 2;
+        var d = etat.dosage[input.getAttribute('data-k')] || 'm';
+        var delta = 0;
+        TAILLES.forEach(function (t) { if (t.k === d) delta = t.delta; });
+        var n = Math.max(1, (LIGNES[nom] || 2) + delta);
         for (var l = 0; l < n; l++) {
           var trait = document.createElement('i');
           trait.style.width = (58 + ((index * 17 + l * 29) % 42)) + '%';
@@ -265,9 +275,75 @@
       }
     };
 
+    /* Le dosage se redessine à chaque changement de sélection : il ne liste
+       que les rubriques retenues, dans l'ordre de la colonne. */
+    var dosageList = document.getElementById('dosageList');
+    var dosageNote = document.getElementById('dosageNote');
+
+    var renderDosage = function () {
+      if (!dosageList) return;
+      var choisies = cochees();
+      dosageList.innerHTML = '';
+
+      if (!choisies.length) {
+        var vide = document.createElement('li');
+        vide.className = 'dosage-vide';
+        vide.textContent = 'Choisis une rubrique pour régler sa place.';
+        dosageList.appendChild(vide);
+        if (dosageNote) dosageNote.textContent = '';
+        return;
+      }
+
+      choisies.forEach(function (input) {
+        var k = input.getAttribute('data-k');
+        var actuel = etat.dosage[k] || 'm';
+
+        var li = document.createElement('li');
+        var nom = document.createElement('span');
+        nom.className = 'dosage-nom';
+        nom.textContent = input.value;
+        li.appendChild(nom);
+
+        var seg = document.createElement('div');
+        seg.className = 'dosage-seg';
+        seg.setAttribute('role', 'radiogroup');
+        seg.setAttribute('aria-label', 'Place accordée à ' + input.value);
+
+        TAILLES.forEach(function (t) {
+          var b = document.createElement('button');
+          b.type = 'button';
+          b.setAttribute('role', 'radio');
+          b.setAttribute('aria-checked', String(t.k === actuel));
+          b.className = t.k === actuel ? 'is-on' : '';
+          b.tabIndex = t.k === actuel ? 0 : -1;
+          b.textContent = t.nom;
+          b.addEventListener('click', function () {
+            if (t.k === 'm') delete etat.dosage[k];
+            else etat.dosage[k] = t.k;
+            majTout();
+          });
+          seg.appendChild(b);
+        });
+
+        li.appendChild(seg);
+        dosageList.appendChild(li);
+      });
+
+      if (dosageNote) {
+        var n = Object.keys(etat.dosage).length;
+        dosageNote.textContent = n
+          ? pluriel(n, 'rubrique') + ' au dosage personnalisé, ' + (choisies.length - n) + ' au format standard.'
+          : 'Toutes au format standard. Change le dosage d’une rubrique pour lui donner plus ou moins de place.';
+      }
+    };
+
     var ecrireURL = function () {
       var q = new URLSearchParams();
-      q.set('r', cochees().map(function (i) { return i.getAttribute('data-k'); }).join('.'));
+      q.set('r', cochees().map(function (i) {
+        var k = i.getAttribute('data-k');
+        var d = etat.dosage[k];
+        return d ? k + '-' + d : k;
+      }).join('.'));
       q.set('p', String(etat.pages));
       q.set('f', etat.format);
       q.set('v', String(etat.verso));
@@ -280,9 +356,16 @@
       var q = new URLSearchParams(location.search);
       var r = q.get('r');
       if (r !== null) {
-        var voulues = r ? r.split('.') : [];
+        var voulues = {};
+        (r ? r.split('.') : []).forEach(function (part) {
+          var m = part.split('-');
+          voulues[m[0]] = m[1] === 's' || m[1] === 'l' ? m[1] : null;
+        });
+        etat.dosage = {};
         Array.prototype.forEach.call(grid.querySelectorAll('input[name="rubrique"]'), function (i) {
-          i.checked = voulues.indexOf(i.getAttribute('data-k')) !== -1;
+          var k = i.getAttribute('data-k');
+          i.checked = Object.prototype.hasOwnProperty.call(voulues, k);
+          if (i.checked && voulues[k]) etat.dosage[k] = voulues[k];
         });
       }
       var n = Number(q.get('p'));
@@ -314,7 +397,7 @@
     };
 
     /* Un seul point de sortie : tout changement repasse par ici. */
-    function majTout() { clearState(); render(); ecrireURL(); }
+    function majTout() { clearState(); render(); renderDosage(); ecrireURL(); }
 
     grid.addEventListener('change', majTout);
 
@@ -324,6 +407,7 @@
         Array.prototype.forEach.call(grid.querySelectorAll('input[name="rubrique"]'), function (i) {
           i.checked = DEFAUTS.indexOf(i.value) !== -1;
         });
+        etat.dosage = {};
         majTout();
       });
     }
@@ -369,6 +453,7 @@
 
     lireURL();
     render();
+    renderDosage();
   }
 
   /* ─── L'édition : feuilletage des pages A4 ────────────
