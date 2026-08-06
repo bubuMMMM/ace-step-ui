@@ -515,13 +515,15 @@ p{ margin:0; }
 .pg-run span:nth-child(2){ color:var(--ink); font-weight:600 }
 
 /* ── Grilles de page ── */
-.pg-body{ flex:1; display:grid; grid-template-columns:1.62fr 1fr; gap:1.4em; min-height:0 }
+.pg-body{ flex:1; min-height:0; display:grid; grid-template-columns:1.62fr 1fr; gap:1.4em }
 .pg-main{ min-width:0; border-right:1px solid rgba(21,20,15,.16); padding-right:1.4em }
 .pg-rail{ min-width:0; display:flex; flex-direction:column; gap:1.1em }
-.pg-split{ flex:1; display:grid; grid-template-columns:1fr 1fr; gap:1.6em; min-height:0 }
-/* Colonnes en pleine hauteur : sans quoi un bloc calé en bas (« Fin de
-   l'édition ») n'a pas de bas où se caler. */
-.pg-split > section{ min-width:0; display:flex; flex-direction:column }
+.pg-split{ flex:1; min-height:0; display:grid; grid-template-columns:1fr 1fr; gap:1.6em }
+/* Colonnes en pleine hauteur, bornées à l'espace disponible : sans
+   min-height:0, une colonne trop chargée débordait sur le folio au lieu de
+   rester dans sa boîte. */
+.pg-split > section{ min-width:0; min-height:0; display:flex; flex-direction:column }
+.pg-main, .pg-rail{ min-height:0 }
 .pg-split > section + section{ border-left:1px solid rgba(21,20,15,.16); padding-left:1.6em }
 
 /* ── Intertitres ── */
@@ -571,6 +573,20 @@ p{ margin:0; }
 .pg-mini li{ padding:.26em 0; border-bottom:1px dotted rgba(21,20,15,.2); overflow:hidden; text-overflow:ellipsis; white-space:nowrap }
 .pg-mini li:last-child{ border-bottom:0 }
 .pg-mini b{ color:var(--ink); font-weight:600; margin-right:.35em }
+.pg-todo{ list-style:none; margin:0; padding:0; font-size:.72em; color:var(--ink-2) }
+.pg-todo li{ padding:.32em 0; border-bottom:1px dotted rgba(21,20,15,.2) }
+.pg-todo li:last-child{ border-bottom:0 }
+.pg-todo b{ color:var(--ink); margin-right:.35em }
+.pg-todo em{ font-style:normal; color:var(--ink-3); display:block; font-size:.92em }
+.pg-filtre{ list-style:none; margin:0; padding:0; font-size:.72em; color:var(--ink-3) }
+.pg-filtre li{ display:flex; justify-content:space-between; gap:.6em; padding:.28em 0; border-bottom:1px dotted rgba(21,20,15,.2) }
+.pg-filtre li:last-child{ border-bottom:0 }
+.pg-filtre b{ color:var(--ink-2); font-variant-numeric:tabular-nums }
+.pg-solde{ list-style:none; margin:0; padding:0; display:flex; gap:1.2em }
+.pg-solde li{ display:flex; flex-direction:column }
+.pg-solde b{ font-family:var(--serif); font-size:1.35em; letter-spacing:-.02em; font-variant-numeric:tabular-nums }
+.pg-solde span{ font-size:.62em; color:var(--ink-3); line-height:1.2 }
+.pg-commentaire{ font-size:.74em; color:var(--ink-2); margin-top:.9em; padding-top:.7em; border-top:1px solid rgba(21,20,15,.16) }
 .pg-focus{ font-family:var(--serif); font-weight:700; font-size:1.05em; line-height:1.15 }
 .pg-prio{ font-size:.62em; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-2); margin-top:.4em }
 
@@ -601,11 +617,21 @@ p{ margin:0; }
 .pg-day em{ font-style:normal; color:var(--ink-3); font-size:.9em }
 
 /* ── Actualités en briques ── */
-.pg-news{ flex:1; columns:2; column-gap:1.4em; column-rule:1px solid rgba(21,20,15,.14) }
-.pg-news article{ break-inside:avoid; margin-bottom:1.1em }
-.pg-news h5{ font-family:var(--serif); font-weight:700; font-size:1.02em; line-height:1.14; margin:0 0 .3em }
-.pg-news p{ font-size:.74em; color:var(--ink-2); margin-bottom:.35em }
-.pg-news .pg-kick{ font-size:.58em; margin-bottom:.4em }
+/* min-height:0 indispensable : un élément flex refuse par défaut de descendre
+   sous la hauteur de son contenu, et poussait donc le folio hors de la
+   feuille. Avec cette ligne, la zone est bornée à l'espace réellement
+   disponible et les colonnes s'équilibrent dedans. */
+.pg-news{ flex:1; min-height:0; columns:2; column-gap:1.4em; column-rule:1px solid rgba(21,20,15,.14) }
+/* Interlignage resserré : à quinze brèves, l'écart d'origine en rejetait deux
+   dans une troisième colonne invisible. Mieux vaut densifier que retrancher —
+   c'est ce que fait un journal quand la matière abonde. */
+/* Interlignage calé au pixel : à .8em les deux dernières brèves mordaient
+   sur le folio, à .66em il restait 16px de blanc. .70em remplit exactement
+   les deux colonnes. */
+.pg-news article{ break-inside:avoid; margin-bottom:.70em }
+.pg-news h5{ font-family:var(--serif); font-weight:700; font-size:1em; line-height:1.1; margin:0 0 .24em }
+.pg-news p{ font-size:.72em; color:var(--ink-2); margin-bottom:.28em }
+.pg-news .pg-kick{ font-size:.56em; margin-bottom:.32em; padding-bottom:.3em }
 
 /* ── Tableaux et graphiques ── */
 .pg-table{ width:100%; border-collapse:collapse; font-size:.72em }
