@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img" aria-label="Concert et festival">
+  <defs>
+    <linearGradient id="fsky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1B0836"/><stop offset=".55" stop-color="#4B1789"/><stop offset="1" stop-color="#9D2FA8"/>
+    </linearGradient>
+    <radialGradient id="stagelight" cx=".5" cy="1" r=".9">
+      <stop offset="0" stop-color="#FF5FC4" stop-opacity=".85"/><stop offset="1" stop-color="#FF5FC4" stop-opacity="0"/>
+    </radialGradient>
+    <clipPath id="fclip"><rect width="400" height="300"/></clipPath>
+  </defs>
+  <g clip-path="url(#fclip)">
+    <rect width="400" height="300" fill="url(#fsky)"/>
+    <!-- beams -->
+    <g opacity=".55">
+      <path d="M120 300 40 40l30-8 76 268z" fill="#7DE0FF" opacity=".45"/>
+      <path d="M180 300 156 34h26l24 266z" fill="#FFD86B" opacity=".4"/>
+      <path d="M248 300 330 46l28 12-84 242z" fill="#FF6BD6" opacity=".45"/>
+      <path d="M300 300 384 128l16 22-72 150z" fill="#C7F53F" opacity=".3"/>
+    </g>
+    <ellipse cx="200" cy="300" rx="220" ry="130" fill="url(#stagelight)"/>
+    <!-- stage truss -->
+    <rect x="44" y="120" width="312" height="10" rx="5" fill="#120522" opacity=".9"/>
+    <g fill="#FFE9A8">
+      <circle cx="88" cy="140" r="7"/><circle cx="152" cy="140" r="7"/><circle cx="216" cy="140" r="7"/><circle cx="280" cy="140" r="7"/><circle cx="336" cy="140" r="7"/>
+    </g>
+    <!-- confetti -->
+    <g opacity=".9">
+      <rect x="60" y="60" width="6" height="12" rx="2" fill="#C7F53F" transform="rotate(24 60 60)"/>
+      <rect x="130" y="34" width="6" height="12" rx="2" fill="#FFD86B" transform="rotate(-30 130 34)"/>
+      <rect x="230" y="70" width="6" height="12" rx="2" fill="#7DE0FF" transform="rotate(50 230 70)"/>
+      <rect x="300" y="30" width="6" height="12" rx="2" fill="#FF6BD6" transform="rotate(-14 300 30)"/>
+      <rect x="352" y="88" width="6" height="12" rx="2" fill="#C7F53F" transform="rotate(38 352 88)"/>
+      <rect x="18" y="104" width="6" height="12" rx="2" fill="#FF6BD6" transform="rotate(-40 18 104)"/>
+    </g>
+    <!-- crowd -->
+    <g fill="#0B0318">
+      <g opacity=".55">
+        <circle cx="46" cy="212" r="16"/><path d="M22 300c0-30 11-46 24-46s24 16 24 46z"/>
+        <circle cx="120" cy="204" r="15"/><path d="M98 300c0-29 10-44 22-44s22 15 22 44z"/>
+        <circle cx="196" cy="210" r="16"/><path d="M172 300c0-30 11-46 24-46s24 16 24 46z"/>
+        <circle cx="272" cy="202" r="15"/><path d="M250 300c0-29 10-44 22-44s22 15 22 44z"/>
+        <circle cx="348" cy="212" r="16"/><path d="M324 300c0-30 11-46 24-46s24 16 24 46z"/>
+      </g>
+      <circle cx="84" cy="240" r="18"/><path d="M56 300c0-32 12-50 28-50s28 18 28 50z"/>
+      <path d="M52 250c-4-22-6-38-4-48 1-6 9-6 10 0 2 10 4 26 6 46zM120 246c6-20 10-36 10-46 0-7 9-7 10-1 1 10-2 28-8 50z"/>
+      <circle cx="164" cy="248" r="17"/><path d="M138 300c0-30 11-47 26-47s26 17 26 47z"/>
+      <path d="M136 258c-6-18-10-32-9-42 1-6 9-6 10 0 1 9 3 24 7 40z"/>
+      <circle cx="240" cy="238" r="18"/><path d="M212 300c0-32 12-50 28-50s28 18 28 50z"/>
+      <path d="M274 246c8-22 12-38 12-48 0-7 9-7 10 0 1 10-4 28-12 52z"/>
+      <circle cx="318" cy="250" r="16"/><path d="M292 300c0-29 11-45 26-45s26 16 26 45z"/>
+      <circle cx="16" cy="252" r="16"/><path d="M-10 300c0-29 11-45 26-45s26 16 26 45z"/>
+      <path d="M348 262c6-18 10-32 10-42 0-7 9-7 10-1 1 10-3 26-10 46z"/>
+    </g>
+    <!-- phone screens in the crowd -->
+    <g fill="#FFF6C9" opacity=".85">
+      <rect x="60" y="228" width="7" height="12" rx="2"/><rect x="206" y="236" width="7" height="12" rx="2"/><rect x="300" y="242" width="7" height="12" rx="2"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,511 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prédizh — Prédis ce qui arrive près de chez toi</title>
+<meta name="description" content="Prédizh, le jeu de prédictions 100% breton. Sport, météo, culture, événements : prédis ce qui arrive près de chez toi, gagne des points et échange-les contre des récompenses chez les commerces locaux.">
+<meta name="theme-color" content="#7C3AED">
+<meta property="og:title" content="Prédizh — Prédis ce qui arrive près de chez toi">
+<meta property="og:description" content="Le jeu de prédictions 100% breton. Gratuit, sans mise, avec des récompenses locales.">
+<meta property="og:type" content="website">
+<link rel="preload" href="assets/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%237C3AED'/%3E%3Cpath d='M10 24V8h7a5 5 0 0 1 0 10h-3' stroke='%23fff' stroke-width='3.4' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+
+<a class="skip-link" href="#contenu">Aller au contenu</a>
+
+<!-- ══════════ NAV ══════════ -->
+<header class="nav" id="nav">
+  <div class="shell nav__inner">
+    <a class="logo" href="#" aria-label="Prédizh, accueil">
+      <span class="logo__word">PRÉDIZH</span>
+      <svg class="logo__spark" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0c1.1 6 4.9 9.8 12 12-7.1 2.2-10.9 6-12 12-1.1-6-4.9-9.8-12-12C7.1 9.8 10.9 6 12 0z"/></svg>
+    </a>
+
+    <nav class="nav__links" id="nav-links" aria-label="Navigation principale">
+      <a href="#comment">Comment ça marche</a>
+      <a href="#recompenses">Récompenses</a>
+      <a href="#classement">Classement</a>
+      <a href="#partenaires">Partenaires</a>
+      <a href="#apropos">À propos</a>
+      <a class="btn btn--purple nav__links-cta" href="#inscription">Rejoindre Predizh</a>
+    </nav>
+
+    <a class="btn btn--purple nav__cta" href="#inscription">Rejoindre Predizh</a>
+
+    <button class="nav__burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav-links">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="contenu">
+
+<!-- ══════════ HERO ══════════ -->
+<section class="hero">
+  <div class="shell hero__inner">
+
+    <div class="hero__copy">
+      <span class="badge reveal">
+        100% BRETAGNE
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21S3 14.6 3 8.9A5 5 0 0 1 12 6a5 5 0 0 1 9 2.9C21 14.6 12 21 12 21z"/></svg>
+      </span>
+
+      <h1 class="hero__title reveal">
+        <span class="line">PRÉDIS</span>
+        <span class="line line--accent">CE QUI ARRIVE</span>
+        <span class="line">PRÈS DE</span>
+        <span class="line line--underlined">CHEZ TOI.
+          <svg class="marker" viewBox="0 0 300 26" aria-hidden="true" preserveAspectRatio="none">
+            <path d="M6 18c46-9 96-13 148-12 44 1 89 5 140 12" />
+          </svg>
+        </span>
+      </h1>
+
+      <p class="hero__sub reveal">Sport, météo, culture, événements…<br>C'est ton terrain de jeu&nbsp;!</p>
+
+      <div class="hero__actions reveal">
+        <a class="btn btn--purple btn--lg" href="#inscription">
+          Rejoindre Predizh
+          <svg class="i-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-7 7 7-7 7"/></svg>
+        </a>
+
+        <div class="note">
+          <svg class="note__arrow" viewBox="0 0 88 52" aria-hidden="true">
+            <path d="M84 8C64 2 34 4 16 24"/>
+            <path d="M8 34c1-8 4-13 8-16m-8 16c8-1 13 1 17 5"/>
+          </svg>
+          <p class="note__text">C'est gratuit,<br>sans mise.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero__visual">
+      <!-- painted blobs -->
+      <svg class="blob blob--purple" viewBox="0 0 400 420" aria-hidden="true"><path d="M204 6c62-12 118 20 140 74 21 52 3 92-26 133-30 42-42 90-91 100-49 11-101-20-137-58C54 217 16 178 14 130 12 79 55 39 104 21c34-13 68-9 100-15z"/></svg>
+      <svg class="blob blob--yellow" viewBox="0 0 300 360" aria-hidden="true"><path d="M160 4c50-10 102 26 118 76 17 51-8 92-32 133-24 40-56 60-100 44C102 241 74 200 56 158 38 116 26 68 56 36 84 6 122 12 160 4z"/></svg>
+
+      <img class="hero__photo" src="assets/phare.svg" alt="Un phare breton sur des rochers face à la mer" width="480" height="600" loading="eager">
+
+      <!-- doodles -->
+      <svg class="doodle doodle--slash-pink" viewBox="0 0 60 80" aria-hidden="true"><path d="M12 74C22 52 30 30 34 6M34 70C42 50 48 32 51 14M2 56C8 42 13 28 16 14"/></svg>
+      <svg class="doodle doodle--tick-black" viewBox="0 0 46 46" aria-hidden="true"><path d="M6 6 22 22M40 8 24 24M14 40l10-10"/></svg>
+      <svg class="doodle doodle--tick-black2" viewBox="0 0 40 60" aria-hidden="true"><path d="M8 4v22M22 8v18M4 40l10 8M28 38l-8 12"/></svg>
+      <svg class="doodle doodle--conf" viewBox="0 0 120 70" aria-hidden="true">
+        <path d="M8 32V8" stroke="#111"/><path d="M30 20 20 6" stroke="#FF4D8D"/><path d="M50 26 56 6" stroke="#3B9EFF"/>
+        <path d="M76 22 88 8" stroke="#C7F53F"/><path d="M104 30l10-16" stroke="#7C3AED"/><path d="M62 46l14-6" stroke="#FFC93D"/>
+      </svg>
+
+      <!-- ═════ PHONE ═════ -->
+      <div class="phone" id="phone">
+        <div class="phone__screen">
+          <div class="phone__notch" aria-hidden="true"></div>
+
+          <div class="app__top">
+            <span class="app__logo">PRÉDIZH</span>
+            <div class="app__stats">
+              <span class="chip chip--dark"><i class="dot dot--purple"></i>2 450</span>
+              <span class="chip chip--dark"><svg class="i-bolt" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z"/></svg>16 900</span>
+            </div>
+          </div>
+
+          <div class="app__tabs" role="tablist" aria-label="Catégories">
+            <button class="app__tab is-active" role="tab" aria-selected="true">À la une</button>
+            <button class="app__tab" role="tab" aria-selected="false">Sport</button>
+            <button class="app__tab" role="tab" aria-selected="false">Météo</button>
+            <button class="app__tab" role="tab" aria-selected="false">Culture</button>
+            <button class="app__tab" role="tab" aria-selected="false">Événements</button>
+          </div>
+
+          <div class="app__feed">
+
+            <article class="pcard">
+              <div class="pcard__head">
+                <h3 class="pcard__q">Le Stade Rennais gagne ce week-end&nbsp;?</h3>
+                <svg class="pcard__icon" viewBox="0 0 48 48" aria-hidden="true">
+                  <path d="M24 3 43 9v16c0 11-8 18-19 21C13 43 5 36 5 25V9z" fill="#B4152B"/>
+                  <path d="M24 3 43 9v16c0 11-8 18-19 21z" fill="#111"/>
+                  <path d="M24 13c5 0 9 4 9 9s-4 9-9 9-9-4-9-9 4-9 9-9z" fill="#fff" opacity=".92"/>
+                  <path d="M24 17.5 27 22h-6z" fill="#B4152B"/><circle cx="24" cy="25" r="3" fill="#111"/>
+                </svg>
+              </div>
+              <div class="vote">
+                <span class="vote__bar vote__bar--yes" style="flex:68"><b>Oui</b> 68%</span>
+                <span class="vote__bar vote__bar--no" style="flex:32"><b>Non</b> 32%</span>
+              </div>
+              <div class="pcard__foot"><span>+2,1k jouent déjà</span><span>Fin de saison</span></div>
+            </article>
+
+            <article class="pcard">
+              <p class="pcard__eyebrow">MÉTÉO <i>•</i> Saint-Malo</p>
+              <div class="pcard__head">
+                <h3 class="pcard__q">Grand soleil à Saint-Malo ce week-end&nbsp;?</h3>
+                <svg class="pcard__icon" viewBox="0 0 48 48" aria-hidden="true">
+                  <circle cx="24" cy="24" r="10" fill="#FFC93D"/>
+                  <g stroke="#FFC93D" stroke-width="3.4" stroke-linecap="round">
+                    <path d="M24 4v6M24 38v6M4 24h6M38 24h6M10 10l4.5 4.5M33.5 33.5 38 38M38 10l-4.5 4.5M14.5 33.5 10 38"/>
+                  </g>
+                </svg>
+              </div>
+              <div class="vote">
+                <span class="vote__bar vote__bar--yes" style="flex:76"><b>Oui</b> 76%</span>
+                <span class="vote__bar vote__bar--no" style="flex:24"><b>Non</b> 24%</span>
+              </div>
+              <div class="pcard__foot"><span>+1,8k jouent déjà</span><span>Ce week-end</span></div>
+            </article>
+
+            <article class="pcard">
+              <p class="pcard__eyebrow">CULTURE <i>•</i> Lorient</p>
+              <div class="pcard__head">
+                <h3 class="pcard__q">Festival Interceltique : record d'affluence&nbsp;?</h3>
+                <svg class="pcard__icon" viewBox="0 0 48 48" aria-hidden="true" fill="#7C3AED">
+                  <path d="M12 20c2 0 3 1 3 3v18h-6V23c0-2 1-3 3-3zM24 14c2 0 3 1 3 3v24h-6V17c0-2 1-3 3-3zM36 20c2 0 3 1 3 3v18h-6V23c0-2 1-3 3-3z"/>
+                  <circle cx="12" cy="13" r="4"/><circle cx="24" cy="7" r="4"/><circle cx="36" cy="13" r="4"/>
+                  <path d="M6 30c-1-4 0-8 2-10l3 3c-1 2-2 4-2 7zM42 30c1-4 0-8-2-10l-3 3c1 2 2 4 2 7z"/>
+                </svg>
+              </div>
+              <div class="vote">
+                <span class="vote__bar vote__bar--yes" style="flex:54"><b>Oui</b> 54%</span>
+                <span class="vote__bar vote__bar--no" style="flex:46"><b>Non</b> 46%</span>
+              </div>
+              <div class="pcard__foot"><span>+3,4k jouent déjà</span><span>En août</span></div>
+            </article>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ COMMENT ÇA MARCHE ══════════ -->
+<section class="steps" id="comment">
+  <h2 class="sr-only">Comment ça marche</h2>
+  <div class="shell steps__grid">
+
+    <article class="step step--purple reveal">
+      <svg class="step__icon" viewBox="0 0 64 64" aria-hidden="true">
+        <circle cx="30" cy="34" r="24" fill="none" stroke="#7C3AED" stroke-width="4"/>
+        <circle cx="30" cy="34" r="15" fill="none" stroke="#C4B5FD" stroke-width="4"/>
+        <circle cx="30" cy="34" r="6" fill="#7C3AED"/>
+        <path d="M30 34 58 6" stroke="#111" stroke-width="4" stroke-linecap="round"/>
+        <path d="M48 6h10v10" fill="none" stroke="#111" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <h3 class="step__title">PRÉDIS.</h3>
+      <p class="step__text">Réponds aux questions qui font parler autour de toi.</p>
+
+      <div class="step__demo">
+        <div class="minivote">
+          <div class="minivote__nums"><b>68%</b><b class="is-muted">32%</b></div>
+          <div class="minivote__track"><span style="width:68%"></span></div>
+          <div class="minivote__labels"><span>Oui</span><span>Non</span></div>
+        </div>
+        <div class="stack">
+          <img src="assets/avatars/avatar-1.svg" alt="" width="34" height="34">
+          <img src="assets/avatars/avatar-4.svg" alt="" width="34" height="34">
+          <img src="assets/avatars/avatar-7.svg" alt="" width="34" height="34">
+          <img src="assets/avatars/avatar-10.svg" alt="" width="34" height="34">
+          <span class="stack__more">+2,1k</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="step step--green reveal">
+      <svg class="step__icon" viewBox="0 0 64 64" aria-hidden="true">
+        <path d="M18 8h28v18a14 14 0 0 1-28 0z" fill="#FFC93D"/>
+        <path d="M18 12H9c0 10 5 15 11 16M46 12h9c0 10-5 15-11 16" fill="none" stroke="#E0A21B" stroke-width="4" stroke-linecap="round"/>
+        <path d="M28 40h8v8h-8z" fill="#E0A21B"/><rect x="20" y="48" width="24" height="7" rx="3" fill="#111"/>
+        <path d="M32 15l2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z" fill="#fff" opacity=".85"/>
+      </svg>
+      <h3 class="step__title">GAGNE.</h3>
+      <p class="step__text">Les bonnes prédictions te rapportent des points.</p>
+
+      <div class="step__demo step__demo--center">
+        <svg class="doodle doodle--sparkle-lime" viewBox="0 0 40 40" aria-hidden="true"><path d="M8 30 4 36M18 32l-2 8M28 30l4 6"/></svg>
+        <div class="pts-pill"><b>+150</b> pts</div>
+        <svg class="doodle doodle--star-green" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 2c1.4 7.6 6.4 12.6 14 14-7.6 1.4-12.6 6.4-14 14-1.4-7.6-6.4-12.6-14-14 7.6-1.4 12.6-6.4 14-14z"/></svg>
+      </div>
+    </article>
+
+    <article class="step step--cream reveal">
+      <svg class="step__icon" viewBox="0 0 64 64" aria-hidden="true">
+        <rect x="8" y="24" width="48" height="32" rx="4" fill="#FFC93D"/>
+        <rect x="5" y="16" width="54" height="12" rx="4" fill="#FFD96B"/>
+        <rect x="27" y="16" width="10" height="40" fill="#7C3AED"/>
+        <path d="M32 16c-4-10-18-10-18-2 0 5 10 4 18 2zM32 16c4-10 18-10 18-2 0 5-10 4-18 2z" fill="#7C3AED"/>
+      </svg>
+      <h3 class="step__title">PROFITE.</h3>
+      <p class="step__text">Échange tes points contre des avantages chez les commerces locaux.</p>
+
+      <div class="step__demo step__demo--tiles">
+        <img src="assets/cafe.svg" alt="Un café offert">
+        <img src="assets/surf.svg" alt="Une session de surf">
+        <img src="assets/festival.svg" alt="Une place de festival">
+        <svg class="doodle doodle--zap-yellow" viewBox="0 0 44 44" aria-hidden="true"><path d="M10 4 2 20h9l-3 14M30 6l-6 12h8l-4 12"/></svg>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ══════════ CARTE LIVE ══════════ -->
+<section class="live">
+  <div class="shell live__grid">
+
+    <div class="live__intro reveal">
+      <p class="live__big" data-count="2100" data-suffix="k">2,1k</p>
+      <p class="live__lead">jouent en direct<br>en Bretagne.</p>
+      <span class="pill-live"><i></i>LIVE</span>
+      <div class="stack stack--lg">
+        <img src="assets/avatars/avatar-2.svg" alt="" width="46" height="46">
+        <img src="assets/avatars/avatar-5.svg" alt="" width="46" height="46">
+        <img src="assets/avatars/avatar-8.svg" alt="" width="46" height="46">
+        <img src="assets/avatars/avatar-11.svg" alt="" width="46" height="46">
+        <img src="assets/avatars/avatar-13.svg" alt="" width="46" height="46">
+        <span class="stack__more stack__more--dark">+2k</span>
+      </div>
+    </div>
+
+    <svg class="doodle doodle--curly" viewBox="0 0 80 60" aria-hidden="true">
+      <path d="M4 12c18-10 30 2 26 16-3 10-16 8-14-2 2-9 18-12 44-6"/>
+      <path d="M52 12l10 8-12 6"/>
+    </svg>
+
+    <div class="live__map reveal">
+      <img src="assets/map-bretagne.svg" alt="Carte de la Bretagne" width="516" height="324">
+      <span class="mapdot" style="left:8.3%;top:30.4%"  data-city="Brest"><i></i></span>
+      <span class="mapdot" style="left:76.6%;top:12.6%" data-city="Saint-Malo"><i></i></span>
+      <span class="mapdot" style="left:86%;top:51.1%"   data-city="Rennes"><i></i></span>
+      <span class="mapdot" style="left:39.3%;top:77.8%" data-city="Lorient"><i></i></span>
+      <span class="mapdot" style="left:56.1%;top:84.4%" data-city="Vannes"><i></i></span>
+      <span class="maphalo" style="left:19.1%;top:60%"></span>
+      <svg class="doodle doodle--slash-pink2" viewBox="0 0 60 60" aria-hidden="true"><path d="M6 46C14 34 22 24 32 16M20 52c8-12 16-22 26-30"/></svg>
+    </div>
+
+    <div class="live__legend reveal">
+      <ul>
+        <li><i style="background:#8BD34A"></i><b>Rennes</b><span>842 en direct</span></li>
+        <li><i style="background:#FF4D8D"></i><b>Brest</b><span>421 en direct</span></li>
+        <li><i style="background:#7C3AED"></i><b>Lorient</b><span>312 en direct</span></li>
+        <li><i style="background:#FFC93D"></i><b>Saint-Malo</b><span>215 en direct</span></li>
+        <li><i style="background:#3B9EFF"></i><b>Vannes</b><span>143 en direct</span></li>
+      </ul>
+    </div>
+
+    <div class="circled reveal">
+      <svg class="circled__ring" viewBox="0 0 220 120" aria-hidden="true"><path d="M112 8C56 6 14 26 10 58c-4 32 40 56 100 54 56-2 100-24 100-54 0-26-34-46-88-50"/></svg>
+      <p>Partout.<br>Tout le temps.<br>En Bretagne.</p>
+      <svg class="circled__heart" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21S3 14.6 3 8.9A5 5 0 0 1 12 6a5 5 0 0 1 9 2.9C21 14.6 12 21 12 21z"/></svg>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════ RÉCOMPENSES ══════════ -->
+<section class="rewards" id="recompenses">
+  <div class="shell rewards__grid">
+
+    <div class="rewards__intro reveal">
+      <h2 class="h-display">DES RÉCOMPENSES LOCALES.</h2>
+      <p class="rewards__sub">
+        Rien d'autre.
+        <svg class="doodle doodle--dash-lime" viewBox="0 0 70 24" aria-hidden="true"><path d="M4 20C14 10 22 6 30 4M22 22c8-8 14-12 20-14M44 20c6-6 12-10 18-12"/></svg>
+      </p>
+      <a class="btn btn--purple" href="#recompenses">
+        Voir toutes les récompenses
+        <svg class="i-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-7 7 7-7 7"/></svg>
+      </a>
+    </div>
+
+    <div class="rewards__rail-wrap">
+      <div class="rewards__rail" id="rail">
+        <article class="rcard rcard--green">
+          <div class="rcard__media"><img src="assets/cafe.svg" alt="Un café latte"><span class="rcard__pts">150 pts</span></div>
+          <div class="rcard__body"><h3>Café offert</h3><p><svg class="i-pin" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s7-7.6 7-12a7 7 0 1 0-14 0c0 4.4 7 12 7 12z"/><circle cx="12" cy="10" r="2.6" fill="#fff"/></svg>Rennes</p></div>
+        </article>
+
+        <article class="rcard rcard--pink">
+          <div class="rcard__media"><img src="assets/surf.svg" alt="Des planches de surf sur la plage"><span class="rcard__pts">250 pts</span></div>
+          <div class="rcard__body"><h3>Session surf</h3><p><svg class="i-pin" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s7-7.6 7-12a7 7 0 1 0-14 0c0 4.4 7 12 7 12z"/><circle cx="12" cy="10" r="2.6" fill="#fff"/></svg>Quiberon</p></div>
+        </article>
+
+        <article class="rcard rcard--cream">
+          <div class="rcard__media"><img src="assets/crepe.svg" alt="Une crêpe bretonne"><span class="rcard__pts">200 pts</span></div>
+          <div class="rcard__body"><h3>Crêpe offerte</h3><p><svg class="i-pin" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s7-7.6 7-12a7 7 0 1 0-14 0c0 4.4 7 12 7 12z"/><circle cx="12" cy="10" r="2.6" fill="#fff"/></svg>Saint-Malo</p></div>
+        </article>
+
+        <article class="rcard rcard--purple">
+          <div class="rcard__media"><img src="assets/festival.svg" alt="Une foule en concert"><span class="rcard__pts">300 pts</span></div>
+          <div class="rcard__body"><h3>Place festival</h3><p><svg class="i-pin" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s7-7.6 7-12a7 7 0 1 0-14 0c0 4.4 7 12 7 12z"/><circle cx="12" cy="10" r="2.6" fill="#fff"/></svg>Lorient</p></div>
+        </article>
+
+        <article class="rcard rcard--green">
+          <div class="rcard__media"><img src="assets/commerce.svg" alt="Une devanture de commerce"><span class="rcard__pts">400 pts</span></div>
+          <div class="rcard__body"><h3>Bon d'achat</h3><p><svg class="i-pin" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s7-7.6 7-12a7 7 0 1 0-14 0c0 4.4 7 12 7 12z"/><circle cx="12" cy="10" r="2.6" fill="#fff"/></svg>Brest</p></div>
+        </article>
+      </div>
+
+      <button class="rail-btn rail-btn--prev" id="rail-prev" aria-label="Récompenses précédentes">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12H5m6-7-7 7 7 7"/></svg>
+      </button>
+      <button class="rail-btn rail-btn--next" id="rail-next" aria-label="Récompenses suivantes">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-7 7 7-7 7"/></svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ CLASSEMENT ══════════ -->
+<section class="board" id="classement">
+  <div class="shell board__grid">
+
+    <div class="board__intro reveal">
+      <h2 class="h-display">TOP BRETAGNE.</h2>
+      <p class="board__sub">
+        Qui a le meilleur flair&nbsp;?
+        <svg class="doodle doodle--q" viewBox="0 0 30 30" aria-hidden="true"><path d="M8 24c6-6 10-10 12-14M22 6l2 8"/></svg>
+      </p>
+      <div class="toggle" id="toggle" role="tablist" aria-label="Filtre du classement">
+        <button class="toggle__opt is-active" role="tab" aria-selected="true" data-scope="bretagne">Bretagne</button>
+        <button class="toggle__opt" role="tab" aria-selected="false" data-scope="amis">Amis</button>
+      </div>
+    </div>
+
+    <ol class="board__list reveal" id="board-list">
+      <li class="player" data-bretagne-pts="24 875 pts" data-amis-pts="9 420 pts">
+        <div class="player__pic">
+          <svg class="player__crown" viewBox="0 0 40 26" aria-hidden="true"><path d="M4 24 2 6l10 7 8-11 8 11 10-7-2 18z"/></svg>
+          <img src="assets/avatars/avatar-3.svg" alt="" width="72" height="72">
+          <span class="player__rank player__rank--1">1</span>
+        </div>
+        <p class="player__name">@bzh.56</p>
+        <p class="player__pts">24 875 pts</p>
+      </li>
+      <li class="player" data-bretagne-pts="18 430 pts" data-amis-pts="8 110 pts">
+        <div class="player__pic">
+          <img src="assets/avatars/avatar-6.svg" alt="" width="72" height="72">
+          <span class="player__rank player__rank--2">2</span>
+        </div>
+        <p class="player__name">@rennes.boss</p>
+        <p class="player__pts">18 430 pts</p>
+      </li>
+      <li class="player" data-bretagne-pts="12 680 pts" data-amis-pts="7 305 pts">
+        <div class="player__pic">
+          <img src="assets/avatars/avatar-9.svg" alt="" width="72" height="72">
+          <span class="player__rank player__rank--3">3</span>
+        </div>
+        <p class="player__name">@armorik</p>
+        <p class="player__pts">12 680 pts</p>
+      </li>
+      <li class="player" data-bretagne-pts="9 315 pts" data-amis-pts="5 940 pts">
+        <div class="player__pic">
+          <img src="assets/avatars/avatar-12.svg" alt="" width="72" height="72">
+          <span class="player__rank player__rank--4">4</span>
+        </div>
+        <p class="player__name">@stmalo</p>
+        <p class="player__pts">9 315 pts</p>
+      </li>
+      <li class="player" data-bretagne-pts="7 890 pts" data-amis-pts="4 275 pts">
+        <div class="player__pic">
+          <img src="assets/avatars/avatar-14.svg" alt="" width="72" height="72">
+          <span class="player__rank player__rank--5">5</span>
+        </div>
+        <p class="player__name">@quimper.bzh</p>
+        <p class="player__pts">7 890 pts</p>
+      </li>
+    </ol>
+
+    <aside class="board__note reveal">
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <path d="M18 8h28v18a14 14 0 0 1-28 0z" fill="#111"/>
+        <path d="M18 12H9c0 10 5 15 11 16M46 12h9c0 10-5 15-11 16" fill="none" stroke="#111" stroke-width="4" stroke-linecap="round"/>
+        <path d="M28 40h8v8h-8z" fill="#111"/><rect x="20" y="48" width="24" height="7" rx="3" fill="#111"/>
+      </svg>
+      <p>Le classement<br>se met à jour<br>en temps réel.</p>
+    </aside>
+
+  </div>
+</section>
+
+<!-- ══════════ CTA / PARTENAIRES ══════════ -->
+<section class="final" id="partenaires">
+  <div class="shell final__grid">
+
+    <div class="final__partner reveal">
+      <h2 class="h-display h-display--sm">TU ES UN COMMERCE<br>OU UN ÉVÉNEMENT&nbsp;?</h2>
+      <p>Transforme Predizh en nouveau canal pour faire découvrir ton établissement.</p>
+      <a class="btn btn--white" href="#partenaires">
+        Devenir partenaire
+        <svg class="i-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-7 7 7-7 7"/></svg>
+      </a>
+      <svg class="doodle doodle--scribble-pink" viewBox="0 0 90 70" aria-hidden="true"><path d="M6 62c12-18 22-30 34-40M24 66c10-16 20-28 32-38M46 64c8-12 16-22 26-30"/></svg>
+    </div>
+
+    <img class="final__shop" src="assets/commerce.svg" alt="La devanture éclairée d'un commerce local">
+
+    <div class="final__cta reveal" id="inscription">
+      <h2 class="final__cta-title">PRÊT À JOUER&nbsp;?</h2>
+      <p>Rejoins la communauté Predizh et ne rate aucune prédiction.</p>
+      <form class="signup" id="signup" novalidate>
+        <label class="sr-only" for="email">Ton adresse email</label>
+        <input id="email" name="email" type="email" placeholder="Ton email" autocomplete="email" required>
+        <button class="btn btn--lime" type="submit">Rejoindre</button>
+      </form>
+      <p class="signup__msg" id="signup-msg" role="status"></p>
+      <div class="final__proof">
+        <span>Déjà +8k inscrits</span>
+        <div class="stack stack--sm">
+          <img src="assets/avatars/avatar-2.svg" alt="" width="26" height="26">
+          <img src="assets/avatars/avatar-7.svg" alt="" width="26" height="26">
+          <img src="assets/avatars/avatar-13.svg" alt="" width="26" height="26">
+        </div>
+        <svg class="doodle doodle--check-lime" viewBox="0 0 34 26" aria-hidden="true"><path d="M4 14l9 8L30 4"/></svg>
+      </div>
+    </div>
+
+    <ul class="final__list reveal">
+      <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#111"/><path d="M7 12.5l3.5 3.5L17 9" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>100% gratuit</li>
+      <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#111"/><path d="M7 12.5l3.5 3.5L17 9" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>Aucune mise d'argent</li>
+      <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#111"/><path d="M7 12.5l3.5 3.5L17 9" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>Des récompenses locales</li>
+      <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#111"/><path d="M7 12.5l3.5 3.5L17 9" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>Une communauté bretonne</li>
+    </ul>
+
+    <img class="final__calvaire" src="assets/calvaire.svg" alt="Un calvaire breton en granit">
+  </div>
+</section>
+
+</main>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer class="foot" id="apropos">
+  <div class="shell foot__inner">
+    <a class="logo logo--sm" href="#">
+      <span class="logo__word">PREDIZH</span>
+      <svg class="logo__spark" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0c1.1 6 4.9 9.8 12 12-7.1 2.2-10.9 6-12 12-1.1-6-4.9-9.8-12-12C7.1 9.8 10.9 6 12 0z"/></svg>
+    </a>
+
+    <nav class="foot__links" aria-label="Liens de pied de page">
+      <a href="#apropos">À propos</a>
+      <a href="#comment">FAQ</a>
+      <a href="#partenaires">Contact</a>
+      <a href="#apropos">Mentions légales</a>
+      <a href="#apropos">Confidentialité</a>
+    </nav>
+
+    <div class="foot__social">
+      <a href="#apropos" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.2" fill="currentColor" stroke="none"/></svg></a>
+      <a href="#apropos" aria-label="X"><svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor" stroke="none"><path d="M17.5 3h3.2l-7 8 8.2 10h-6.4l-5-6.1L4.7 21H1.5l7.5-8.6L1.2 3h6.6l4.5 5.6zm-1.1 16h1.8L7.7 4.8H5.8z"/></svg></a>
+      <a href="#apropos" aria-label="TikTok"><svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor" stroke="none"><path d="M16.5 2c.4 2.6 1.9 4.2 4.5 4.4v2.9c-1.6.1-3-.4-4.5-1.3v6.3c0 4.6-4.4 7.4-8.2 5.4-2.6-1.4-3.4-4.8-1.9-7.3 1.3-2.1 3.7-3 6-2.5v3c-1-.3-2-.2-2.7.6-.9 1-.8 2.6.3 3.4 1.3 1 3.4.2 3.5-1.6V2z"/></svg></a>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

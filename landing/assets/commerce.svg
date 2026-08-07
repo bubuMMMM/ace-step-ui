@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img" aria-label="Devanture de commerce local">
+  <defs>
+    <linearGradient id="dusk" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2C3E63"/><stop offset="1" stop-color="#6E5A77"/>
+    </linearGradient>
+    <linearGradient id="vitrine" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFE7A8"/><stop offset="1" stop-color="#F5B85C"/>
+    </linearGradient>
+    <linearGradient id="facade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4A4A52"/><stop offset="1" stop-color="#33333A"/>
+    </linearGradient>
+    <clipPath id="cclip"><rect width="400" height="300"/></clipPath>
+  </defs>
+  <g clip-path="url(#cclip)">
+    <rect width="400" height="300" fill="url(#dusk)"/>
+    <g fill="#FFFFFF" opacity=".5">
+      <circle cx="48" cy="34" r="2"/><circle cx="120" cy="20" r="1.6"/><circle cx="210" cy="30" r="2"/><circle cx="332" cy="22" r="1.8"/><circle cx="378" cy="52" r="1.6"/>
+    </g>
+    <!-- facade -->
+    <rect x="24" y="46" width="352" height="230" fill="url(#facade)"/>
+    <rect x="24" y="46" width="352" height="12" fill="#5A5A64"/>
+    <!-- upper windows -->
+    <g>
+      <rect x="52" y="74" width="52" height="42" rx="4" fill="#8FA6C4" opacity=".5"/>
+      <rect x="174" y="74" width="52" height="42" rx="4" fill="#FFE7A8" opacity=".8"/>
+      <rect x="296" y="74" width="52" height="42" rx="4" fill="#8FA6C4" opacity=".5"/>
+      <g stroke="#2B2B31" stroke-width="3">
+        <path d="M78 74v42M52 95h52M200 74v42M174 95h52M322 74v42M296 95h52"/>
+      </g>
+    </g>
+    <!-- awning -->
+    <path d="M20 138h360l-16 40H36z" fill="#7C3AED"/>
+    <g fill="#C7F53F">
+      <path d="M60 138h34l-14 40H60zM128 138h34l-12 40h-26zM196 138h34l-10 40h-28zM264 138h34l-8 40h-30z" opacity=".9"/>
+    </g>
+    <path d="M36 178h328l-6 10H42z" fill="#5B21B6"/>
+    <!-- sign -->
+    <rect x="120" y="106" width="160" height="30" rx="6" fill="#111"/>
+    <text x="200" y="128" text-anchor="middle" font-family="Georgia, serif" font-size="18" font-weight="700" fill="#C7F53F" letter-spacing="3">LOCAL</text>
+    <!-- shopfront glass -->
+    <rect x="52" y="192" width="132" height="84" rx="4" fill="url(#vitrine)"/>
+    <rect x="216" y="192" width="132" height="84" rx="4" fill="url(#vitrine)"/>
+    <g stroke="#2B2B31" stroke-width="4" opacity=".8">
+      <path d="M118 192v84M282 192v84M52 232h132M216 232h132"/>
+    </g>
+    <!-- door -->
+    <rect x="188" y="188" width="24" height="88" fill="#3B2A1E"/>
+    <circle cx="206" cy="234" r="3" fill="#E7C56B"/>
+    <!-- goods in the window -->
+    <g fill="#8A5A2B" opacity=".85">
+      <rect x="64" y="212" width="14" height="18" rx="3"/><rect x="86" y="206" width="12" height="24" rx="3"/><rect x="140" y="210" width="16" height="20" rx="4"/>
+      <circle cx="240" cy="220" r="9"/><circle cx="266" cy="216" r="7"/><rect x="300" y="208" width="18" height="22" rx="4"/>
+    </g>
+    <g fill="#5A3A18" opacity=".7">
+      <rect x="60" y="250" width="118" height="8" rx="3"/><rect x="222" y="250" width="120" height="8" rx="3"/>
+    </g>
+    <!-- pavement + glow -->
+    <rect y="272" width="400" height="28" fill="#2A2A31"/>
+    <ellipse cx="118" cy="278" rx="86" ry="14" fill="#FFD98A" opacity=".35"/>
+    <ellipse cx="282" cy="278" rx="86" ry="14" fill="#FFD98A" opacity=".35"/>
+    <!-- planter -->
+    <g><rect x="356" y="238" width="26" height="34" rx="4" fill="#8C4A32"/><circle cx="362" cy="232" r="12" fill="#2F6B3A"/><circle cx="376" cy="228" r="10" fill="#3C8248"/><circle cx="369" cy="218" r="9" fill="#2F6B3A"/></g>
+  </g>
+</svg>

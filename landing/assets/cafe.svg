@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img" aria-label="Tasse de café latte">
+  <defs>
+    <linearGradient id="wood" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#C89A6B"/><stop offset=".5" stop-color="#B07F52"/><stop offset="1" stop-color="#8E6440"/>
+    </linearGradient>
+    <radialGradient id="crema" cx=".38" cy=".32" r=".75">
+      <stop offset="0" stop-color="#C6905C"/><stop offset=".6" stop-color="#A9713F"/><stop offset="1" stop-color="#8A552C"/>
+    </radialGradient>
+    <linearGradient id="cupg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#DFE0DE"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="300" fill="url(#wood)"/>
+  <g stroke="#8E6440" stroke-width="2" opacity=".35">
+    <path d="M0 46h400M0 128h400M0 214h400M0 282h400"/>
+  </g>
+  <ellipse cx="206" cy="166" rx="118" ry="112" fill="#6B4A2E" opacity=".28"/>
+  <circle cx="200" cy="158" r="112" fill="url(#cupg)"/>
+  <circle cx="200" cy="158" r="112" fill="none" stroke="#C9CAC7" stroke-width="3"/>
+  <circle cx="200" cy="158" r="86" fill="#F4F4F2"/>
+  <circle cx="200" cy="158" r="78" fill="url(#cupg)"/>
+  <circle cx="200" cy="158" r="70" fill="url(#crema)"/>
+  <!-- rosetta latte art -->
+  <g fill="#F6EEE2">
+    <path d="M200 96c9 14 13 27 13 39 0 22-6 39-13 55-7-16-13-33-13-55 0-12 4-25 13-39z"/>
+    <path d="M200 118c-14-4-26-2-34 5 8 8 20 12 34 11zM200 118c14-4 26-2 34 5-8 8-20 12-34 11z" opacity=".95"/>
+    <path d="M200 142c-16-5-30-3-39 5 9 9 23 13 39 12zM200 142c16-5 30-3 39 5-9 9-23 13-39 12z" opacity=".95"/>
+    <path d="M200 168c-13-4-25-2-33 5 8 7 20 11 33 10zM200 168c13-4 25-2 33 5-8 7-20 11-33 10z" opacity=".95"/>
+    <path d="M200 190c-9-3-17-1-23 4 6 5 14 8 23 7zM200 190c9-3 17-1 23 4-6 5-14 8-23 7z" opacity=".95"/>
+  </g>
+  <path d="M312 122c26 0 44 14 44 34s-18 34-44 34v-16c15 0 24-7 24-18s-9-18-24-18z" fill="url(#cupg)"/>
+  <g fill="#6B4A2E" opacity=".35">
+    <circle cx="46" cy="252" r="9"/><circle cx="72" cy="270" r="6"/><circle cx="352" cy="66" r="8"/>
+  </g>
+  <ellipse cx="60" cy="60" rx="34" ry="22" fill="#F1E3CE" opacity=".55" transform="rotate(-18 60 60)"/>
+</svg>

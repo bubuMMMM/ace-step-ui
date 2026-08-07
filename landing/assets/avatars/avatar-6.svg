@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Photo de profil">
+<defs><clipPath id="c5"><circle cx="50" cy="50" r="50"/></clipPath></defs>
+<g clip-path="url(#c5)">
+<rect width="100" height="100" fill="#EDE4FF"/>
+<path d="M50 72c16 0 29 10 31 28H19c2-18 15-28 31-28z" fill="#FF4D8D"/>
+<path d="M42 62h16v14H42z" fill="#F7D7B8"/>
+<ellipse cx="50" cy="45" rx="20" ry="23" fill="#F7D7B8"/>
+<path d="M31 45c0 16 8 24 19 24s19-8 19-24c1 9 0 16-3 21-4 6-9 9-16 9s-12-3-16-9c-3-5-4-12-3-21z" fill="#7A4A25" opacity=".9"/>
+<g fill="#7A4A25"><circle cx="34" cy="30" r="10"/><circle cx="50" cy="23" r="11"/><circle cx="66" cy="30" r="10"/><circle cx="30" cy="42" r="8"/><circle cx="70" cy="42" r="8"/></g>
+<circle cx="42" cy="46" r="2.4" fill="#231A14"/>
+<circle cx="58" cy="46" r="2.4" fill="#231A14"/>
+<path d="M44.5 56.5h11" stroke="#231A14" stroke-width="2.2" stroke-linecap="round"/>
+</g>
+</svg>
