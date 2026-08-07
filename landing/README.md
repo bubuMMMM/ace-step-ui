@@ -3,6 +3,8 @@
 Clone statique de la landing page Prédizh (jeu de prédictions locales en Bretagne).
 Pas de build, pas de dépendances : trois fichiers et un dossier d'assets.
 
+**En ligne :** https://predizh-landing.vercel.app
+
 ```
 landing/
 ├── index.html          markup complet de la page
@@ -56,4 +58,10 @@ dans `index.html` si le tracé change.
 ## Déploiement
 
 Site statique : n'importe quel hébergeur convient. Sur Vercel, pointer la racine
-du projet sur `landing/` sans build command ni framework.
+du projet sur `landing/`, sans build command ni framework.
+
+Une seule différence sur https://predizh-landing.vercel.app : les polices y sont
+chargées depuis Google Fonts plutôt qu'auto-hébergées, parce que ce déploiement
+a été poussé par l'API (qui prend les fichiers en clair, sans binaires). Brancher
+ce dépôt sur Vercel redéploie la version auto-hébergée, sans dépendance externe.
+Le rendu est identique : mêmes familles, mêmes axes variables.
