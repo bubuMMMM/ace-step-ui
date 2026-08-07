@@ -1,0 +1,14 @@
+{
+  "name": "Predizh — Prédis ce qui arrive près de chez toi",
+  "short_name": "Predizh",
+  "description": "Pronostics locaux gratuits en Bretagne : gagne des points, débloque des récompenses près de chez toi.",
+  "lang": "fr-FR",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#050505",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }
+  ]
+}

@@ -1,0 +1,953 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Predizh — Prédis ce qui arrive près de chez toi | Bretagne</title>
+<meta name="description" content="Predizh transforme l'actualité locale bretonne en prédictions gratuites. Sport, météo, culture : donne ton pronostic, gagne des points, débloque des récompenses chez les commerçants près de chez toi. Sans argent misé.">
+<link rel="canonical" href="https://predizh-landing.vercel.app/">
+<meta name="theme-color" content="#050505">
+<meta name="robots" content="index,follow,max-image-preview:large">
+
+<!-- Open Graph / partage social -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Predizh">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:url" content="https://predizh-landing.vercel.app/">
+<meta property="og:title" content="Predizh — Prédis ce qui arrive près de chez toi.">
+<meta property="og:description" content="Sport, météo, culture en Bretagne. Donne ton pronostic, gagne des points, débloque des récompenses locales. 100% gratuit, aucun argent misé.">
+<meta property="og:image" content="https://predizh-landing.vercel.app/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Predizh — Prédis ce qui arrive près de chez toi. Bretagne.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Predizh — Prédis ce qui arrive près de chez toi.">
+<meta name="twitter:description" content="Sport, météo, culture en Bretagne. Pronostique gratuitement, gagne des points, débloque des récompenses locales.">
+<meta name="twitter:image" content="https://predizh-landing.vercel.app/og.png">
+
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;700;800&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;700;800&display=swap"></noscript>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://predizh-landing.vercel.app/#org",
+      "name": "Predizh",
+      "url": "https://predizh-landing.vercel.app/",
+      "logo": "https://predizh-landing.vercel.app/og.png",
+      "areaServed": { "@type": "AdministrativeArea", "name": "Bretagne, France" },
+      "description": "Predizh transforme l'actualité locale en prédictions gratuites, points et récompenses chez les commerçants bretons."
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://predizh-landing.vercel.app/#site",
+      "url": "https://predizh-landing.vercel.app/",
+      "name": "Predizh",
+      "inLanguage": "fr-FR",
+      "publisher": { "@id": "https://predizh-landing.vercel.app/#org" }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "Est-ce vraiment gratuit ?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Oui. Predizh est 100% gratuit. Aucun paiement, aucun abonnement, aucune carte bancaire n'est demandée." } },
+        { "@type": "Question", "name": "Est-ce un site de paris ?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Non. Tu ne mises jamais d'argent. Predizh est un jeu de pronostics gratuit : tu prends position, tu suis le résultat, tu accumules des points. Aucun gain financier n'est possible." } },
+        { "@type": "Question", "name": "À quoi servent les points ?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Les points se transforment en avantages concrets chez les commerçants et partenaires locaux : un café, une crêpe, une place de festival, une activité près de chez toi." } },
+        { "@type": "Question", "name": "Quand est-ce que Predizh arrive ?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Predizh se lance d'abord en Bretagne, sur six villes : Rennes, Brest, Lorient, Vannes, Saint-Malo et Quimper. Les personnes inscrites sur la liste d'attente sont prévenues en premier et accèdent à la bêta avant tout le monde." } },
+        { "@type": "Question", "name": "Que faites-vous de mes données ?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Ton email sert uniquement à te prévenir du lancement de Predizh dans ta ville. Aucune revente, aucun partage à des tiers. Tu peux demander la suppression de tes données à tout moment." } },
+        { "@type": "Question", "name": "Comment devenir commerçant partenaire ?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Les commerces locaux peuvent proposer des récompenses à la communauté Predizh et gagner en visibilité auprès des habitants de leur ville. Il suffit de nous contacter pour rejoindre le réseau de partenaires." } }
+    ]
+    }
+  ]
+}
+</script>
+
+<style>
+:root{
+  --ink:#050505;
+  --muted:#5f5f5a;      /* 5.9:1 sur blanc — AA */
+  --soft:#6b6b66;       /* 5.3:1 sur blanc — AA */
+  --line:#deded8;
+  --edge:#c9c9c3;
+  --sand:#f7f7f4;
+  --pad:clamp(20px,4vw,68px);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;color:var(--ink);background:#fff;font-family:Inter,system-ui,-apple-system,Segoe UI,Arial,sans-serif;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button,input,select{font:inherit;color:inherit}
+img{max-width:100%;display:block}
+
+/* ---- Accessibilité : focus visible partout ---- */
+:where(a,button,summary,input,select,[tabindex]):focus-visible{
+  outline:3px solid #050505;outline-offset:3px;border-radius:4px
+}
+.skip{position:absolute;left:-9999px;top:0;z-index:200;background:#050505;color:#fff;padding:14px 20px;font-weight:800;font-size:13px;border-radius:0 0 10px 0}
+.skip:focus{left:0}
+.sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+.noise{position:fixed;inset:0;z-index:99;pointer-events:none;opacity:.022;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* ---------- Header ---------- */
+header{height:72px;position:fixed;inset:0 0 auto;z-index:50;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 var(--pad);background:rgba(255,255,255,.92);backdrop-filter:blur(18px);border-bottom:1px solid rgba(0,0,0,.07)}
+.brand{font-weight:800;letter-spacing:.16em;font-size:19px}
+nav{display:flex;gap:26px;font-size:12px;font-weight:700;color:#5f5f5a}
+nav a:hover{color:#050505}
+.join{justify-self:end;border:1px solid #111;border-radius:999px;padding:11px 17px;font-size:12px;font-weight:800;background:#050505;color:#fff;transition:.2s}
+.join:hover{transform:translateY(-1px)}
+.menu{display:none;border:1px solid #111;background:#fff;font-weight:800;font-size:12px;border-radius:999px;padding:9px 14px;cursor:pointer;justify-self:end}
+.mobile{display:none}
+
+.shell{padding:112px var(--pad) 88px;border-top:1px solid var(--line);position:relative;overflow:hidden}
+.hero{min-height:100svh;padding-top:106px;border-top:0;display:grid;grid-template-columns:1.08fr .92fr;gap:2vw;align-items:center}
+.k{font-size:11px;font-weight:800;letter-spacing:.2em;margin:0 0 20px;color:var(--ink)}
+/* line-height >= .96 + padding : sans ça, les accents des capitales Anton
+   (PRÉDIS, PRÈS) sont rognés en haut et chevauchent la ligne précédente. */
+.hero h1,h2{font-family:Anton,Impact,Haettenschweiler,sans-serif;font-weight:400;letter-spacing:-.025em;line-height:.96;margin:0;text-transform:uppercase;padding-top:.06em}
+.hero h1{font-size:clamp(60px,8.2vw,148px);max-width:920px}
+h2{font-size:clamp(52px,8vw,136px)}
+.lead{font-size:clamp(17px,1.4vw,21px);line-height:1.5;max-width:620px;margin:24px 0;color:var(--muted)}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 22px;border:1px solid #111;border-radius:999px;font-size:13px;font-weight:800;transition:.2s;cursor:pointer;background:#fff;text-align:center}
+.btn:hover{transform:translateY(-2px)}
+.dark{background:#050505;color:#fff}
+.meta{display:flex;gap:18px;flex-wrap:wrap;margin-top:24px;color:var(--soft);font-size:12px;font-weight:600;list-style:none;padding:0}
+.meta li:before{content:'✓';margin-right:7px;color:#050505;font-weight:800}
+
+/* ---------- Maquettes téléphone (décoratives) ---------- */
+.visual{height:82vh;min-height:560px;position:relative;display:flex;align-items:flex-end;justify-content:center}
+.menhir{position:absolute;left:2%;bottom:0;width:29%;height:62%;clip-path:polygon(51% 0,86% 15%,100% 100%,0 100%,14% 16%);background:linear-gradient(90deg,#a0a09c,#f1f1ee 52%,#777773);box-shadow:0 30px 70px rgba(0,0,0,.13)}
+.phone{position:relative;background:#0a0a0a;border-radius:56px;padding:9px;box-shadow:0 30px 80px rgba(0,0,0,.22),inset 0 0 0 2px #303030}
+.heroPhone{height:min(77vh,700px);aspect-ratio:9/18.9;z-index:4;margin-left:14%;transform:perspective(1200px) rotateY(-5deg)}
+.screen{height:100%;background:#fff;border-radius:48px;padding:16px;overflow:hidden;position:relative}
+.status{height:34px;display:flex;align-items:center;justify-content:space-between;font-size:10px;font-weight:800;position:relative}
+.status:after{content:'';position:absolute;top:1px;left:34%;width:32%;height:27px;background:#050505;border-radius:18px}
+.appHead{display:flex;justify-content:space-between;align-items:center;margin:11px 2px}
+.appHead strong{font-size:25px;letter-spacing:.02em}
+.chips{display:flex;gap:5px;overflow:hidden;margin:8px 0 11px}
+.chips span{background:#fff;padding:7px 10px;border-radius:999px;font-size:9px;border:1px solid var(--line);white-space:nowrap}
+.chips span:first-child{background:#050505;color:#fff;border-color:#050505}
+.card{background:#fff;border:1px solid var(--edge);border-radius:16px;padding:12px;margin:8px 0}
+.cardTop,.cardFoot{display:flex;justify-content:space-between;font-size:9px;color:var(--muted);font-weight:700}
+.card h3{font-size:15px;line-height:1.12;margin:11px 0;font-weight:700}
+.votes{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.votes span,.votes button{min-height:34px;border-radius:8px;border:1px solid var(--edge);background:#fff;font-size:10px;font-weight:800;display:grid;place-items:center}
+.votes :first-child{background:#050505;color:#fff;border-color:#050505}
+.cardFoot{margin-top:8px}
+.bottom{position:absolute;left:12px;right:12px;bottom:7px;border-top:1px solid var(--line);height:55px;background:#fff;display:flex;align-items:center;justify-content:space-between}
+.bottom span{text-align:center;font-size:14px}
+.bottom small{display:block;font-size:7px}
+.bottom b{width:41px;height:41px;background:#050505;color:#fff;border-radius:50%;display:grid;place-items:center;font-size:23px}
+.mockLabel{position:absolute;bottom:-2px;left:50%;transform:translateX(-50%);background:#050505;color:#fff;font-size:10px;font-weight:800;letter-spacing:.14em;padding:7px 13px;border-radius:999px;z-index:9;white-space:nowrap}
+
+/* ---------- Bandeau défilant ---------- */
+.rail{border-top:1px solid #111;border-bottom:1px solid #111;overflow:hidden}
+.track{display:flex;gap:24px;align-items:center;padding:14px 0;width:max-content;animation:run 28s linear infinite;font-size:11px;font-weight:800;letter-spacing:.08em}
+.track b{font-family:Anton,Impact,sans-serif;font-size:19px;font-weight:400;margin-left:6px}
+@keyframes run{to{transform:translateX(-50%)}}
+
+.idx{position:absolute;right:var(--pad);top:34px;font-size:11px;font-weight:800;color:var(--soft)}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid #111;margin-top:58px}
+.step{padding:28px 3vw 8px 0;border-right:1px solid var(--line)}
+.step+.step{padding-left:3vw}
+.step:last-child{border-right:0}
+.step>span{font-size:12px;font-weight:800;color:var(--soft)}
+.step h3{font-size:32px;margin:36px 0 10px;font-family:Anton,Impact,sans-serif;font-weight:400;text-transform:uppercase;letter-spacing:-.01em}
+.step p,.copy p,.split>p{font-size:16px;line-height:1.6;color:var(--muted);max-width:460px}
+.split{display:grid;grid-template-columns:1.25fr .75fr;gap:6vw;align-items:end}
+
+/* ---------- Section « en direct » ---------- */
+.liveStage{height:760px;position:relative;margin-top:36px}
+.contour{position:absolute;inset:0;opacity:.18;background:repeating-radial-gradient(ellipse at 51% 52%,transparent 0 25px,#777 26px 27px,transparent 28px 50px);clip-path:polygon(7% 39%,15% 16%,35% 7%,52% 17%,68% 7%,91% 29%,82% 48%,95% 70%,77% 89%,55% 79%,37% 94%,18% 77%,5% 58%)}
+.float{position:absolute;width:min(520px,61vw);box-shadow:0 18px 44px rgba(0,0,0,.08);background:#fff}
+.float h3{font-size:26px;line-height:1.15}
+.float .cardTop,.float .cardFoot{font-size:11px}
+.float .votes button{min-height:48px;font-size:13px;cursor:pointer;transition:.15s}
+.float .votes button:hover{border-color:#050505}
+.float .votes button[aria-pressed=true]{background:#050505;color:#fff;border-color:#050505}
+.float .votes button[aria-pressed=false]{background:#fff;color:#050505}
+.voteThanks{margin:10px 0 0;font-size:12px;font-weight:700;color:var(--ink)}
+.voteThanks a{text-decoration:underline;text-underline-offset:3px}
+.f1{left:4%;top:12%}
+.f2{right:6%;top:34%}
+.f3{left:28%;bottom:7%}
+
+/* ---------- Lancement ---------- */
+.launchBox{min-height:560px;border:1px solid var(--edge);display:grid;grid-template-columns:.72fr 1.28fr;gap:4vw;padding:clamp(28px,4vw,58px)}
+.launchCopy{display:flex;flex-direction:column}
+.count{margin-top:20px}
+.count strong{font-family:Anton,Impact,sans-serif;font-size:clamp(92px,10vw,176px);font-weight:400;line-height:.82;display:block}
+.count span{font-size:clamp(24px,2.1vw,36px);font-weight:700;line-height:1.1;display:block;margin-top:20px}
+.count small{display:block;margin-top:16px;font-size:15px;font-weight:400;color:var(--muted);max-width:330px;line-height:1.55}
+.cityList{display:flex;flex-wrap:wrap;gap:7px;margin-top:auto;padding-top:32px;list-style:none;padding-left:0}
+.cityList li{border:1px solid var(--edge);border-radius:999px;padding:9px 14px;font-size:12px;font-weight:700}
+.dotWrap{position:relative;min-height:500px}
+.dotMap{position:absolute;inset:7% 2% 9%;background-image:radial-gradient(circle,#111 0 2px,transparent 2.3px);background-size:10px 10px;clip-path:polygon(3% 31%,9% 22%,19% 17%,25% 9%,36% 12%,43% 18%,51% 13%,58% 17%,67% 18%,75% 23%,84% 21%,94% 29%,97% 39%,91% 45%,96% 55%,90% 64%,84% 63%,79% 73%,68% 71%,61% 79%,51% 74%,46% 86%,38% 80%,33% 89%,26% 79%,19% 78%,14% 69%,6% 66%,9% 57%,3% 51%,7% 42%)}
+.pulseDot{position:absolute;width:32px;height:32px;border-radius:50%;background:#fff;border:1px solid var(--edge);box-shadow:0 7px 20px rgba(0,0,0,.12)}
+.pulseDot:after{content:'';position:absolute;inset:11px;background:#111;border-radius:50%}
+.pb{left:27%;top:31%}
+.pr{left:66%;top:43%}
+.pv{left:58%;top:62%}
+.mapFoot{position:absolute;right:1%;bottom:1%;font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--soft)}
+
+/* ---------- Récompenses / classement ---------- */
+.cols{display:grid;grid-template-columns:.86fr 1.14fr;gap:5vw;align-items:center}
+.stage{height:730px;position:relative;display:flex;align-items:flex-end;justify-content:center}
+.stagePhone{height:640px;aspect-ratio:9/18.9;z-index:3}
+.screen h3{font-size:19px;margin:14px 0 6px;font-weight:700}
+.screen>p{font-size:12px;color:var(--muted);margin:0 0 12px;line-height:1.45}
+.ticket{position:absolute;z-index:5;width:175px;min-height:112px;background:#fff;border:1px solid var(--edge);border-radius:17px;padding:14px;box-shadow:0 16px 38px rgba(0,0,0,.1);display:grid;grid-template-columns:38px 1fr}
+.ticket>span{grid-row:1/3;width:35px;height:35px;background:#050505;color:#fff;border-radius:9px;display:grid;place-items:center}
+.ticket b{font-size:13px}
+.ticket small{font-size:11px;color:var(--muted)}
+.ticket strong{grid-column:2;margin-top:11px;font-size:13px}
+.t1{right:0;top:11%;transform:rotate(4deg)}
+.t2{right:-2%;top:39%;transform:rotate(7deg)}
+.t3{left:0;bottom:17%;transform:rotate(-7deg)}
+.t4{right:4%;bottom:3%;transform:rotate(5deg)}
+.stats{display:grid;gap:7px;margin-top:14px;list-style:none;padding:0}
+.stats li{border:1px solid var(--line);border-radius:10px;padding:10px;display:grid;grid-template-columns:1fr auto;align-items:center}
+.stats span{font-size:11px;color:var(--muted)}
+.trend{margin-top:18px;border:1px solid var(--line);border-radius:12px;padding:12px}
+.trend small{display:block;color:var(--muted);font-size:11px;margin-top:4px}
+.trend p{margin:10px 0 0;font-size:13px}
+.rankHead{display:flex;justify-content:space-between;align-items:center;margin:18px 0 10px}
+.rankHead h3{margin:0}
+.rankTabs{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.rankTabs button{border:1px solid var(--line);border-radius:999px;padding:11px;background:#fff;font-weight:800;font-size:12px;cursor:pointer}
+.rankTabs .on{background:#050505;color:#fff;border-color:#050505}
+.rankList{margin-top:11px}
+.row{display:grid;grid-template-columns:26px 34px 1fr auto;gap:9px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+.avatar{width:32px;height:32px;border-radius:50%;background:#050505;color:#fff;display:grid;place-items:center;font-size:12px}
+.user b,.user small{display:block}
+.user small{font-size:11px;color:var(--muted)}
+.pts{font-size:12px;font-weight:800}
+
+/* ---------- Ultra local ---------- */
+.localHead{display:grid;grid-template-columns:1.15fr .85fr;gap:6vw;align-items:end}
+.localStage{height:650px;position:relative;margin-top:46px;border-top:1px solid #111;border-bottom:1px solid #111}
+.mapArea{position:absolute;inset:0}
+.map{position:absolute;inset:7% 6%;opacity:.18;background:repeating-radial-gradient(ellipse at 48% 48%,transparent 0 32px,#777 33px 34px,transparent 35px 64px);clip-path:polygon(6% 38%,16% 15%,35% 8%,51% 17%,66% 7%,91% 28%,83% 49%,95% 69%,78% 88%,54% 78%,37% 94%,19% 77%,5% 58%)}
+.node{position:absolute;border:0;background:none;text-align:left;cursor:pointer;font-size:12px;font-weight:800;letter-spacing:.06em;padding:8px 10px;border-radius:8px}
+.node:before{content:'';display:block;width:9px;height:9px;border-radius:50%;background:#111;margin-bottom:7px;box-shadow:0 0 0 7px rgba(0,0,0,.06);transition:.2s}
+.node[aria-pressed=true]:before{box-shadow:0 0 0 10px rgba(0,0,0,.16);transform:scale(1.25)}
+.node:hover:before{box-shadow:0 0 0 10px rgba(0,0,0,.12)}
+.ren{left:46%;top:35%}
+.bre{left:11%;top:28%}
+.van{left:51%;top:67%}
+.lor{left:34%;top:65%}
+.stm{left:66%;top:21%}
+.localCard{position:absolute;right:5%;bottom:8%;width:min(450px,42vw);background:#fff;border:1px solid var(--edge);border-radius:23px;padding:24px;box-shadow:0 26px 70px rgba(0,0,0,.1)}
+.localTop{display:flex;justify-content:space-between;font-size:10px;font-weight:800;letter-spacing:.1em}
+.localCard h3{font-size:22px;line-height:1.2;margin:14px 0}
+.result{display:flex;gap:10px;align-items:baseline}
+.result strong{font-family:Anton,Impact,sans-serif;font-size:48px;font-weight:400}
+.result span{font-size:12px;font-weight:800;letter-spacing:.1em}
+.localCard>p{font-size:13px;color:var(--muted);margin:12px 0 0}
+
+/* ---------- Manifeste ---------- */
+.manifest{background:#050505;color:#fff;border-top:0}
+.manifestGrid{display:grid;grid-template-columns:.23fr 1fr .58fr;gap:5vw}
+.manifest .k{color:#fff}
+.manifest p{color:#d4d4d0;line-height:1.65;font-size:16px}
+.pills{display:flex;gap:7px;flex-wrap:wrap;margin-top:22px;list-style:none;padding:0}
+.pills li{border:1px solid #55554f;border-radius:999px;padding:10px 14px;font-size:11px;font-weight:700}
+
+/* ---------- Waitlist ---------- */
+.wait{display:grid;grid-template-columns:1.15fr .85fr;gap:6vw;align-items:start}
+.waitIntro p{font-size:16px;line-height:1.6;color:var(--muted);max-width:460px;margin-top:24px}
+.waitCard{border:1px solid var(--edge);border-radius:22px;padding:26px;background:var(--sand)}
+form{display:grid;gap:15px}
+label{font-size:12px;font-weight:800}
+input,select{width:100%;margin-top:7px;border:1px solid var(--edge);border-radius:11px;padding:14px;background:#fff;min-height:50px}
+input:invalid:not(:placeholder-shown){border-color:#b42318}
+.consent{display:flex;gap:11px;align-items:flex-start;font-size:12px;font-weight:400;line-height:1.5;color:var(--muted)}
+.consent input{width:20px;height:20px;min-height:20px;margin:2px 0 0;flex:0 0 auto;accent-color:#050505}
+.hp{position:absolute;left:-9999px}
+.formNote{font-size:12px;color:var(--soft);text-align:center;margin:0}
+.formErr{margin:0;font-size:13px;font-weight:700;color:#b42318}
+.success{text-align:center;padding:22px 0}
+.success h3{font-family:Anton,Impact,sans-serif;font-weight:400;text-transform:uppercase;font-size:34px;margin:0 0 12px}
+.success p{color:var(--muted);line-height:1.6;margin:0 0 20px;font-size:15px}
+.shareRow{display:flex;gap:9px;justify-content:center;flex-wrap:wrap}
+.shareRow a,.shareRow button{border:1px solid var(--edge);border-radius:999px;padding:11px 16px;font-size:12px;font-weight:800;background:#fff;cursor:pointer}
+
+/* ---------- Partenaires ---------- */
+.partner{display:grid;grid-template-columns:1fr auto;gap:4vw;align-items:center;border:1px solid var(--edge);border-radius:22px;padding:clamp(24px,3vw,40px);margin-top:64px;background:var(--sand)}
+.partner h3{font-family:Anton,Impact,sans-serif;font-weight:400;text-transform:uppercase;font-size:clamp(26px,3vw,40px);margin:8px 0 10px;line-height:1.02}
+.partner p{color:var(--muted);margin:0;max-width:520px;line-height:1.6;font-size:15px}
+
+/* ---------- FAQ ---------- */
+.faq{max-width:900px;margin-top:44px;border-top:1px solid #111}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{display:flex;justify-content:space-between;gap:20px;padding:22px 0;font-weight:700;cursor:pointer;font-size:16px;list-style:none}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary .sign{font-weight:800;flex:0 0 auto}
+.faq details[open] summary .sign{transform:rotate(45deg)}
+.faq summary .sign{display:inline-block;transition:transform .2s}
+.faq p{color:var(--muted);line-height:1.65;margin:0 0 22px;max-width:70ch;font-size:15px}
+
+/* ---------- Footer ---------- */
+.site{min-height:110px;border-top:1px solid var(--line);padding:28px var(--pad) 96px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;font-size:12px;gap:14px}
+.site p{justify-self:end;color:var(--soft);margin:0}
+.site nav{gap:18px;font-size:12px}
+
+/* ---------- CTA collant mobile ---------- */
+.stickyCta{display:none;position:fixed;left:0;right:0;bottom:0;z-index:60;padding:12px 16px calc(12px + env(safe-area-inset-bottom));background:rgba(255,255,255,.94);backdrop-filter:blur(16px);border-top:1px solid var(--line)}
+.stickyCta .btn{width:100%}
+
+.reveal{animation:rev .8s both}
+@keyframes rev{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+
+/* ---------- Responsive ---------- */
+@media(max-width:900px){
+  .hero,.cols,.split,.localHead,.manifestGrid,.wait{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr}
+  .step,.step+.step{padding:25px 0;border-right:0;border-bottom:1px solid var(--line)}
+  .launchBox{grid-template-columns:1fr}
+  .stage{height:680px}
+  .localCard{width:56vw}
+  .partner{grid-template-columns:1fr}
+  .site{grid-template-columns:1fr;gap:18px}
+  .site p{justify-self:start}
+}
+@media(max-width:720px){
+  header{height:66px;grid-template-columns:1fr auto}
+  nav,.join{display:none}
+  .menu{display:block}
+  .mobile.open{display:flex;position:absolute;top:66px;left:0;right:0;background:#fff;padding:18px 20px 22px;flex-direction:column;gap:16px;border-bottom:1px solid var(--line);box-shadow:0 18px 40px rgba(0,0,0,.09);font-size:15px;font-weight:700}
+  .stickyCta{display:block}
+  .shell{padding:88px 20px 64px}
+  .hero{padding-top:96px;min-height:auto}
+  .hero h1,h2{font-size:clamp(46px,13vw,80px)}
+  .visual{height:auto;min-height:0;margin-top:44px}
+  .menhir{display:none}
+  .heroPhone{height:520px;max-width:78vw;margin-left:0;transform:none}
+  .liveStage{height:auto;display:grid;gap:18px;padding:10px 0}
+  .contour{display:none}
+  .float{position:static;width:100%}
+  .float h3{font-size:21px}
+  .launchBox{margin:0 -20px;border-left:0;border-right:0;padding:28px 20px}
+  .count strong{font-size:96px}
+  .count span{font-size:26px}
+  .dotWrap{min-height:320px}
+  .dotMap{background-size:7px 7px;background-image:radial-gradient(circle,#111 0 1.5px,transparent 1.8px)}
+  .stage{height:600px}
+  .stagePhone{height:500px;max-width:80vw}
+  .ticket{width:142px;min-height:96px;padding:11px}
+  .t1{top:6%}.t2{top:36%}.t3{bottom:20%}.t4{bottom:2%}
+  /* La carte de résultat était posée par-dessus les boutons Vannes/Lorient,
+     qui devenaient impossibles à toucher. En mobile, on la sort du flux absolu. */
+  .localStage{height:auto;border:0;margin-top:28px}
+  .mapArea{position:relative;height:360px;border-top:1px solid #111;border-bottom:1px solid #111}
+  .localCard{position:static;width:auto;margin-top:22px}
+  .node{font-size:11px;padding:6px 8px}
+  .manifestGrid{gap:26px}
+  .waitCard{padding:20px}
+  .site{padding:25px 20px 108px}
+}
+
+/* ---------- Mouvement réduit ---------- */
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*:before,*:after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+  .track{animation:none;width:auto;flex-wrap:wrap;justify-content:center}
+  .reveal{animation:none}
+}
+</style>
+</head>
+<body>
+<div class="noise" aria-hidden="true"></div>
+<a class="skip" href="#main">Aller au contenu</a>
+
+<header>
+  <a class="brand" href="#top">PREDIZH</a>
+  <nav aria-label="Navigation principale">
+    <a href="#how">Concept</a>
+    <a href="#live">Prédictions</a>
+    <a href="#rewards">Récompenses</a>
+    <a href="#ranking">Classement</a>
+    <a href="#faq">FAQ</a>
+  </nav>
+  <a class="join" href="#wait">Rejoindre</a>
+  <button class="menu" type="button" aria-expanded="false" aria-controls="mobileNav">Menu</button>
+  <div class="mobile" id="mobileNav">
+    <a href="#how">Concept</a>
+    <a href="#live">Prédictions</a>
+    <a href="#rewards">Récompenses</a>
+    <a href="#ranking">Classement</a>
+    <a href="#faq">FAQ</a>
+    <a href="#wait"><strong>Rejoindre la liste →</strong></a>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ============ HERO ============ -->
+  <section id="top" class="shell hero">
+    <div>
+      <p class="k">PREDIZH / BRETAGNE</p>
+      <h1>Prédis ce qui arrive près de chez toi.</h1>
+      <p class="lead">Sport, météo, culture, événements. Donne ton pronostic sur ce qui fait parler ta ville, gagne des points et échange-les contre des récompenses chez les commerçants du coin.</p>
+      <div class="actions">
+        <a class="btn dark" href="#wait">Rejoindre la liste d'attente</a>
+        <a class="btn" href="#live">Voir comment ça marche</a>
+      </div>
+      <ul class="meta">
+        <li>100% gratuit</li>
+        <li>Aucun argent misé</li>
+        <li>Récompenses locales</li>
+      </ul>
+    </div>
+
+    <div class="visual">
+      <div class="menhir" aria-hidden="true"></div>
+      <div class="phone heroPhone" role="img" aria-label="Aperçu de l'application Predizh : trois prédictions en cours sur Rennes, Saint-Malo et Lorient.">
+        <div class="screen" aria-hidden="true">
+          <div class="status"><span>9:41</span><span>▮▮▮</span></div>
+          <div class="appHead"><strong>Predizh</strong><span>⌕ ●</span></div>
+          <div class="chips"><span>À la une</span><span>Sport</span><span>Météo</span><span>Culture</span></div>
+          <article class="card">
+            <div class="cardTop"><span>SPORT · RENNES</span><span>● LIVE</span></div>
+            <h3>Le Stade Rennais gagne ce week-end ?</h3>
+            <div class="votes"><span>Oui 68%</span><span>Non 32%</span></div>
+            <div class="cardFoot"><span>2,1k prédisent</span><span>↗ +7%</span></div>
+          </article>
+          <article class="card">
+            <div class="cardTop"><span>MÉTÉO · SAINT-MALO</span><span>● LIVE</span></div>
+            <h3>Grand soleil ce week-end ?</h3>
+            <div class="votes"><span>Oui 76%</span><span>Non 24%</span></div>
+            <div class="cardFoot"><span>1,8k prédisent</span><span>↗ +12%</span></div>
+          </article>
+          <article class="card">
+            <div class="cardTop"><span>CULTURE · LORIENT</span><span>● LIVE</span></div>
+            <h3>Record d'affluence au Festival Interceltique ?</h3>
+            <div class="votes"><span>Oui 55%</span><span>Non 45%</span></div>
+            <div class="cardFoot"><span>1,3k prédisent</span><span>↗ +5%</span></div>
+          </article>
+          <div class="bottom">
+            <span>⌂<small>Accueil</small></span>
+            <span>◉<small>Explorer</small></span>
+            <b>+</b>
+            <span>▤<small>Mes préds</small></span>
+            <span>♛<small>Top</small></span>
+          </div>
+        </div>
+        <p class="mockLabel">APERÇU DE L'APP</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ BANDEAU ============ -->
+  <section class="rail" aria-hidden="true">
+    <div class="track">
+      <span>RENNES <b>68%</b></span>◆<span>SAINT-MALO <b>76%</b></span>◆<span>BREST <b>62%</b></span>◆<span>LORIENT <b>55%</b></span>◆<span>VANNES <b>71%</b></span>◆<span>QUIMPER <b>64%</b></span>◆
+      <span>RENNES <b>68%</b></span>◆<span>SAINT-MALO <b>76%</b></span>◆<span>BREST <b>62%</b></span>◆<span>LORIENT <b>55%</b></span>◆<span>VANNES <b>71%</b></span>◆<span>QUIMPER <b>64%</b></span>◆
+    </div>
+  </section>
+
+  <!-- ============ 01 COMMENT ÇA MARCHE ============ -->
+  <section id="how" class="shell" aria-labelledby="how-t">
+    <span class="idx" aria-hidden="true">01</span>
+    <p class="k">COMMENT ÇA MARCHE</p>
+    <h2 id="how-t">Prédis. Gagne. Profite.</h2>
+    <div class="steps">
+      <article class="step"><span>01</span><h3>Prédis</h3><p>Choisis Oui ou Non sur ce qui fait parler autour de toi : le match du week-end, la météo, l'affluence d'un festival.</p></article>
+      <article class="step"><span>02</span><h3>Gagne</h3><p>Quand ton intuition est bonne, tes points augmentent automatiquement. Plus tu vises juste, plus tu montes au classement.</p></article>
+      <article class="step"><span>03</span><h3>Profite</h3><p>Échange tes points contre des avantages réels chez les commerçants et lieux partenaires de ta ville.</p></article>
+    </div>
+  </section>
+
+  <!-- ============ 02 EN DIRECT ============ -->
+  <section id="live" class="shell" aria-labelledby="live-t">
+    <span class="idx" aria-hidden="true">02</span>
+    <div class="split">
+      <div><p class="k">LES PRÉDICTIONS</p><h2 id="live-t">Ce qui fait parler la Bretagne.</h2></div>
+      <p>Chaque sujet devient un mini terrain de jeu. Essaie&nbsp;: vote ci-dessous et regarde le résultat évoluer, exactement comme dans l'app.</p>
+    </div>
+    <div class="liveStage">
+      <div class="contour" aria-hidden="true"></div>
+
+      <article class="card float f1" data-y="68">
+        <div class="cardTop"><span>SPORT · BREST</span><span>● DÉMO</span></div>
+        <h3 id="q1">Le Stade Brestois gagne dimanche ?</h3>
+        <div class="votes" role="group" aria-labelledby="q1">
+          <button type="button" data-v="y" aria-pressed="false">Oui <b>68</b>%</button>
+          <button type="button" data-v="n" aria-pressed="false">Non <b>32</b>%</button>
+        </div>
+        <div class="cardFoot"><span>Exemple de prédiction</span><span>↗ +7%</span></div>
+      </article>
+
+      <article class="card float f2" data-y="71">
+        <div class="cardTop"><span>MÉTÉO · VANNES</span><span>● DÉMO</span></div>
+        <h3 id="q2">Plus de 22°C à Vannes samedi ?</h3>
+        <div class="votes" role="group" aria-labelledby="q2">
+          <button type="button" data-v="y" aria-pressed="false">Oui <b>71</b>%</button>
+          <button type="button" data-v="n" aria-pressed="false">Non <b>29</b>%</button>
+        </div>
+        <div class="cardFoot"><span>Exemple de prédiction</span><span>↗ +12%</span></div>
+      </article>
+
+      <article class="card float f3" data-y="84">
+        <div class="cardTop"><span>CULTURE · CARHAIX</span><span>● DÉMO</span></div>
+        <h3 id="q3">Les Vieilles Charrues affichent complet ?</h3>
+        <div class="votes" role="group" aria-labelledby="q3">
+          <button type="button" data-v="y" aria-pressed="false">Oui <b>84</b>%</button>
+          <button type="button" data-v="n" aria-pressed="false">Non <b>16</b>%</button>
+        </div>
+        <div class="cardFoot"><span>Exemple de prédiction</span><span>↗ +5%</span></div>
+      </article>
+    </div>
+    <p class="sr" role="status" id="voteLive"></p>
+  </section>
+
+  <!-- ============ LANCEMENT ============ -->
+  <section id="launch" class="shell" aria-labelledby="launch-t">
+    <h2 class="sr" id="launch-t">Le lancement : 6 villes bretonnes au démarrage</h2>
+    <div class="launchBox">
+      <div class="launchCopy">
+        <p class="k">LE LANCEMENT</p>
+        <div class="count">
+          <strong aria-hidden="true">6</strong>
+          <span aria-hidden="true">villes bretonnes<br>au démarrage.</span>
+          <small>Predizh ouvre d'abord là où les conversations sont les plus vives. Les inscrits de la liste d'attente entrent en premier, avant l'ouverture publique.</small>
+        </div>
+        <ul class="cityList">
+          <li>Rennes</li><li>Brest</li><li>Lorient</li><li>Vannes</li><li>Saint-Malo</li><li>Quimper</li>
+        </ul>
+      </div>
+      <div class="dotWrap" aria-hidden="true">
+        <div class="dotMap"></div>
+        <i class="pulseDot pb"></i>
+        <i class="pulseDot pr"></i>
+        <i class="pulseDot pv"></i>
+        <p class="mapFoot">BRETAGNE · 6 VILLES AU LANCEMENT</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 03 RÉCOMPENSES ============ -->
+  <section id="rewards" class="shell" aria-labelledby="rew-t">
+    <span class="idx" aria-hidden="true">03</span>
+    <div class="cols">
+      <div class="copy">
+        <p class="k">RÉCOMPENSES</p>
+        <h2 id="rew-t">Des points qui restent près de chez toi.</h2>
+        <p>Pas de cagnotte virtuelle qui ne sert à rien. Tes points deviennent une vraie valeur locale&nbsp;: un café, une crêpe, une session de surf, une place de festival — proposés par les commerces partenaires de ta ville.</p>
+        <p><a class="btn" href="#partner" style="margin-top:14px">Vous êtes commerçant&nbsp;?</a></p>
+      </div>
+      <div class="stage">
+        <div class="phone stagePhone" role="img" aria-label="Aperçu de l'écran Récompenses de l'application Predizh, avec le solde de points et les avantages disponibles.">
+          <div class="screen" aria-hidden="true">
+            <div class="status"><span>9:41</span><span>▮▮▮</span></div>
+            <div class="appHead"><strong>Predizh</strong><span>◇ 2 450</span></div>
+            <h3>Mes récompenses</h3>
+            <p>Échange tes points contre des avantages près de chez toi.</p>
+            <ul class="stats">
+              <li><span>Points disponibles</span><strong>2 450</strong></li>
+              <li><span>Récompenses dispo</span><strong>12</strong></li>
+              <li><span>Villes actives</span><strong>6</strong></li>
+            </ul>
+            <div class="trend">
+              <b>La Bretagne bat l'Occitanie ?</b>
+              <small>Résultat dans 2h 18m</small>
+              <p><strong>Oui 58%</strong> · Non 42%</p>
+            </div>
+          </div>
+          <p class="mockLabel">APERÇU DE L'APP</p>
+        </div>
+        <div class="ticket t1" aria-hidden="true"><span>☕</span><b>Café offert</b><small>Rennes</small><strong>150 pts</strong></div>
+        <div class="ticket t2" aria-hidden="true"><span>◒</span><b>Crêpe offerte</b><small>Saint-Malo</small><strong>200 pts</strong></div>
+        <div class="ticket t3" aria-hidden="true"><span>≈</span><b>Session surf</b><small>Quiberon</small><strong>250 pts</strong></div>
+        <div class="ticket t4" aria-hidden="true"><span>▣</span><b>Place festival</b><small>Lorient</small><strong>300 pts</strong></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 04 CLASSEMENT ============ -->
+  <section id="ranking" class="shell" aria-labelledby="rank-t">
+    <span class="idx" aria-hidden="true">04</span>
+    <div class="cols">
+      <div class="copy">
+        <p class="k">CLASSEMENT</p>
+        <h2 id="rank-t">Prouve que t'as raison.</h2>
+        <p>Bretagne, ville, amis&nbsp;: ton classement évolue à chaque résultat. Le vrai enjeu n'est pas l'argent — c'est d'avoir vu juste avant tout le monde, et de pouvoir le prouver.</p>
+      </div>
+      <div class="stage">
+        <div class="phone stagePhone" role="img" aria-label="Aperçu de l'écran Classement de l'application Predizh, avec le top des joueurs bretons.">
+          <div class="screen" aria-hidden="true">
+            <div class="status"><span>17:21</span><span>▮▮▮</span></div>
+            <div class="rankHead"><h3>Top Bretagne</h3><span>● LIVE</span></div>
+            <div class="rankTabs">
+              <button type="button" class="on" data-tab="b">Bretagne</button>
+              <button type="button" data-tab="a">Amis</button>
+            </div>
+            <div id="rank" class="rankList"></div>
+          </div>
+          <p class="mockLabel">APERÇU DE L'APP</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 05 ULTRA LOCAL ============ -->
+  <section id="local" class="shell" aria-labelledby="loc-t">
+    <span class="idx" aria-hidden="true">05</span>
+    <div class="localHead">
+      <div><p class="k">ULTRA LOCAL</p><h2 id="loc-t">Ta ville.<br>Ton flair.</h2></div>
+      <p>Predizh commence là où les conversations commencent vraiment&nbsp;: au comptoir, au stade, sur le port. Choisis une ville pour voir le type de question qu'on y posera.</p>
+    </div>
+    <div class="localStage">
+      <div class="mapArea">
+        <div class="map" aria-hidden="true"></div>
+        <button class="node ren" type="button" data-city="Rennes" aria-pressed="true" aria-controls="localCard">Rennes</button>
+        <button class="node bre" type="button" data-city="Brest" aria-pressed="false" aria-controls="localCard">Brest</button>
+        <button class="node van" type="button" data-city="Vannes" aria-pressed="false" aria-controls="localCard">Vannes</button>
+        <button class="node lor" type="button" data-city="Lorient" aria-pressed="false" aria-controls="localCard">Lorient</button>
+        <button class="node stm" type="button" data-city="Saint-Malo" aria-pressed="false" aria-controls="localCard">Saint-Malo</button>
+      </div>
+      <div class="localCard" id="localCard" role="region" aria-live="polite" aria-label="Exemple de prédiction par ville">
+        <div class="localTop"><span id="lc">RENNES</span><span>EXEMPLE</span></div>
+        <h3 id="lq">Le Stade Rennais gagne ce week-end ?</h3>
+        <div class="result"><strong id="ly">68%</strong><span>OUI</span><strong id="ln">32%</strong><span>NON</span></div>
+        <p id="lm">Question type posée aux habitants de Rennes.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MANIFESTE ============ -->
+  <section class="shell manifest" aria-labelledby="man-t">
+    <div class="manifestGrid">
+      <p class="k">LE PRINCIPE</p>
+      <h2 id="man-t">Pas de mise.<br>Pas de casino.<br>Juste ton flair.</h2>
+      <div>
+        <p>Predizh transforme l'actualité locale en expérience participative. Tu ne risques pas un centime&nbsp;: tu prends position, tu suis le résultat, tu accumules des points. Rien à miser, rien à perdre — et des récompenses qui font vivre les commerces d'à côté.</p>
+        <ul class="pills">
+          <li>0 € à miser</li><li>100% gratuit</li><li>Points &amp; récompenses</li><li>Sans carte bancaire</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WAITLIST ============ -->
+  <section id="wait" class="shell" aria-labelledby="wait-t">
+    <div class="wait">
+      <div class="waitIntro">
+        <p class="k">BIENTÔT EN BRETAGNE</p>
+        <h2 id="wait-t">Sois là au coup d'envoi.</h2>
+        <p>Inscris-toi et tu seras prévenu·e dès l'ouverture dans ta ville. Les premiers inscrits accèdent à la bêta avant tout le monde et démarrent avec un bonus de points de bienvenue.</p>
+      </div>
+
+      <div class="waitCard">
+        <form id="form" novalidate>
+          <label for="email">Email
+            <input id="email" name="email" type="email" required autocomplete="email" placeholder="toi@email.fr" inputmode="email">
+          </label>
+          <label for="city">Ta ville
+            <select id="city" name="city">
+              <option>Rennes</option><option>Brest</option><option>Lorient</option>
+              <option>Vannes</option><option>Saint-Malo</option><option>Quimper</option>
+              <option>Autre ville en Bretagne</option>
+            </select>
+          </label>
+          <div class="hp" aria-hidden="true">
+            <label for="website">Ne pas remplir</label>
+            <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
+          </div>
+          <label class="consent" for="consent">
+            <input id="consent" name="consent" type="checkbox" required>
+            <span>J'accepte de recevoir un email quand Predizh ouvre dans ma ville. Pas de spam, désinscription en un clic.</span>
+          </label>
+          <p class="formErr" id="formErr" role="alert" hidden></p>
+          <button class="btn dark" type="submit" id="submitBtn">Rejoindre la liste</button>
+          <p class="formNote">100% gratuit · Aucun paiement · Aucune revente de données</p>
+        </form>
+
+        <div id="success" class="success" hidden>
+          <h3>Tu es sur la liste.</h3>
+          <p>On te prévient dès que Predizh ouvre à <strong id="successCity">Rennes</strong>. En attendant, fais passer le mot autour de toi&nbsp;: plus on est nombreux dans une ville, plus elle ouvre tôt.</p>
+          <div class="shareRow">
+            <a id="shareWa" href="#" target="_blank" rel="noopener">Partager sur WhatsApp</a>
+            <button type="button" id="copyLink">Copier le lien</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Partenaires -->
+    <div class="partner" id="partner">
+      <div>
+        <p class="k">COMMERÇANTS &amp; LIEUX</p>
+        <h3>Faites entrer votre ville dans le jeu.</h3>
+        <p>Cafés, crêperies, salles de concert, clubs de sport&nbsp;: proposez une récompense et touchez des habitants qui vivent déjà l'actualité de votre ville. Zéro commission au lancement.</p>
+      </div>
+      <a class="btn dark" href="mailto:contact@predizh.fr?subject=Devenir%20partenaire%20Predizh">Devenir partenaire</a>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section id="faq" class="shell" aria-labelledby="faq-t">
+    <p class="k">FAQ</p>
+    <h2 id="faq-t">Les questions utiles.</h2>
+    <div class="faq">
+      <details open>
+        <summary>Est-ce vraiment gratuit ?<span class="sign" aria-hidden="true">+</span></summary>
+        <p>Oui. Predizh est 100% gratuit. Aucun paiement, aucun abonnement, aucune carte bancaire n'est demandée — ni à l'inscription, ni ensuite.</p>
+      </details>
+      <details>
+        <summary>Est-ce un site de paris ?<span class="sign" aria-hidden="true">+</span></summary>
+        <p>Non. Tu ne mises jamais d'argent et tu ne peux pas en gagner. Predizh est un jeu de pronostics gratuit : tu prends position, tu suis le résultat, tu accumules des points. Rien à voir avec un opérateur de paris.</p>
+      </details>
+      <details>
+        <summary>À quoi servent les points ?<span class="sign" aria-hidden="true">+</span></summary>
+        <p>À débloquer des avantages concrets chez les partenaires locaux : un café offert à Rennes, une crêpe à Saint-Malo, une session de surf à Quiberon, une place de festival à Lorient.</p>
+      </details>
+      <details>
+        <summary>Quand est-ce que Predizh arrive ?<span class="sign" aria-hidden="true">+</span></summary>
+        <p>Le lancement se fait d'abord en Bretagne, sur six villes : Rennes, Brest, Lorient, Vannes, Saint-Malo et Quimper. Les inscrits de la liste d'attente sont prévenus en premier et accèdent à la bêta avant l'ouverture publique.</p>
+      </details>
+      <details>
+        <summary>Que faites-vous de mes données ?<span class="sign" aria-hidden="true">+</span></summary>
+        <p>Ton email sert uniquement à te prévenir du lancement dans ta ville. Aucune revente, aucun partage à des tiers, aucun tracking publicitaire. Tu peux demander la suppression de tes données à tout moment en écrivant à contact@predizh.fr.</p>
+      </details>
+      <details>
+        <summary>Je suis commerçant, comment participer ?<span class="sign" aria-hidden="true">+</span></summary>
+        <p>Proposez une récompense à la communauté Predizh de votre ville et gagnez en visibilité auprès des habitants. <a href="#partner" style="text-decoration:underline">Contactez-nous ici</a> — zéro commission au lancement.</p>
+      </details>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site">
+  <a class="brand" href="#top">PREDIZH</a>
+  <nav aria-label="Liens de pied de page">
+    <a href="#how">Concept</a>
+    <a href="#faq">FAQ</a>
+    <a href="#partner">Partenaires</a>
+    <a href="mailto:contact@predizh.fr">Contact</a>
+  </nav>
+  <p>© 2026 Predizh · Bretagne · Prédis. Gagne. Profite.</p>
+</footer>
+
+<div class="stickyCta">
+  <a class="btn dark" href="#wait">Rejoindre la liste d'attente</a>
+</div>
+
+<noscript>
+  <div style="position:fixed;left:0;right:0;bottom:0;z-index:100;background:#050505;color:#fff;padding:14px 20px;font-size:13px">
+    JavaScript est désactivé : la démo interactive et le formulaire ne fonctionneront pas.
+    Écris-nous à <a href="mailto:contact@predizh.fr" style="text-decoration:underline">contact@predizh.fr</a> pour rejoindre la liste d'attente.
+  </div>
+</noscript>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ---------- Menu mobile ---------- */
+  var menu = document.querySelector('.menu');
+  var mob = document.getElementById('mobileNav');
+  menu.addEventListener('click', function () {
+    var open = mob.classList.toggle('open');
+    menu.setAttribute('aria-expanded', String(open));
+    menu.textContent = open ? 'Fermer' : 'Menu';
+  });
+  mob.addEventListener('click', function (e) {
+    if (e.target.closest('a')) {
+      mob.classList.remove('open');
+      menu.setAttribute('aria-expanded', 'false');
+      menu.textContent = 'Menu';
+    }
+  });
+
+  /* ---------- Démo de vote ---------- */
+  var live = document.getElementById('voteLive');
+  document.querySelectorAll('.float').forEach(function (card) {
+    var yes = card.querySelector('[data-v="y"]');
+    var no = card.querySelector('[data-v="n"]');
+    card.querySelectorAll('[data-v]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        if (card.dataset.done) return;
+        card.dataset.done = '1';
+
+        var y = Number(card.dataset.y) + (btn.dataset.v === 'y' ? 1 : -1);
+        yes.querySelector('b').textContent = y;
+        no.querySelector('b').textContent = 100 - y;
+        yes.setAttribute('aria-pressed', String(btn === yes));
+        no.setAttribute('aria-pressed', String(btn === no));
+
+        var note = document.createElement('p');
+        note.className = 'voteThanks';
+        note.innerHTML = 'Bien vu. Dans l\'app, ça t\'aurait rapporté des points. ' +
+          '<a href="#wait">Rejoins la liste pour les garder →</a>';
+        card.appendChild(note);
+        live.textContent = 'Vote enregistré. ' + y + '% de oui, ' + (100 - y) + '% de non.';
+      });
+    });
+  });
+
+  /* ---------- Classement (maquette) ---------- */
+  var data = {
+    b: [['@bzh.56', '100%', '24 875', '☷'], ['@rennes.boss', '82%', '18 430', '✦'],
+        ['@armorik', '76%', '12 680', '◎'], ['@stmalo', '71%', '9 315', '♜'],
+        ['@quimper.bzh', '68%', '7 890', '◌']],
+    a: [['@mael.bzh', '91%', '13 220', 'M'], ['@lena35', '84%', '10 540', 'L'],
+        ['@yann29', '79%', '8 710', 'Y'], ['@louise56', '72%', '6 980', 'L']]
+  };
+  var rank = document.getElementById('rank');
+  function draw(k) {
+    rank.innerHTML = data[k].map(function (r, i) {
+      return '<div class="row"><strong>' + (i + 1) + '</strong>' +
+        '<div class="avatar">' + r[3] + '</div>' +
+        '<div class="user"><b>' + r[0] + '</b><small>' + r[1] + ' de réussite</small></div>' +
+        '<div class="pts">' + r[2] + ' pts</div></div>';
+    }).join('');
+  }
+  draw('b');
+  document.querySelectorAll('[data-tab]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('[data-tab]').forEach(function (x) { x.classList.remove('on'); });
+      btn.classList.add('on');
+      draw(btn.dataset.tab);
+    });
+  });
+
+  /* ---------- Sélecteur de ville ---------- */
+  var cities = {
+    'Rennes': ['Le Stade Rennais gagne ce week-end ?', 68, 'Question type posée aux habitants de Rennes.'],
+    'Brest': ['Le Stade Brestois termine dans le top 6 ?', 62, 'Question type posée aux habitants de Brest.'],
+    'Vannes': ['Plus de 22°C à Vannes samedi ?', 71, 'Question type posée aux habitants de Vannes.'],
+    'Lorient': ['Le Festival Interceltique bat son record ?', 55, 'Question type posée aux habitants de Lorient.'],
+    'Saint-Malo': ['Grand soleil sur les remparts ce week-end ?', 76, 'Question type posée aux habitants de Saint-Malo.']
+  };
+  var nodes = document.querySelectorAll('.node');
+  nodes.forEach(function (n) {
+    n.addEventListener('click', function () {
+      var c = cities[n.dataset.city];
+      nodes.forEach(function (x) { x.setAttribute('aria-pressed', String(x === n)); });
+      document.getElementById('lc').textContent = n.dataset.city.toUpperCase();
+      document.getElementById('lq').textContent = c[0];
+      document.getElementById('ly').textContent = c[1] + '%';
+      document.getElementById('ln').textContent = (100 - c[1]) + '%';
+      document.getElementById('lm').textContent = c[2];
+    });
+  });
+
+  /* ---------- Formulaire liste d'attente ---------- */
+  var form = document.getElementById('form');
+  var emailEl = document.getElementById('email');
+  var cityEl = document.getElementById('city');
+  var consentEl = document.getElementById('consent');
+  var errEl = document.getElementById('formErr');
+  var btn = document.getElementById('submitBtn');
+  var success = document.getElementById('success');
+  var SHARE = 'Je viens de m\'inscrire à Predizh : on prédit ce qui se passe en Bretagne et on gagne des récompenses locales. Rejoins-moi 👉 ';
+  var URL_ = location.origin + location.pathname;
+
+  function fail(msg) {
+    errEl.textContent = msg;
+    errEl.hidden = false;
+    btn.disabled = false;
+    btn.textContent = 'Rejoindre la liste';
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    errEl.hidden = true;
+
+    var email = emailEl.value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
+      emailEl.focus();
+      return fail('Vérifie ton adresse email.');
+    }
+    if (!consentEl.checked) {
+      consentEl.focus();
+      return fail('Coche la case pour qu\'on puisse te prévenir.');
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Inscription…';
+
+    var payload = {
+      email: email,
+      city: cityEl.value,
+      website: document.getElementById('website').value,
+      ref: document.referrer || null
+    };
+
+    // Sauvegarde locale immédiate : rien n'est perdu même si le réseau échoue.
+    try { localStorage.setItem('predizh_waitlist', JSON.stringify(payload)); } catch (_) {}
+
+    fetch('/api/waitlist', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+      .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { return { ok: r.ok, body: j }; }); })
+      .then(function (res) {
+        if (!res.ok) throw new Error(res.body && res.body.error ? res.body.error : 'network');
+        showSuccess();
+      })
+      .catch(function () {
+        fail('Impossible de t\'inscrire pour le moment. Réessaie, ou écris-nous à contact@predizh.fr.');
+      });
+  });
+
+  function showSuccess() {
+    document.getElementById('successCity').textContent = cityEl.value;
+    document.getElementById('shareWa').href =
+      'https://wa.me/?text=' + encodeURIComponent(SHARE + URL_);
+    form.hidden = true;
+    success.hidden = false;
+    success.setAttribute('tabindex', '-1');
+    success.focus();
+  }
+
+  document.getElementById('copyLink').addEventListener('click', function () {
+    var b = this;
+    navigator.clipboard.writeText(URL_).then(function () {
+      b.textContent = 'Lien copié ✓';
+      setTimeout(function () { b.textContent = 'Copier le lien'; }, 2200);
+    }).catch(function () { b.textContent = URL_; });
+  });
+
+  /* ---------- Apparition au scroll ---------- */
+  if ('IntersectionObserver' in window &&
+      !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { en.target.classList.add('reveal'); obs.unobserve(en.target); }
+      });
+    }, { threshold: .08, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.shell:not(.hero)').forEach(function (s) { obs.observe(s); });
+  }
+
+  /* ---------- CTA collant : masqué quand le formulaire est visible ---------- */
+  var sticky = document.querySelector('.stickyCta');
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { sticky.style.transform = en.isIntersecting ? 'translateY(110%)' : 'none'; });
+    }, { threshold: .15 }).observe(document.getElementById('wait'));
+    sticky.style.transition = 'transform .3s';
+  }
+})();
+</script>
+</body>
+</html>
