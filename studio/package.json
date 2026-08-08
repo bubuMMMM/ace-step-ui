@@ -1,0 +1,14 @@
+{
+  "name": "prisme-landing-library",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "PRISME — a library of cinematic, production-ready landing pages. Static site, no framework.",
+  "scripts": {
+    "build": "node scripts/vendor.mjs",
+    "dev": "node scripts/serve.mjs"
+  },
+  "dependencies": {
+    "three": "0.185.1"
+  }
+}

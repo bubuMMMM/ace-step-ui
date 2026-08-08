@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<title>KAGE — 影 · A night walk in five chapters</title>
+<meta name="description" content="Kage is a cinematic WebGL night walk through a fictional Kyoto mountain temple, told in five chapters: threshold, ascent, still gardens, sacred craft, afterlight.">
+<meta name="theme-color" content="#05070b">
+<meta property="og:title" content="KAGE — A night walk in five chapters">
+<meta property="og:description" content="A realtime WebGL night walk through a mountain temple that does not exist.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%2305070b'/%3E%3Ccircle cx='16' cy='14' r='7' fill='%23d8412f'/%3E%3Crect x='6' y='24' width='20' height='2' fill='%23ece5d8'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="./assets/css/kage.css">
+</head>
+<body class="is-loading">
+
+<a class="skip-link" href="#chapter-01">Skip to the first chapter</a>
+
+<!-- ─── environmental layer ─────────────────────────────────────────────── -->
+<canvas id="stage" aria-hidden="true"></canvas>
+<div class="stage-fallback" aria-hidden="true"></div>
+<div class="stage-veil" aria-hidden="true"></div>
+
+<!-- ─── foreground cutout layers, pinned to the base of the viewport ────── -->
+<div class="foreground" id="foreground" aria-hidden="true">
+  <div class="fg-set" data-fg="hero">
+    <img class="fg-layer" data-depth="0.30" style="--x:-8%;--w:126%;--b:-27%" src="./assets/img/fg-pines.webp" alt="" width="1920" height="540" decoding="async">
+    <img class="fg-layer" data-depth="0.62" style="--x:-10%;--w:132%;--b:-24%" src="./assets/img/fg-grass.webp" alt="" width="1920" height="540" decoding="async">
+  </div>
+  <div class="fg-set" data-fg="chapter-01">
+    <img class="fg-layer" data-depth="0.22" style="--x:-6%;--w:120%;--b:-4%" src="./assets/img/fg-stones.webp" alt="" width="1920" height="540" loading="lazy" decoding="async">
+    <img class="fg-layer fg-corner fg-corner--left" data-depth="0.72" style="--w:46vmax;--b:-8%" src="./assets/img/fg-maple.webp" alt="" width="1100" height="820" loading="lazy" decoding="async">
+    <img class="fg-layer" data-depth="0.55" style="--x:-12%;--w:136%;--b:-12%" src="./assets/img/fg-grass.webp" alt="" width="1920" height="540" loading="lazy" decoding="async">
+  </div>
+  <div class="fg-set" data-fg="chapter-02">
+    <img class="fg-layer" data-depth="0.18" style="--x:-6%;--w:120%;--b:-2%" src="./assets/img/fg-wall.webp" alt="" width="1920" height="540" loading="lazy" decoding="async">
+    <img class="fg-layer fg-corner fg-corner--right" data-depth="0.80" style="--w:25vmax;--b:-8%" src="./assets/img/fg-lantern.webp" alt="" width="640" height="980" loading="lazy" decoding="async">
+    <img class="fg-layer" data-depth="0.50" style="--x:-10%;--w:130%;--b:-14%" src="./assets/img/fg-bush.webp" alt="" width="1920" height="540" loading="lazy" decoding="async">
+  </div>
+  <div class="fg-set" data-fg="chapter-03">
+    <img class="fg-layer" data-depth="0.16" style="--x:-4%;--w:116%;--b:0" src="./assets/img/fg-hills.webp" alt="" width="1920" height="540" loading="lazy" decoding="async">
+    <img class="fg-layer" data-depth="0.44" style="--x:-8%;--w:124%;--b:-8%" src="./assets/img/fg-stones.webp" alt="" width="1920" height="540" loading="lazy" decoding="async">
+    <img class="fg-layer fg-corner fg-corner--right" data-depth="0.74" style="--w:34vmax;--b:-16%" src="./assets/img/fg-sakura.webp" alt="" width="1100" height="820" loading="lazy" decoding="async">
+  </div>
+  <div class="fg-set" data-fg="chapter-04">
+    <img class="fg-layer" data-depth="0.20" style="--x:-6%;--w:120%;--b:-14%" src="./assets/img/fg-pines.webp" alt="" width="1920" height="540" loading="lazy" decoding="async">
+    <img class="fg-layer fg-corner fg-corner--left" data-depth="0.78" style="--w:24vmax;--b:-9%" src="./assets/img/fg-lantern.webp" alt="" width="640" height="980" loading="lazy" decoding="async">
+    <img class="fg-layer" data-depth="0.52" style="--x:-10%;--w:130%;--b:-12%" src="./assets/img/fg-bush.webp" alt="" width="1920" height="540" loading="lazy" decoding="async">
+  </div>
+  <div class="fg-set" data-fg="chapter-05">
+    <img class="fg-layer" data-depth="0.14" style="--x:-4%;--w:116%;--b:2%" src="./assets/img/fg-hills.webp" alt="" width="1920" height="540" loading="lazy" decoding="async">
+    <img class="fg-layer" data-depth="0.40" style="--x:-8%;--w:124%;--b:-6%" src="./assets/img/fg-ruins.webp" alt="" width="1920" height="540" loading="lazy" decoding="async">
+    <img class="fg-layer" data-depth="0.58" style="--x:-12%;--w:134%;--b:-14%" src="./assets/img/fg-grass.webp" alt="" width="1920" height="540" loading="lazy" decoding="async">
+  </div>
+</div>
+
+<!-- ─── masthead ────────────────────────────────────────────────────────── -->
+<header class="masthead" id="masthead">
+  <a class="brand" href="#top" aria-label="Kage, back to the top">
+    <span class="brand__mark" aria-hidden="true"></span>
+    <span class="brand__word">KAGE</span>
+    <span class="brand__ja" lang="ja" aria-hidden="true">影</span>
+  </a>
+
+  <nav class="masthead__nav" aria-label="Chapters">
+    <ul>
+      <li><a href="#chapter-01"><i aria-hidden="true">01</i> Threshold</a></li>
+      <li><a href="#chapter-02"><i aria-hidden="true">02</i> Ascent</a></li>
+      <li><a href="#chapter-03"><i aria-hidden="true">03</i> Gardens</a></li>
+      <li><a href="#chapter-04"><i aria-hidden="true">04</i> Craft</a></li>
+      <li><a href="#chapter-05"><i aria-hidden="true">05</i> Afterlight</a></li>
+    </ul>
+  </nav>
+
+  <div class="masthead__end">
+    <a class="masthead__back" href="../../index.html">Library</a>
+    <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="drawer" aria-label="Open chapter menu">
+      <span aria-hidden="true"></span><span aria-hidden="true"></span>
+    </button>
+  </div>
+</header>
+
+<!-- ─── mobile drawer ───────────────────────────────────────────────────── -->
+<div class="drawer" id="drawer" hidden>
+  <nav aria-label="Chapters, mobile">
+    <ol>
+      <li><a href="#top"><i aria-hidden="true">00</i><span>Kage</span><em lang="ja">影</em></a></li>
+      <li><a href="#chapter-01"><i aria-hidden="true">01</i><span>Threshold</span><em lang="ja">鳥居</em></a></li>
+      <li><a href="#chapter-02"><i aria-hidden="true">02</i><span>Ascent</span><em lang="ja">石段</em></a></li>
+      <li><a href="#chapter-03"><i aria-hidden="true">03</i><span>Still Gardens</span><em lang="ja">石庭</em></a></li>
+      <li><a href="#chapter-04"><i aria-hidden="true">04</i><span>Sacred Craft</span><em lang="ja">神工</em></a></li>
+      <li><a href="#chapter-05"><i aria-hidden="true">05</i><span>Afterlight</span><em lang="ja">残光</em></a></li>
+    </ol>
+  </nav>
+  <a class="drawer__back" href="../../index.html">← Back to the library</a>
+</div>
+
+<!-- ─── chapter rail ────────────────────────────────────────────────────── -->
+<nav class="rail" aria-label="Chapter progress">
+  <ol>
+    <li><a href="#top" data-rail="top"><span class="rail__num">00</span><span class="rail__name">Kage</span></a></li>
+    <li><a href="#chapter-01" data-rail="chapter-01"><span class="rail__num">01</span><span class="rail__name">Threshold</span></a></li>
+    <li><a href="#chapter-02" data-rail="chapter-02"><span class="rail__num">02</span><span class="rail__name">Ascent</span></a></li>
+    <li><a href="#chapter-03" data-rail="chapter-03"><span class="rail__num">03</span><span class="rail__name">Gardens</span></a></li>
+    <li><a href="#chapter-04" data-rail="chapter-04"><span class="rail__num">04</span><span class="rail__name">Craft</span></a></li>
+    <li><a href="#chapter-05" data-rail="chapter-05"><span class="rail__num">05</span><span class="rail__name">Afterlight</span></a></li>
+  </ol>
+  <div class="rail__meter" aria-hidden="true"><i id="railMeter"></i></div>
+</nav>
+
+<main id="top">
+
+  <!-- ══ HERO ═══════════════════════════════════════════════════════════ -->
+  <section class="chapter chapter--hero" id="hero" data-section="hero" data-shot="0" aria-labelledby="hero-title">
+    <div class="chapter__inner hero__inner">
+      <p class="label label--wide" data-reveal>
+        <span>Realtime WebGL</span><span class="dot" aria-hidden="true">·</span><span>Fiction, Higashiyama</span><span class="dot" aria-hidden="true">·</span><span>35.0116° N 135.7681° E</span>
+      </p>
+
+      <h1 class="display display--hero" id="hero-title" data-reveal-words>Kage</h1>
+
+      <p class="hero__ja" lang="ja" aria-hidden="true" data-reveal>影</p>
+
+      <div class="hero__body">
+        <p class="lede" data-reveal-words>A night walk in five chapters through a mountain temple that does not exist.</p>
+        <p class="note" data-reveal>Everything you are about to see — the terrain, the gate, the two hundred steps, the rain, the lantern light on wet stone — is generated in the browser, frame by frame, as you scroll. Nothing here was photographed. Nothing here was ever built.</p>
+      </div>
+
+      <dl class="specs" data-reveal>
+        <div><dt>Chapters</dt><dd>Five</dd></div>
+        <div><dt>Geometry</dt><dd>Procedural</dd></div>
+        <div><dt>Duration</dt><dd>One scroll</dd></div>
+        <div><dt>Hour</dt><dd>03:40</dd></div>
+      </dl>
+    </div>
+
+    <a class="scroll-cue" href="#chapter-01" data-reveal>
+      <span>Begin the ascent</span>
+      <i aria-hidden="true"></i>
+    </a>
+  </section>
+
+  <!-- ══ 01 · THRESHOLD ═════════════════════════════════════════════════ -->
+  <section class="chapter" id="chapter-01" data-section="chapter-01" data-shot="1" aria-labelledby="t1">
+    <div class="chapter__inner">
+      <header class="chapter__head">
+        <p class="label" data-reveal><b>Chapter 01</b><span class="dot" aria-hidden="true">/</span>Threshold</p>
+        <hr class="rule" data-reveal>
+        <h2 class="display" id="t1" data-reveal-words>The gate keeps a record of everyone who passes.</h2>
+        <p class="vertical-ja" lang="ja" aria-hidden="true" data-reveal>鳥居</p>
+      </header>
+
+      <div class="chapter__cols">
+        <div class="col col--text">
+          <p class="lede" data-reveal-words>Vermilion, because the colour was believed to hold back decay.</p>
+          <p data-reveal>You cross beneath it and the temperature drops four degrees. Behind you the valley road, the last vending machine, the ordinary world with its receipts. Ahead: wet stone, cedar, and a silence so complete it has texture.</p>
+          <p data-reveal>The gate is not a door. It marks the seam where one kind of space ends and another begins, and it asks nothing of you except that you notice the crossing.</p>
+        </div>
+        <div class="col col--meta">
+          <dl class="facts" data-reveal>
+            <div><dt>Structure</dt><dd>Myōjin torii</dd></div>
+            <div><dt>Pigment</dt><dd>Vermilion, cinnabar</dd></div>
+            <div><dt>Height</dt><dd>8.2 m</dd></div>
+            <div><dt>Standing since</dt><dd>Never</dd></div>
+          </dl>
+        </div>
+      </div>
+
+      <div class="cards cards--two">
+        <figure class="card" data-reveal>
+          <div class="card__frame">
+            <img src="./assets/img/still-threshold-01.webp" alt="The first gate seen from the valley path, rain falling through lantern light." width="1200" height="800" loading="lazy" decoding="async">
+            <button class="play" type="button" aria-label="Play the sequence: approach to the first gate">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 6.5v11l9-5.5-9-5.5Z"/></svg>
+            </button>
+          </div>
+          <figcaption><b>Still 01</b> Approach, 03:41. Frame held four seconds.</figcaption>
+        </figure>
+        <figure class="card card--offset" data-reveal>
+          <div class="card__frame">
+            <img src="./assets/img/still-threshold-02.webp" alt="Looking back through the gate toward the valley, mist between the ridges." width="1200" height="800" loading="lazy" decoding="async">
+            <button class="play" type="button" aria-label="Play the sequence: looking back through the gate">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 6.5v11l9-5.5-9-5.5Z"/></svg>
+            </button>
+          </div>
+          <figcaption><b>Still 02</b> The valley, refusing to be photographed.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 02 · ASCENT ════════════════════════════════════════════════════ -->
+  <section class="chapter" id="chapter-02" data-section="chapter-02" data-shot="2" aria-labelledby="t2">
+    <div class="chapter__inner">
+      <header class="chapter__head">
+        <p class="label" data-reveal><b>Chapter 02</b><span class="dot" aria-hidden="true">/</span>Ascent</p>
+        <hr class="rule" data-reveal>
+        <h2 class="display" id="t2" data-reveal-words>Two hundred steps, each one colder than the last.</h2>
+        <p class="vertical-ja" lang="ja" aria-hidden="true" data-reveal>石段</p>
+      </header>
+
+      <div class="chapter__cols">
+        <div class="col col--text">
+          <p class="lede" data-reveal-words>The lanterns are lit by someone who has already gone home.</p>
+          <p data-reveal>Stone worn concave at the centre — two centuries of feet finding the same line. The rain arrives sideways here, caught in the lantern light for a fraction of a second before it disappears into the moss.</p>
+          <p data-reveal>Halfway up you stop, not because you are tired but because the sound has changed. The valley is gone. What remains is water moving somewhere under the stone.</p>
+        </div>
+        <div class="col col--meta">
+          <dl class="facts" data-reveal>
+            <div><dt>Rise</dt><dd>61 m</dd></div>
+            <div><dt>Steps</dt><dd>200</dd></div>
+            <div><dt>Lanterns</dt><dd>34, stone</dd></div>
+            <div><dt>Flame</dt><dd>Oil, sheltered</dd></div>
+          </dl>
+        </div>
+      </div>
+
+      <div class="cards cards--wide">
+        <figure class="card" data-reveal>
+          <div class="card__frame card__frame--wide">
+            <img src="./assets/img/still-ascent-01.webp" alt="Stone stairs climbing between lanterns, rain streaking through the light." width="1600" height="800" loading="lazy" decoding="async">
+            <button class="play" type="button" aria-label="Play the sequence: the lantern stair">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 6.5v11l9-5.5-9-5.5Z"/></svg>
+            </button>
+          </div>
+          <figcaption><b>Still 03</b> The stair, held for the length of one breath.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 03 · STILL GARDENS ═════════════════════════════════════════════ -->
+  <section class="chapter" id="chapter-03" data-section="chapter-03" data-shot="3" aria-labelledby="t3">
+    <div class="chapter__inner">
+      <header class="chapter__head">
+        <p class="label" data-reveal><b>Chapter 03</b><span class="dot" aria-hidden="true">/</span>Still Gardens</p>
+        <hr class="rule" data-reveal>
+        <h2 class="display" id="t3" data-reveal-words>Gravel raked at dusk still holds the shape of water.</h2>
+        <p class="vertical-ja" lang="ja" aria-hidden="true" data-reveal>石庭</p>
+      </header>
+
+      <div class="chapter__cols">
+        <div class="col col--text">
+          <p class="lede" data-reveal-words>Fifteen stones. From no position can you see all fifteen.</p>
+          <p data-reveal>The garden is not a picture of a landscape. It is an argument about attention, made in stone and white grit, and it takes the side of the person willing to stand still for a long time.</p>
+          <p data-reveal>At night the rake lines catch the moon and the whole surface reads as shallow water. Step closer and the illusion holds. That is the craft.</p>
+        </div>
+        <div class="col col--meta">
+          <dl class="facts" data-reveal>
+            <div><dt>Field</dt><dd>Shirakawa grit</dd></div>
+            <div><dt>Stones</dt><dd>Fifteen</dd></div>
+            <div><dt>Raked</dt><dd>Daily, at dusk</dd></div>
+            <div><dt>Moss</dt><dd>Left alone</dd></div>
+          </dl>
+        </div>
+      </div>
+
+      <div class="cards cards--two">
+        <figure class="card" data-reveal>
+          <div class="card__frame">
+            <img src="./assets/img/still-gardens-01.webp" alt="Raked gravel under moonlight with standing stones casting long shadows." width="1200" height="800" loading="lazy" decoding="async">
+            <button class="play" type="button" aria-label="Play the sequence: the raked field at night">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 6.5v11l9-5.5-9-5.5Z"/></svg>
+            </button>
+          </div>
+          <figcaption><b>Still 04</b> The field at 03:52. No wind.</figcaption>
+        </figure>
+        <figure class="card card--offset" data-reveal>
+          <div class="card__frame">
+            <img src="./assets/img/still-gardens-02.webp" alt="A water basin beside the garden wall, the moon caught on its surface." width="1200" height="800" loading="lazy" decoding="async">
+            <button class="play" type="button" aria-label="Play the sequence: the water basin">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 6.5v11l9-5.5-9-5.5Z"/></svg>
+            </button>
+          </div>
+          <figcaption><b>Still 05</b> Basin, overflowing quietly since always.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 04 · SACRED CRAFT ══════════════════════════════════════════════ -->
+  <section class="chapter" id="chapter-04" data-section="chapter-04" data-shot="4" aria-labelledby="t4">
+    <div class="chapter__inner">
+      <header class="chapter__head">
+        <p class="label" data-reveal><b>Chapter 04</b><span class="dot" aria-hidden="true">/</span>Sacred Craft</p>
+        <hr class="rule" data-reveal>
+        <h2 class="display" id="t4" data-reveal-words>Every joint cut by hand. No nail enters the hall.</h2>
+        <p class="vertical-ja" lang="ja" aria-hidden="true" data-reveal>神工</p>
+      </header>
+
+      <div class="chapter__cols">
+        <div class="col col--text">
+          <p class="lede" data-reveal-words>The roof is a held breath, four slopes long.</p>
+          <p data-reveal>Cypress bark laid in layers thick as a forearm, trimmed to an edge you could read by. The eaves lift at the corners — not decoration, but the shape water wants to leave by.</p>
+          <p data-reveal>Inside, paper. Shoji glow the colour of a lamp seen through a closed eyelid, and the whole hall becomes a lantern that happens to be a building.</p>
+        </div>
+        <div class="col col--meta">
+          <dl class="facts" data-reveal>
+            <div><dt>Frame</dt><dd>Hinoki cypress</dd></div>
+            <div><dt>Joinery</dt><dd>Kanawa tsugi</dd></div>
+            <div><dt>Roof</dt><dd>Bark shingle</dd></div>
+            <div><dt>Fasteners</dt><dd>None</dd></div>
+          </dl>
+        </div>
+      </div>
+
+      <div class="cards cards--two">
+        <figure class="card" data-reveal>
+          <div class="card__frame">
+            <img src="./assets/img/still-craft-01.webp" alt="The temple hall at night, warm shoji light behind the pillars." width="1200" height="800" loading="lazy" decoding="async">
+            <button class="play" type="button" aria-label="Play the sequence: the hall">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 6.5v11l9-5.5-9-5.5Z"/></svg>
+            </button>
+          </div>
+          <figcaption><b>Still 06</b> The hall, lit from within.</figcaption>
+        </figure>
+        <figure class="card card--offset" data-reveal>
+          <div class="card__frame">
+            <img src="./assets/img/still-craft-02.webp" alt="Detail of the eave line against the moon, rain falling past the corner." width="1200" height="800" loading="lazy" decoding="async">
+            <button class="play" type="button" aria-label="Play the sequence: the eave line">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 6.5v11l9-5.5-9-5.5Z"/></svg>
+            </button>
+          </div>
+          <figcaption><b>Still 07</b> Eave and moon, one degree apart.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 05 · AFTERLIGHT ════════════════════════════════════════════════ -->
+  <section class="chapter chapter--close" id="chapter-05" data-section="chapter-05" data-shot="5" aria-labelledby="t5">
+    <div class="chapter__inner">
+      <header class="chapter__head">
+        <p class="label" data-reveal><b>Chapter 05</b><span class="dot" aria-hidden="true">/</span>Afterlight</p>
+        <hr class="rule" data-reveal>
+        <h2 class="display" id="t5" data-reveal-words>By morning the mountain will deny all of it.</h2>
+        <p class="vertical-ja" lang="ja" aria-hidden="true" data-reveal>残光</p>
+      </header>
+
+      <div class="chapter__cols">
+        <div class="col col--text">
+          <p class="lede" data-reveal-words>The moon goes down the way a lamp is carried out of a room.</p>
+          <p data-reveal>Mist fills the stair from the bottom up. The gate is somewhere below it, still vermilion, still keeping its record. The lanterns burn down to a colour with no name.</p>
+          <p data-reveal>You turn back once. The hall is already a shape rather than a building, and then it is only a darker part of the dark.</p>
+        </div>
+        <div class="col col--meta">
+          <dl class="facts" data-reveal>
+            <div><dt>Hour</dt><dd>04:58</dd></div>
+            <div><dt>Visibility</dt><dd>40 m, falling</dd></div>
+            <div><dt>Remaining</dt><dd>Afterlight</dd></div>
+            <div><dt>Record</dt><dd>This page</dd></div>
+          </dl>
+        </div>
+      </div>
+
+      <div class="cards cards--wide">
+        <figure class="card" data-reveal>
+          <div class="card__frame card__frame--wide">
+            <img src="./assets/img/still-afterlight-01.webp" alt="The valley from above the temple at dawn, ridges layered in mist." width="1600" height="800" loading="lazy" decoding="async">
+            <button class="play" type="button" aria-label="Play the sequence: the valley at dawn">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 6.5v11l9-5.5-9-5.5Z"/></svg>
+            </button>
+          </div>
+          <figcaption><b>Still 08</b> Last frame before the light changes.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ MANIFESTO ══════════════════════════════════════════════════════ -->
+  <footer class="manifesto" id="manifesto" data-section="manifesto" data-shot="6" aria-labelledby="mani">
+    <div class="chapter__inner">
+      <p class="label" data-reveal><b>Colophon</b><span class="dot" aria-hidden="true">/</span>Manifesto</p>
+      <hr class="rule" data-reveal>
+      <h2 class="display display--manifesto" id="mani" data-reveal-words>Build the place first. Then walk through it.</h2>
+
+      <div class="manifesto__grid">
+        <p class="manifesto__lede" data-reveal-words>A page can be a location. It can have weather, an hour, a direction of travel, and a reason for its silences.</p>
+        <div class="manifesto__cols">
+          <p data-reveal>Kage carries no photographs. The terrain is noise, the gate is a handful of tapered cylinders, the rain is twelve hundred instanced quads with somewhere to be. The moon is a disc and a lie about atmosphere.</p>
+          <p data-reveal>None of that matters to a visitor. What matters is that the shot changes when they move, that the light behaves, and that the writing was worth the climb.</p>
+        </div>
+      </div>
+
+      <dl class="colophon" data-reveal>
+        <div><dt>Renderer</dt><dd>WebGL2, three.js, self-hosted</dd></div>
+        <div><dt>Post</dt><dd>Bloom, grain, vignette — hand written</dd></div>
+        <div><dt>Type</dt><dd>System grotesk, vertical mincho</dd></div>
+        <div><dt>Assets</dt><dd>Generated, local, relative</dd></div>
+        <div><dt>Trackers</dt><dd>None</dd></div>
+        <div><dt>Motion</dt><dd>Respects your setting</dd></div>
+      </dl>
+
+      <div class="manifesto__end">
+        <a class="link-back" href="../../index.html">← Back to the library</a>
+        <a class="link-top" href="#top">Return to the valley ↑</a>
+      </div>
+      <p class="fine">Kage is a fiction. The temple, the coordinates and the two hundred steps do not exist and never did.</p>
+    </div>
+  </footer>
+
+</main>
+
+<div class="cursor" id="cursor" aria-hidden="true"><i></i><b></b></div>
+
+<noscript>
+  <style>.stage-fallback{opacity:1}.chapter,[data-reveal],[data-reveal-words]{opacity:1!important;transform:none!important;filter:none!important}</style>
+</noscript>
+
+<script type="module" src="./assets/js/main.js"></script>
+</body>
+</html>

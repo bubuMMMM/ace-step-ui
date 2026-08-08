@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>PRISME — A library of landing pages that actually ship</title>
+<meta name="description" content="PRISME is a small library of complete, production-ready landing pages: cinematic WebGL, SaaS, fashion editorial, 404 and wellness. Every page is real, hand-built and free to open.">
+<meta name="theme-color" content="#06060a">
+<meta property="og:title" content="PRISME — A library of landing pages">
+<meta property="og:description" content="Five complete landing pages, hand-built, no frameworks, free to open.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2306060a'/%3E%3Cpath d='M16 6 27 25H5z' fill='none' stroke='%23ff8a4c' stroke-width='2.2' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="./assets/css/library.css">
+</head>
+<body>
+<a class="skip" href="#library">Skip to the library</a>
+
+<div class="aurora" aria-hidden="true">
+  <span class="aurora__a"></span><span class="aurora__b"></span><span class="aurora__c"></span>
+  <span class="aurora__grain"></span>
+</div>
+
+<header class="top" id="top">
+  <div class="shell top__in">
+    <a class="mark" href="#top" aria-label="PRISME, home">
+      <svg class="mark__glyph" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 5 28 26H4z"/></svg>
+      <span>prisme</span>
+    </a>
+
+    <nav class="top__nav" aria-label="Primary">
+      <ul>
+        <li><a href="#library">Library</a></li>
+        <li><a href="#how">How they're built</a></li>
+        <li><a href="#faq">Questions</a></li>
+      </ul>
+    </nav>
+
+    <div class="top__end">
+      <button class="icon-btn" id="searchToggle" type="button" aria-expanded="false" aria-controls="search"
+              aria-label="Search the library">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.4"/><path d="m16 16 4.5 4.5"/></svg>
+      </button>
+      <button class="icon-btn" id="menuToggle" type="button" aria-expanded="false" aria-controls="drawer"
+              aria-label="Open menu">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h16M4 16h16"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="drawer" id="drawer" hidden>
+    <div class="shell">
+      <ul>
+        <li><a href="#library">Library</a></li>
+        <li><a href="#how">How they're built</a></li>
+        <li><a href="#faq">Questions</a></li>
+        <li><a href="./sites/kage/index.html">Open Kage →</a></li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="shell">
+      <p class="pill" data-rv>Five pages · built, not mocked up</p>
+
+      <h1 data-rv>
+        Landing pages<br>
+        that actually<br>
+        <em>ship</em>
+      </h1>
+
+      <p class="hero__sub" data-rv>
+        Complete, responsive, accessible pages — not screenshots of pages.
+        Open any of them, read the source, take what you need.
+      </p>
+
+      <div class="hero__cta" data-rv>
+        <a class="btn btn--light" href="#library">Browse the library <span aria-hidden="true">→</span></a>
+        <a class="btn btn--ghost" href="./sites/kage/index.html">Open the flagship</a>
+      </div>
+
+      <dl class="hero__stats" data-rv>
+        <div><dt>Pages</dt><dd>5</dd></div>
+        <div><dt>Frameworks</dt><dd>0</dd></div>
+        <div><dt>Trackers</dt><dd>0</dd></div>
+        <div><dt>Licence</dt><dd>Yours</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="controls" id="library" aria-label="Filter the library">
+    <div class="shell">
+      <form class="search" id="search" role="search" hidden>
+        <label class="sr-only" for="q">Search pages by name, category or technique</label>
+        <svg class="search__icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.4"/><path d="m16 16 4.5 4.5"/></svg>
+        <input id="q" type="search" placeholder="Search — webgl, fashion, pricing, 404…" autocomplete="off">
+        <button class="search__clear" id="clear" type="button">Clear</button>
+      </form>
+
+      <div class="chips" role="group" aria-label="Categories">
+        <button class="chip is-on" type="button" data-cat="all" aria-pressed="true">All</button>
+        <button class="chip" type="button" data-cat="cinematic" aria-pressed="false">Cinematic</button>
+        <button class="chip" type="button" data-cat="saas" aria-pressed="false">SaaS</button>
+        <button class="chip" type="button" data-cat="fashion" aria-pressed="false">Fashion</button>
+        <button class="chip" type="button" data-cat="404" aria-pressed="false">404</button>
+        <button class="chip" type="button" data-cat="wellness" aria-pressed="false">Wellness</button>
+        <button class="chip chip--icon" type="button" id="sortBtn" aria-label="Change sort order">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M7 12h10M10 17h4"/></svg>
+          <span id="sortLabel">Featured</span>
+        </button>
+      </div>
+
+      <p class="count" id="count" role="status" aria-live="polite">Showing 5 pages</p>
+    </div>
+  </section>
+
+  <section class="grid-wrap" aria-label="Landing pages">
+    <div class="shell">
+      <ul class="grid" id="grid">
+
+        <li class="card card--wide" data-cat="cinematic" data-order="1"
+            data-keywords="kage webgl three.js scroll cinematic japan temple night dark editorial parallax">
+          <a class="card__link" href="./sites/kage/index.html">
+            <span class="card__frame">
+              <img src="./assets/img/thumbs/kage.webp" alt="The Kage landing page: a huge headline over a moonlit temple valley rendered in WebGL."
+                   width="880" height="550" loading="eager" decoding="async">
+              <span class="card__badge">Flagship</span>
+            </span>
+          </a>
+          <div class="card__meta">
+            <div>
+              <h2><a href="./sites/kage/index.html">Kage <span lang="ja">影</span></a></h2>
+              <p class="card__cat">Cinematic · WebGL</p>
+            </div>
+            <div class="card__tools">
+              <button class="tool" type="button" data-copy="./sites/kage/index.html" aria-label="Copy link to Kage">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.5"/><path d="M15 5.5H6.5A2.5 2.5 0 0 0 4 8v8"/></svg>
+              </button>
+              <a class="tool tool--open" href="./sites/kage/index.html" aria-label="Open Kage">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 16 16 8M9.5 8H16v6.5"/></svg>
+              </a>
+            </div>
+          </div>
+          <p class="card__desc">A five-chapter night walk through a temple that does not exist. Terrain, gate, rain, lanterns and moon are generated at runtime and driven by scroll.</p>
+          <ul class="tags"><li>three.js</li><li>Scroll camera</li><li>Custom post-FX</li><li>Reduced-motion</li></ul>
+        </li>
+
+        <li class="card" data-cat="saas" data-order="2"
+            data-keywords="halo saas ai product pricing dark violet canvas features developer inference">
+          <a class="card__link" href="./sites/halo/index.html">
+            <span class="card__frame">
+              <img src="./assets/img/thumbs/halo.webp" alt="The Halo landing page: a dark product hero with a constellation canvas and a code sample."
+                   width="880" height="550" loading="lazy" decoding="async">
+            </span>
+          </a>
+          <div class="card__meta">
+            <div>
+              <h2><a href="./sites/halo/index.html">Halo</a></h2>
+              <p class="card__cat">SaaS · Developer product</p>
+            </div>
+            <div class="card__tools">
+              <button class="tool" type="button" data-copy="./sites/halo/index.html" aria-label="Copy link to Halo"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.5"/><path d="M15 5.5H6.5A2.5 2.5 0 0 0 4 8v8"/></svg></button>
+              <a class="tool tool--open" href="./sites/halo/index.html" aria-label="Open Halo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 16 16 8M9.5 8H16v6.5"/></svg></a>
+            </div>
+          </div>
+          <p class="card__desc">The full developer-product shape: hero with live canvas, code sample, feature grid, three-step explainer, metrics and pricing.</p>
+          <ul class="tags"><li>Canvas</li><li>Pricing</li><li>Mobile nav</li></ul>
+        </li>
+
+        <li class="card" data-cat="fashion" data-order="3"
+            data-keywords="atelier noir fashion editorial light serif lookbook typography antwerp shop">
+          <a class="card__link" href="./sites/atelier-noir/index.html">
+            <span class="card__frame">
+              <img src="./assets/img/thumbs/atelier-noir.webp" alt="The Atelier Noir landing page: oversized serif type on warm paper with colour-field lookbook panels."
+                   width="880" height="550" loading="lazy" decoding="async">
+            </span>
+          </a>
+          <div class="card__meta">
+            <div>
+              <h2><a href="./sites/atelier-noir/index.html">Atelier Noir</a></h2>
+              <p class="card__cat">Fashion · Editorial</p>
+            </div>
+            <div class="card__tools">
+              <button class="tool" type="button" data-copy="./sites/atelier-noir/index.html" aria-label="Copy link to Atelier Noir"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.5"/><path d="M15 5.5H6.5A2.5 2.5 0 0 0 4 8v8"/></svg></button>
+              <a class="tool tool--open" href="./sites/atelier-noir/index.html" aria-label="Open Atelier Noir"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 16 16 8M9.5 8H16v6.5"/></svg></a>
+            </div>
+          </div>
+          <p class="card__desc">A light, paper-grained editorial: oversized serif, a broken lookbook grid, a marquee and an index table that reads like a price list.</p>
+          <ul class="tags"><li>Light theme</li><li>Editorial grid</li><li>Marquee</li></ul>
+        </li>
+
+        <li class="card" data-cat="404" data-order="4"
+            data-keywords="signal lost 404 error page radar terminal mono glitch dark utility">
+          <a class="card__link" href="./sites/signal-lost/index.html">
+            <span class="card__frame">
+              <img src="./assets/img/thumbs/signal-lost.webp" alt="The Signal Lost 404 page: a glitching 404 next to a live radar sweep and a station log."
+                   width="880" height="550" loading="lazy" decoding="async">
+            </span>
+          </a>
+          <div class="card__meta">
+            <div>
+              <h2><a href="./sites/signal-lost/index.html">Signal Lost</a></h2>
+              <p class="card__cat">404 · Utility</p>
+            </div>
+            <div class="card__tools">
+              <button class="tool" type="button" data-copy="./sites/signal-lost/index.html" aria-label="Copy link to Signal Lost"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.5"/><path d="M15 5.5H6.5A2.5 2.5 0 0 0 4 8v8"/></svg></button>
+              <a class="tool tool--open" href="./sites/signal-lost/index.html" aria-label="Open Signal Lost"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 16 16 8M9.5 8H16v6.5"/></svg></a>
+            </div>
+          </div>
+          <p class="card__desc">A 404 that behaves like a station losing contact: a live radar sweep, a scrolling log, and a search box that really does route you somewhere.</p>
+          <ul class="tags"><li>Canvas radar</li><li>Working search</li><li>Terminal type</li></ul>
+        </li>
+
+        <li class="card" data-cat="wellness" data-order="5"
+            data-keywords="meridian health wellness breathing sleep programme warm sand calm faq coach">
+          <a class="card__link" href="./sites/meridian/index.html">
+            <span class="card__frame">
+              <img src="./assets/img/thumbs/meridian.webp" alt="The Meridian landing page: a calm sand-coloured hero with a breathing circle animation."
+                   width="880" height="550" loading="lazy" decoding="async">
+            </span>
+          </a>
+          <div class="card__meta">
+            <div>
+              <h2><a href="./sites/meridian/index.html">Meridian</a></h2>
+              <p class="card__cat">Wellness · Programme</p>
+            </div>
+            <div class="card__tools">
+              <button class="tool" type="button" data-copy="./sites/meridian/index.html" aria-label="Copy link to Meridian"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2.5"/><path d="M15 5.5H6.5A2.5 2.5 0 0 0 4 8v8"/></svg></button>
+              <a class="tool tool--open" href="./sites/meridian/index.html" aria-label="Open Meridian"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 16 16 8M9.5 8H16v6.5"/></svg></a>
+            </div>
+          </div>
+          <p class="card__desc">Warm, quiet and unhurried: a breathing animation that keeps time, an eight-week outline, a coach quote and an honest FAQ.</p>
+          <ul class="tags"><li>Warm palette</li><li>CSS animation</li><li>Native details</li></ul>
+        </li>
+
+      </ul>
+
+      <p class="empty" id="empty" hidden>Nothing matches that. <button class="link-btn" type="button" id="reset">Show all five</button></p>
+    </div>
+  </section>
+
+  <section class="how" id="how">
+    <div class="shell">
+      <p class="eyebrow">How they're built</p>
+      <h2>Five rules, applied to every page here.</h2>
+      <ol class="rules">
+        <li data-rv><b>01</b><h3>No framework, no build step</h3><p>Plain HTML, CSS and modules. The only dependency anywhere in this library is three.js, served from this origin.</p></li>
+        <li data-rv><b>02</b><h3>No stock imagery</h3><p>Every image is generated: the cutouts and stills in Kage are rendered from its own 3D scene, the rest is colour and type.</p></li>
+        <li data-rv><b>03</b><h3>Motion with a reason</h3><p>If it moves, it is carrying meaning. Every page has a reduced-motion path that keeps the whole reading experience.</p></li>
+        <li data-rv><b>04</b><h3>Real interaction</h3><p>Search filters, menus open, forms answer, the 404 routes you somewhere. Nothing on screen is a decorative lie.</p></li>
+        <li data-rv><b>05</b><h3>Relative paths only</h3><p>Every asset is local and relatively linked, so the whole library also works from a subfolder or a file server.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="faq" id="faq">
+    <div class="shell">
+      <p class="eyebrow">Questions</p>
+      <h2>Short answers.</h2>
+      <div class="faq__list">
+        <details><summary>Can I use these?</summary><p>Yes — copy anything you find useful. The brands, products and people in them are invented, so replace the words before you ship.</p></details>
+        <details><summary>Why is Kage so much bigger than the others?</summary><p>It renders a whole environment in real time. The other four are single files and load in well under a second.</p></details>
+        <details><summary>What happens without WebGL?</summary><p>Kage falls back to a static gradient and stays completely readable. Nothing else on the site needs WebGL at all.</p></details>
+        <details><summary>Is anything tracked?</summary><p>No analytics, no cookies, no third-party requests. Every byte comes from this domain.</p></details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="shell foot__in">
+    <div>
+      <a class="mark" href="#top" aria-label="PRISME, back to top">
+        <svg class="mark__glyph" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 5 28 26H4z"/></svg>
+        <span>prisme</span>
+      </a>
+      <p>A small library of complete landing pages. Every product, brand and person named here is fictional.</p>
+    </div>
+    <nav aria-label="Pages">
+      <ul>
+        <li><a href="./sites/kage/index.html">Kage</a></li>
+        <li><a href="./sites/halo/index.html">Halo</a></li>
+        <li><a href="./sites/atelier-noir/index.html">Atelier Noir</a></li>
+        <li><a href="./sites/signal-lost/index.html">Signal Lost</a></li>
+        <li><a href="./sites/meridian/index.html">Meridian</a></li>
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<noscript><style>.card,[data-rv],.rules li{opacity:1!important;transform:none!important}.search{display:flex!important}</style></noscript>
+<script src="./assets/js/library.js" defer></script>
+</body>
+</html>

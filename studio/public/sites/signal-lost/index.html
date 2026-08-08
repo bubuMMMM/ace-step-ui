@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>404 — Signal Lost</title>
+<meta name="description" content="A 404 page built as a station losing contact: a live radar sweep, a station log, and three ways back.">
+<meta name="theme-color" content="#04070a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%2304070a'/%3E%3Ccircle cx='16' cy='16' r='9' fill='none' stroke='%2350e3a4' stroke-width='2'/%3E%3Ccircle cx='16' cy='16' r='2.5' fill='%2350e3a4'/%3E%3C/svg%3E">
+<style>
+:root{
+  --ink:#04070a; --panel:#080d12; --line:rgba(80,227,164,.16); --line-2:rgba(214,232,224,.10);
+  --green:#50e3a4; --green-dim:rgba(80,227,164,.6); --amber:#ffb45c; --red:#ff5d47;
+  --text:#d6e8e0; --dim:rgba(214,232,224,.55); --dimmer:rgba(214,232,224,.3);
+  --mono:ui-monospace,"SF Mono","JetBrains Mono","Roboto Mono",Menlo,Consolas,monospace;
+  --sans:"Helvetica Neue",Helvetica,Arial,system-ui,sans-serif;
+  --ease:cubic-bezier(.2,.8,.25,1);
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--ink);color:var(--text);font-family:var(--mono);font-size:14px;line-height:1.7;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  background-image:radial-gradient(70rem 50rem at 78% 12%,rgba(80,227,164,.07),transparent 60%)}
+/* scanlines */
+body::after{content:"";position:fixed;inset:0;z-index:40;pointer-events:none;opacity:.5;
+  background:repeating-linear-gradient(180deg,rgba(255,255,255,.028) 0 1px,transparent 1px 3px)}
+a{color:inherit}
+::selection{background:var(--green);color:var(--ink)}
+:focus-visible{outline:1.5px solid var(--green);outline-offset:3px}
+.skip{position:fixed;top:8px;left:8px;z-index:99;background:var(--green);color:var(--ink);padding:.55rem .9rem;
+  font:600 .72rem var(--mono);letter-spacing:.1em;text-decoration:none;transform:translateY(-160%)}
+.skip:focus-visible{transform:none}
+
+.shell{min-height:100%;display:flex;flex-direction:column;
+  padding:clamp(1rem,3vw,2rem);gap:clamp(1rem,2.5vw,1.6rem);max-width:100rem;margin:0 auto;width:100%}
+.tag{font:500 .68rem/1 var(--mono);letter-spacing:.22em;text-transform:uppercase;color:var(--dimmer);margin:0}
+
+/* top bar */
+.top{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;
+  border:1px solid var(--line-2);padding:.7rem 1rem}
+.station{display:flex;align-items:center;gap:.7rem;font-weight:600;letter-spacing:.06em}
+.blip{width:9px;height:9px;border-radius:50%;background:var(--red);box-shadow:0 0 0 0 rgba(255,93,71,.6);animation:pulse 2s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 9px rgba(255,93,71,0)}100%{box-shadow:0 0 0 0 rgba(255,93,71,0)}}
+.top nav{display:flex;gap:1.4rem;flex-wrap:wrap}
+.top nav a{text-decoration:none;color:var(--dim);font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;transition:color .3s}
+.top nav a:hover{color:var(--green)}
+
+/* body grid */
+.main{flex:1;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(1rem,2.5vw,1.6rem);align-items:stretch}
+.panel{border:1px solid var(--line-2);padding:clamp(1.2rem,3vw,2.4rem);position:relative;background:linear-gradient(180deg,rgba(255,255,255,.014),transparent)}
+.panel--left{display:flex;flex-direction:column;justify-content:center}
+
+.code404{margin:0;font-family:var(--sans);font-weight:700;font-size:clamp(5rem,17vw,14rem);line-height:.82;
+  letter-spacing:-.05em;color:var(--text);position:relative;display:inline-block}
+.code404::before,.code404::after{content:"404";position:absolute;left:0;top:0;opacity:.85}
+.code404::before{color:var(--green);animation:gl1 4.6s infinite steps(1)}
+.code404::after{color:var(--red);animation:gl2 5.3s infinite steps(1)}
+@keyframes gl1{0%,92%,100%{clip-path:inset(100% 0 0 0);transform:none}
+  93%{clip-path:inset(12% 0 62% 0);transform:translateX(-5px)}95%{clip-path:inset(48% 0 26% 0);transform:translateX(4px)}97%{clip-path:inset(74% 0 8% 0);transform:translateX(-3px)}}
+@keyframes gl2{0%,88%,100%{clip-path:inset(100% 0 0 0);transform:none}
+  89%{clip-path:inset(30% 0 48% 0);transform:translateX(5px)}91%{clip-path:inset(66% 0 18% 0);transform:translateX(-4px)}}
+
+h1{margin:1.6rem 0 0;font-family:var(--sans);font-size:clamp(1.4rem,3vw,2.2rem);line-height:1.16;letter-spacing:-.03em;
+  font-weight:600;max-width:18ch;color:var(--text)}
+.lead{margin:1rem 0 0;color:var(--dim);max-width:52ch;font-size:.94rem}
+.kv{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.1rem 1.4rem;margin:2rem 0 0;
+  border-top:1px solid var(--line-2);padding-top:1rem;max-width:34rem}
+.kv div{display:flex;justify-content:space-between;gap:1rem;padding:.35rem 0;border-bottom:1px dotted rgba(214,232,224,.12)}
+.kv dt{color:var(--dimmer);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase}
+.kv dd{margin:0;font-size:.82rem;color:var(--text)}
+
+.actions{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:2.2rem}
+.act{display:inline-flex;align-items:center;gap:.55rem;text-decoration:none;border:1px solid var(--line);
+  padding:.7rem 1.15rem;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--text);
+  transition:background .3s,color .3s,border-color .3s,transform .3s var(--ease)}
+.act:hover{background:var(--green);color:var(--ink);border-color:var(--green);transform:translateY(-1px)}
+.act--ghost{border-color:var(--line-2);color:var(--dim)}
+.act--ghost:hover{background:transparent;color:var(--text);border-color:var(--text)}
+
+/* radar */
+.panel--right{display:flex;flex-direction:column;gap:1.2rem}
+.radar{position:relative;aspect-ratio:1;width:100%;max-width:24rem;margin:0 auto}
+.radar canvas{width:100%;height:100%;display:block}
+.log{flex:1;min-height:0;border-top:1px solid var(--line-2);padding-top:.9rem;overflow:hidden}
+.log ul{list-style:none;margin:.6rem 0 0;padding:0;font-size:.78rem;color:var(--dim);display:grid;gap:.32rem}
+.log li{display:flex;gap:.7rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.log b{color:var(--dimmer);font-weight:400}
+.log .ok{color:var(--green-dim)}
+.log .warn{color:var(--amber)}
+.log .err{color:var(--red)}
+
+/* search */
+.finder{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1.6rem;max-width:34rem}
+.finder input{flex:1 1 14rem;background:rgba(255,255,255,.03);border:1px solid var(--line-2);color:var(--text);
+  padding:.7rem .9rem;font:400 .86rem var(--mono)}
+.finder input::placeholder{color:var(--dimmer)}
+.finder button{border:1px solid var(--green);background:transparent;color:var(--green);padding:.7rem 1.2rem;cursor:pointer;
+  font:500 .76rem var(--mono);letter-spacing:.14em;text-transform:uppercase;transition:background .3s,color .3s}
+.finder button:hover{background:var(--green);color:var(--ink)}
+output{display:block;margin-top:.8rem;font-size:.8rem;color:var(--amber)}
+
+footer{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;
+  border:1px solid var(--line-2);padding:.7rem 1rem;color:var(--dimmer);font-size:.74rem;letter-spacing:.1em;text-transform:uppercase}
+footer a{color:var(--dim);text-decoration:none}
+footer a:hover{color:var(--green)}
+
+@media (max-width:900px){
+  .main{grid-template-columns:1fr}
+  .kv{grid-template-columns:1fr}
+  .radar{max-width:18rem}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition-duration:.001ms!important}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="shell">
+
+  <div class="top">
+    <span class="station"><span class="blip" aria-hidden="true"></span>MERIDIAN RELAY · STATION 07</span>
+    <nav aria-label="Recovery">
+      <a href="#main">Status</a>
+      <a href="../../index.html">Library</a>
+      <a href="../kage/index.html">Kage</a>
+      <a href="../halo/index.html">Halo</a>
+    </nav>
+  </div>
+
+  <div class="main" id="main">
+    <section class="panel panel--left" aria-labelledby="h">
+      <p class="tag">Error · resource not found</p>
+      <p class="code404" aria-hidden="true">404</p>
+      <h1 id="h">The page you asked for stopped transmitting.</h1>
+      <p class="lead">Either it was moved, or it never existed and something linked to it anyway. The relay has been sweeping this sector for a while now and has nothing to report.</p>
+
+      <dl class="kv">
+        <div><dt>Requested</dt><dd id="path">/unknown</dd></div>
+        <div><dt>Status</dt><dd>404 · Not Found</dd></div>
+        <div><dt>Last contact</dt><dd id="ago">—</dd></div>
+        <div><dt>Sector</dt><dd>07 · quiet</dd></div>
+      </dl>
+
+      <form class="finder" id="finder" role="search">
+        <label class="tag" for="q" style="flex:1 1 100%">Search the archive</label>
+        <input id="q" name="q" type="search" placeholder="try: kage, halo, atelier…" autocomplete="off">
+        <button type="submit">Sweep</button>
+        <output id="out" role="status" aria-live="polite"></output>
+      </form>
+
+      <div class="actions">
+        <a class="act" href="../../index.html">← Return to the library</a>
+        <a class="act act--ghost" href="#" id="back">Retrace one step</a>
+      </div>
+    </section>
+
+    <section class="panel panel--right" aria-label="Relay telemetry">
+      <p class="tag">Sweep · sector 07</p>
+      <div class="radar"><canvas id="radar" width="560" height="560" aria-hidden="true"></canvas></div>
+      <div class="log">
+        <p class="tag">Station log</p>
+        <ul id="log"></ul>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <span>Signal Lost — a 404 study</span>
+    <span><a href="../../index.html">prisme.library / 404</a></span>
+  </footer>
+</div>
+
+<script>
+(() => {
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  document.getElementById('path').textContent =
+    location.pathname.replace(/\/index\.html$/, '/') + (location.search || '');
+  const started = Date.now();
+  const ago = document.getElementById('ago');
+  const tickAgo = () => {
+    const s = Math.floor((Date.now() - started) / 1000);
+    ago.textContent = s < 60 ? `${s}s ago` : `${Math.floor(s / 60)}m ${s % 60}s ago`;
+  };
+  tickAgo(); setInterval(tickAgo, 1000);
+
+  document.getElementById('back').addEventListener('click', (e) => {
+    e.preventDefault();
+    if (history.length > 1) history.back();
+    else location.href = '../../index.html';
+  });
+
+  const routes = [
+    ['kage', '../kage/index.html', 'Kage — night walk, five chapters'],
+    ['halo', '../halo/index.html', 'Halo — inference layer'],
+    ['atelier', '../atelier-noir/index.html', 'Atelier Noir — A/W 26'],
+    ['noir', '../atelier-noir/index.html', 'Atelier Noir — A/W 26'],
+    ['meridian', '../meridian/index.html', 'Meridian — eight week programme'],
+    ['library', '../../index.html', 'The library index'],
+  ];
+  const out = document.getElementById('out');
+  document.getElementById('finder').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const q = document.getElementById('q').value.trim().toLowerCase();
+    if (!q) { out.textContent = 'Nothing to sweep for.'; return; }
+    const hit = routes.find(([k]) => k.includes(q) || q.includes(k));
+    if (hit) {
+      out.textContent = `Contact — ${hit[2]}. Routing…`;
+      setTimeout(() => { location.href = hit[1]; }, 700);
+    } else {
+      out.textContent = `No contact for “${q}”. Sector 07 remains quiet.`;
+    }
+  });
+
+  /* station log */
+  const lines = [
+    ['ok', 'relay online · antenna 3 nominal'],
+    ['ok', 'sweep 001 complete · 0 returns'],
+    ['warn', 'requested path resolves to nothing'],
+    ['ok', 'sweep 002 complete · 0 returns'],
+    ['err', 'handshake timeout · 30 000 ms'],
+    ['warn', 'falling back to archive index'],
+    ['ok', 'archive index reachable · 5 documents'],
+    ['ok', 'sweep 003 complete · 0 returns'],
+  ];
+  const log = document.getElementById('log');
+  let li = 0;
+  const stamp = () => new Date().toISOString().slice(11, 19);
+  const push = () => {
+    const [cls, text] = lines[li % lines.length];
+    const el = document.createElement('li');
+    el.innerHTML = `<b>${stamp()}</b><span class="${cls}">${text}</span>`;
+    log.prepend(el);
+    while (log.children.length > 7) log.lastElementChild.remove();
+    li++;
+  };
+  push(); push(); push();
+  if (!reduced) setInterval(push, 3400);
+
+  /* radar sweep */
+  const cv = document.getElementById('radar');
+  const ctx = cv.getContext('2d');
+  const S = cv.width, C = S / 2;
+  const blips = Array.from({ length: 7 }, () => ({
+    a: Math.random() * Math.PI * 2, r: 0.25 + Math.random() * 0.68, seen: -1e6,
+  }));
+  let angle = 0, raf = 0;
+  function ring(r, alpha) {
+    ctx.strokeStyle = `rgba(80,227,164,${alpha})`;
+    ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.arc(C, C, r, 0, 6.3); ctx.stroke();
+  }
+  function frame(t) {
+    raf = requestAnimationFrame(frame);
+    ctx.clearRect(0, 0, S, S);
+    ctx.fillStyle = 'rgba(6,14,12,.55)';
+    ctx.beginPath(); ctx.arc(C, C, C - 2, 0, 6.3); ctx.fill();
+    for (let i = 1; i <= 4; i++) ring((C - 6) * (i / 4), i === 4 ? 0.28 : 0.12);
+    ctx.strokeStyle = 'rgba(80,227,164,.12)';
+    ctx.beginPath(); ctx.moveTo(C, 6); ctx.lineTo(C, S - 6); ctx.moveTo(6, C); ctx.lineTo(S - 6, C); ctx.stroke();
+
+    angle = reduced ? -1.2 : (t / 2600) % (Math.PI * 2);
+    if (!reduced) {
+      const g = ctx.createConicGradient ? ctx.createConicGradient(angle - 0.9, C, C) : null;
+      if (g) {
+        g.addColorStop(0, 'rgba(80,227,164,0)');
+        g.addColorStop(0.92, 'rgba(80,227,164,.02)');
+        g.addColorStop(1, 'rgba(80,227,164,.34)');
+        ctx.fillStyle = g;
+        ctx.beginPath(); ctx.arc(C, C, C - 4, 0, 6.3); ctx.fill();
+      }
+      ctx.strokeStyle = 'rgba(80,227,164,.85)';
+      ctx.lineWidth = 1.6;
+      ctx.beginPath(); ctx.moveTo(C, C);
+      ctx.lineTo(C + Math.cos(angle) * (C - 5), C + Math.sin(angle) * (C - 5)); ctx.stroke();
+    }
+    for (const b of blips) {
+      let d = Math.abs(((b.a - angle + Math.PI * 3) % (Math.PI * 2)) - Math.PI);
+      if (d > Math.PI - 0.06) b.seen = t;
+      const fade = reduced ? 0.5 : Math.max(0, 1 - (t - b.seen) / 2600);
+      if (fade <= 0) continue;
+      const x = C + Math.cos(b.a) * b.r * (C - 12);
+      const y = C + Math.sin(b.a) * b.r * (C - 12);
+      ctx.fillStyle = `rgba(80,227,164,${(fade * .9).toFixed(3)})`;
+      ctx.beginPath(); ctx.arc(x, y, 3.4, 0, 6.3); ctx.fill();
+      ctx.strokeStyle = `rgba(80,227,164,${(fade * .3).toFixed(3)})`;
+      ctx.beginPath(); ctx.arc(x, y, 9 + (1 - fade) * 12, 0, 6.3); ctx.stroke();
+    }
+    ctx.fillStyle = 'rgba(255,93,71,.9)';
+    ctx.beginPath(); ctx.arc(C, C, 3, 0, 6.3); ctx.fill();
+  }
+  frame(0);
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) cancelAnimationFrame(raf); else raf = requestAnimationFrame(frame);
+  });
+})();
+</script>
+</body>
+</html>
